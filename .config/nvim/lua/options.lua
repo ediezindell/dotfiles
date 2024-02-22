@@ -13,6 +13,9 @@ local options = {
   termguicolors = true,
   clipboard = "unnamedplus",
   syntax = "enable",
+  termguicolors = true,
+  winblend = 0,
+  pumblend = 0,
 }
 
 for k, v in pairs(options) do
