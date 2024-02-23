@@ -1,3 +1,6 @@
+-- preview git conflict
 return {
-  "akinsho/git-conflict.nvim"
+  "akinsho/git-conflict.nvim",
+  version = "*",
+  config = true,
 }

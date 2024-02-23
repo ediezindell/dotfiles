@@ -1,3 +1,4 @@
+-- nvim-tree用のアイコンセット
 return {
   'nvim-tree/nvim-web-devicons',
   config = function()
@@ -17,5 +18,5 @@ return {
       color_icons = true,
       default = true,
     }
-  end
+  end,
 }

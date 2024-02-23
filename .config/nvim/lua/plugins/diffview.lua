@@ -1,3 +1,4 @@
+-- TODO: not working...
 return {
-  "sindrets/diffview.nvim"
+  "sindrets/diffview.nvim",
 }

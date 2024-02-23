@@ -1,3 +1,4 @@
+-- status line customize
 return {
   'nvim-lualine/lualine.nvim',
   requires = 'kyazdani42/nvim-web-devicons',
@@ -5,5 +6,5 @@ return {
     require('lualine').setup({
       options = { theme = 'iceberg_dark' },
     })
-  end
+  end,
 }
