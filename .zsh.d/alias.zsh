@@ -42,6 +42,7 @@ alias n="node"
 alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
+alias code="nvim"
 
 # util
 alias cb="system_profiler SPPowerDataType | grep Wattage"
