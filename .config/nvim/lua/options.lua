@@ -1,4 +1,11 @@
 local options = {
+  encoding = "utf-8",
+  fileencoding = "utf-8",
+  list = true,
+  scrolloff = 4,
+  ignorecase = true,
+  smartcase = true,
+  inccommand = "split",
   ambiwidth = "double",
   cursorline = true,
   tabstop = 2,
@@ -16,6 +23,9 @@ local options = {
   termguicolors = true,
   winblend = 0,
   pumblend = 0,
+  signcolumn = "yes:2",
+  splitbelow = true,
+  splitright = true,
 }
 
 for k, v in pairs(options) do

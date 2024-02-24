@@ -1,3 +1,7 @@
+vim.cmd("autocmd!")
+
+vim.scriptencoding = "utf-8"
+
 vim.api.nvim_set_var('mapleader', ' ')
 vim.api.nvim_set_var('maplocalleader', '_')
 
