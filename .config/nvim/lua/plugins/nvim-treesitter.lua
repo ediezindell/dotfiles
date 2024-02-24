@@ -1,4 +1,4 @@
-
+-- code highlight
 return {
   'nvim-treesitter/nvim-treesitter',
   run = ':TSUpdate',

@@ -1,3 +1,4 @@
+-- file tree
 vim.cmd([[
     :hi      NvimTreeExecFile    guifg=#ffa0a0
     :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
