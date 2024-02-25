@@ -34,6 +34,9 @@ alias gdw="git diff -w"
 alias gds="git diff --staged"
 alias gdsw="git diff --staged -w"
 alias gdws="git diff --staged -w"
+alias gl="git log"
+alias glo="git log --oneline"
+alias nb="git rev-parse --abbrev-ref HEAD"
 
 # node
 alias n="node"
