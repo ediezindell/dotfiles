@@ -22,6 +22,10 @@ return {
       sort = {
         folders_first = true,
       },
+      update_focused_file = {
+        enable = true,
+        update_cwd = true,
+      },
       view = {
         adaptive_size = true,
         -- number = true,
