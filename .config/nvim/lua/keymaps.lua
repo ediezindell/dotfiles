@@ -28,10 +28,8 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 -- nvim-tree
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>', {silent=true})
+keymap('n', '<leader>e', ':NvimTreeToggle<CR>', opts)
 
-vim.keymap.set('n', '<leader>t', ':term<CR>', {})
+keymap('n', '<leader>t', ':bo term<CR>', term_opts)
 
-vim.keymap.set('n', '<leader>mdp', ':CocCommand markdown-preview-enhanced.openPreview<CR>', {})
-
-vim.keymap.set('n', '<leader>gd', ':DiffviewOpen<CR>', {})
+keymap('n', '<leader>gd', ':DiffviewOpen<CR>', opts)
