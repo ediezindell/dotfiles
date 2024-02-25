@@ -15,6 +15,7 @@ return {
   requires = {
     'nvim-tree/nvim-web-devicons',
   },
+  event = "VimEnter",
   config = function()
     require('nvim-tree').setup({
       sort_by = 'case_sensitive',

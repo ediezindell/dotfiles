@@ -1,6 +1,7 @@
 -- nvim-tree用のアイコンセット
 return {
   'nvim-tree/nvim-web-devicons',
+  event = "VimEnter",
   config = function()
     require('nvim-web-devicons').setup {
       override = {
