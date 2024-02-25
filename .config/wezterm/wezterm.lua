@@ -1,7 +1,6 @@
 local wezterm = require('wezterm')
 local keybind = require('keybinds')
 
-
 local config = {
   -- appearance
   color_scheme = 'nord',
@@ -13,9 +12,9 @@ local config = {
   }),
   font_size = 15,
   -- keybinds
-  disable_default_key_bindings = true,
-  keys = keybind.keys,
-  key_tables = keybind.key_tables,
+  -- disable_default_key_bindings = true,
+  -- keys = keybind.keys,
+  -- key_tables = keybind.key_tables,
 }
 
 return config
