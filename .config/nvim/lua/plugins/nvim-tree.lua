@@ -14,6 +14,7 @@ return {
   'nvim-tree/nvim-tree.lua',
   requires = {
     'nvim-tree/nvim-web-devicons',
+    'nvim-telescope/telescope.nvim',
   },
   event = "VimEnter",
   config = function()
@@ -38,15 +39,29 @@ return {
         group_empty = true,
         highlight_git = true,
         highlight_modified = "icon",
-        highlight_opened_files = "icon",
+        -- highlight_opened_files = "icon",
+        highlight_opened_files = 'name',
+        icons = {
+          glyphs = {
+            git = {
+              unstaged = '!', renamed = '»', untracked = '?', deleted = '✘',
+              staged = '✓', unmerged = '', ignored = '◌',
+            },
+          },
+        },
       },
       diagnostics = {
         enable = true,
         show_on_dirs = true,
       },
-      filters = {
-        dotfiles = true,
+      actions = {
+        expand_all = {
+          max_folder_discovery = 100,
+          exclude = { '.git', 'target', 'build' },
+        },
       },
+      on_attach = require('actions/nvim-tree-actions').on_attach,
+      -- on_attach = 'default' 
     })
   end,
 }
