@@ -13,5 +13,15 @@ return  {
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
   },
-  config = true,
+  config = function()
+    require('mason').setup({
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        }
+      }
+    })
+  end,
 }

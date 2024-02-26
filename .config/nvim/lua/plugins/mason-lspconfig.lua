@@ -9,12 +9,23 @@ return {
   config = function()
     local lspconfig = require("lspconfig")
     require('mini.completion').setup({})
-    require("mason-lspconfig").setup_handlers({
+    local masonLspconfig = require("mason-lspconfig")
+    masonLspconfig.setup({
+      ensure_installed = {
+        "jsonls",
+        "lua_ls",
+        "dockerls",
+        "docker_compose_language_service",
+        "cssls",
+        "html",
+        "tsserver",
+      }
+    })
+    masonLspconfig.setup_handlers({
       function(server_name)
         lspconfig[server_name].setup({})
       end,
       ["lua_ls"] = function()
-        local lspconfig = require("lspconfig")
         lspconfig.lua_ls.setup({
           settings = {
             Lua = {
@@ -26,9 +37,6 @@ return {
             }
           }
         })
-      end,
-      ["vtsls"] = function()
-        lspconfig["vtsls"].setup({})
       end,
     })
 
