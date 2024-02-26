@@ -2,5 +2,9 @@
 return {
   'tanvirtin/monokai.nvim',
   event = "VimEnter",
-  config = true,
+  config = function()
+    require("monokai").setup({
+      italics = false,
+    })
+  end,
 }
