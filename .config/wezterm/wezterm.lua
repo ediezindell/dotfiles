@@ -10,7 +10,7 @@ local config = {
     stretch = "Normal",
     style = "Normal",
   }),
-  font_size = 15,
+  font_size = 16,
   -- keybinds
   -- disable_default_key_bindings = true,
   -- keys = keybind.keys,
