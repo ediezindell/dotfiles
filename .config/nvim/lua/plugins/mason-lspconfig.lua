@@ -13,6 +13,20 @@ return {
       function(server_name)
         lspconfig[server_name].setup({})
       end,
+      ["lua_ls"] = function()
+        local lspconfig = require("lspconfig")
+        lspconfig.lua_ls.setup({
+          settings = {
+            Lua = {
+              diagnostics = {
+                globals = {
+                  "vim",
+                }
+              }
+            }
+          }
+        })
+      end,
       ["vtsls"] = function()
         lspconfig["vtsls"].setup({})
       end,
