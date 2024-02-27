@@ -20,12 +20,10 @@ local options = {
   termguicolors = true,
   clipboard = "unnamedplus",
   syntax = "enable",
-  termguicolors = true,
   winblend = 0,
   pumblend = 0,
   signcolumn = "yes:2",
   splitbelow = true,
-  splitright = true,
 }
 
 for k, v in pairs(options) do
