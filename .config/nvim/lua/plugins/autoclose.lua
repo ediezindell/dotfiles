@@ -1,7 +1,7 @@
 -- auto close bracket / quote
 return {
   "m4xshen/autoclose.nvim",
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = true,
 }
 

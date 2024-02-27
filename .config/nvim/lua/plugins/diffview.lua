@@ -1,6 +1,6 @@
 -- TODO: not working...
 return {
   "sindrets/diffview.nvim",
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = true,
 }

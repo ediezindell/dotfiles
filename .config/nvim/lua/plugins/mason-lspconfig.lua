@@ -5,7 +5,7 @@ return {
     { "neovim/nvim-lspconfig" },
     { "echasnovski/mini.completion", version = false },
   },
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = function()
     local lspconfig = require("lspconfig")
     require('mini.completion').setup({})

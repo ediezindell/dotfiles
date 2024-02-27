@@ -1,7 +1,7 @@
 -- color theme
 return {
   'tanvirtin/monokai.nvim',
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = function()
     require("monokai").setup({
       italics = false,

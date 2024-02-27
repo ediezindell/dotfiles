@@ -5,6 +5,6 @@ return {
     "sindrets/diffview.nvim",
     "nvim-telescope/telescope.nvim",
   },
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = true,
 }

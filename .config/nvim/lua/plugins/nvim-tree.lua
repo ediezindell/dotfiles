@@ -16,7 +16,7 @@ return {
     'nvim-tree/nvim-web-devicons',
     'nvim-telescope/telescope.nvim',
   },
-  event = "VimEnter",
+  -- event = "VimEnter",
   config = function()
     require('nvim-tree').setup({
       sort_by = 'case_sensitive',

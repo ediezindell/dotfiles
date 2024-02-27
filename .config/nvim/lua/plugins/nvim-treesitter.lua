@@ -1,7 +1,7 @@
 -- code highlight
 return {
   'nvim-treesitter/nvim-treesitter',
-  event = "VimEnter",
+  -- event = { 'BufNewFile', 'BufRead' },
   run = ':TSUpdate',
   config = function()
     require("nvim-treesitter").setup({
