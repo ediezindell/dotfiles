@@ -50,3 +50,8 @@ alias code="nvim"
 # util
 alias cb="system_profiler SPPowerDataType | grep Wattage"
 
+# Application
+alias fork="open -a Fork"
+alias chrome="open -a Google\ Chrome"
+alias ff="open -a Firefox"
+alias edge="open -a Microsoft\ Edge"
