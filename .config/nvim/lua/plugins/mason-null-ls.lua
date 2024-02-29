@@ -9,7 +9,8 @@ return {
     "nvimtools/none-ls.nvim",
   },
   config = function()
-    require("mason-null-ls").setup({
+    local mason_null_ls = require("mason-null-ls")
+    mason_null_ls.setup({
       ensure_installed = {
         "stylua",
         "eslint",
@@ -17,14 +18,13 @@ return {
       },
       automatic_installation = true,
       handlers = {
-        function() end, -- disables automatic setup of all null-ls sources
-        stylua = function(source_name, methods)
+        function() end,
+        stylua = function()
           local null_ls = require("null-ls")
           null_ls.register(null_ls.builtins.formatting.stylua)
         end,
         shfmt = function(source_name, methods)
-          -- custom logic
-          require("mason-null-ls").default_setup(source_name, methods) -- to maintain default behavior
+          mason_null_ls.default_setup(source_name, methods)
         end,
       },
     })
