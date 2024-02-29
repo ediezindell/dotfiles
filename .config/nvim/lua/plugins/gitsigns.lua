@@ -5,7 +5,7 @@ return {
   config = function()
     require("gitsigns").setup({
       numhl = true,
-      -- linehl = true,
+      linehl = true,
       -- word_diff = true,
     })
   end,
