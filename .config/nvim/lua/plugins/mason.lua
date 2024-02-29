@@ -1,4 +1,4 @@
-return  {
+return {
   "williamboman/mason.nvim",
   build = ":MasonUpdate",
   -- cmd = {
@@ -10,18 +10,19 @@ return  {
   --   "MasonUpdate",
   -- },
   requires = {
-    'williamboman/mason-lspconfig.nvim',
-    'neovim/nvim-lspconfig',
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
   },
   config = function()
-    require('mason').setup({
+    require("mason").setup({
       ui = {
         icons = {
           package_installed = "✓",
           package_pending = "➜",
           package_uninstalled = "✗",
-        }
-      }
+        },
+        border = "single",
+      },
     })
   end,
 }
