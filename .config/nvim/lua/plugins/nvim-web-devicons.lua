@@ -12,7 +12,7 @@ return {
           name = "Zsh"
         },
         ts = {
-          icon = 'ﯤ',
+          icon = '󰛦',
           color = '#3178C6'
         }
       },
