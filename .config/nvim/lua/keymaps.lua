@@ -33,4 +33,5 @@ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
 -- terminal
 keymap("n", "<leader>t", ":term<CR>", term_opts)
 
+-- diffview
 keymap("n", "<leader>gd", ":DiffviewOpen<CR>", opts)
