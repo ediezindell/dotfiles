@@ -9,7 +9,7 @@ local options = {
   ambiwidth = "double",
   cursorline = true,
   tabstop = 2,
-	shiftwidth = 2,
+  shiftwidth = 2,
   number = true,
   expandtab = true,
   numberwidth = 4,
@@ -31,4 +31,3 @@ for k, v in pairs(options) do
 end
 
 vim.cmd("set whichwrap+=<,>,[,],h,l")
-
