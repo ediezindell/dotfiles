@@ -1,8 +1,8 @@
 return {
-  'yamatsum/nvim-cursorline',
+  "yamatsum/nvim-cursorline",
   -- event = "VimEnter",
   config = function()
-    require('nvim-cursorline').setup({
+    require("nvim-cursorline").setup({
       cursorline = {
         enable = true,
         timeout = 1000,
@@ -12,7 +12,7 @@ return {
         enable = true,
         min_length = 3,
         hl = { underline = true },
-      }
+      },
     })
   end,
 }

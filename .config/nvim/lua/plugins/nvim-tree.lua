@@ -6,20 +6,20 @@ vim.cmd([[
     :hi link NvimTreeImageFile   Title
 ]])
 
-vim.api.nvim_set_var('loaded_netrw', 1)
-vim.api.nvim_set_var('loaded_netrwPlugin', 1)
-vim.api.nvim_set_var('termguicolors', true)
+vim.api.nvim_set_var("loaded_netrw", 1)
+vim.api.nvim_set_var("loaded_netrwPlugin", 1)
+vim.api.nvim_set_var("termguicolors", true)
 
 return {
-  'nvim-tree/nvim-tree.lua',
+  "nvim-tree/nvim-tree.lua",
   requires = {
-    'nvim-tree/nvim-web-devicons',
-    'nvim-telescope/telescope.nvim',
+    "nvim-tree/nvim-web-devicons",
+    "nvim-telescope/telescope.nvim",
   },
   -- event = "VimEnter",
   config = function()
-    require('nvim-tree').setup({
-      sort_by = 'case_sensitive',
+    require("nvim-tree").setup({
+      sort_by = "case_sensitive",
       sort = {
         folders_first = true,
       },
@@ -30,7 +30,7 @@ return {
       view = {
         adaptive_size = true,
         -- number = true,
-        -- 
+        --
         -- float = {
         --   enable = true,
         -- },
@@ -40,12 +40,17 @@ return {
         highlight_git = true,
         highlight_modified = "icon",
         -- highlight_opened_files = "icon",
-        highlight_opened_files = 'name',
+        highlight_opened_files = "name",
         icons = {
           glyphs = {
             git = {
-              unstaged = '!', renamed = '»', untracked = '?', deleted = '✘',
-              staged = '✓', unmerged = '', ignored = '◌',
+              unstaged = "!",
+              renamed = "»",
+              untracked = "?",
+              deleted = "✘",
+              staged = "✓",
+              unmerged = "",
+              ignored = "◌",
             },
           },
         },
@@ -57,11 +62,11 @@ return {
       actions = {
         expand_all = {
           max_folder_discovery = 100,
-          exclude = { '.git', 'target', 'build' },
+          exclude = { ".git", "target", "build" },
         },
       },
-      on_attach = require('actions/nvim-tree-actions').on_attach,
-      -- on_attach = 'default' 
+      on_attach = require("actions/nvim-tree-actions").on_attach,
+      -- on_attach = 'default'
     })
   end,
 }
