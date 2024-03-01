@@ -3,12 +3,10 @@ return {
   dependencies = {
     { "williamboman/mason.nvim" },
     { "neovim/nvim-lspconfig" },
-    { "echasnovski/mini.completion", version = false },
   },
   -- event = "VimEnter",
   config = function()
     local lspconfig = require("lspconfig")
-    require("mini.completion").setup({})
     local masonLspconfig = require("mason-lspconfig")
     masonLspconfig.setup({
       ensure_installed = {
