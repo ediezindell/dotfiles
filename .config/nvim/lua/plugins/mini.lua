@@ -6,6 +6,16 @@ return {
     config = true,
   },
   {
+    -- カーソル上の単語ハイライト
+    "echasnovski/mini.cursorword",
+    version = false,
+    config = function()
+      require("mini.cursorword").setup({
+        delay = 10,
+      })
+    end,
+  },
+  {
     -- 補完
     "echasnovski/mini.completion",
     version = false,
