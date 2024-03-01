@@ -12,8 +12,8 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<Esc><Esc>", ":<C-u>set nohlsearch<CR>", opts)
 
 -- split view
-keymap("n", "ss", ":split<CR>", opts) -- 上下
-keymap("n", "sv", ":vsplit<CR>", opts) -- 左右
+keymap("n", "<leader>ss", ":split<CR>", opts)  -- 上下
+keymap("n", "<leader>sv", ":vsplit<CR>", opts) -- 左右
 
 -- yank from cursor to end of line
 keymap("n", "Y", "y$", opts)
@@ -38,3 +38,9 @@ keymap("n", "<leader>t", ":ToggleTerm<CR>", term_opts)
 
 -- diffview
 keymap("n", "<leader>gd", ":DiffviewOpen<CR>", opts)
+
+-- disable arrow keys
+vim.keymap.set({ "i", "n", "v" }, "<Up>", "", {})
+vim.keymap.set({ "i", "n", "v" }, "<Down>", "", {})
+vim.keymap.set({ "i", "n", "v" }, "<Left>", "", {})
+vim.keymap.set({ "i", "n", "v" }, "<Right>", "", {})

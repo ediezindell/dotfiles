@@ -1,11 +1,11 @@
 local wezterm = require("wezterm")
-local keybind = require("keybinds")
+-- local keybind = require("keybinds")
 
 local config = {
   -- appearance
   color_scheme = "nord",
   window_background_opacity = 0.90,
-  font = wezterm.font("HackGen Console NF", {
+  font = wezterm.font("Firge", {
     weight = "Medium",
     stretch = "Normal",
     style = "Normal",

@@ -1,7 +1,9 @@
 require("lualine").setup({
   options = {
     icons_enabled = true,
-    theme = "auto",
+    theme = "molokai",
+    -- theme = "horizon",
+    use_mode_colors = true,
     component_separators = { left = "", right = "" },
     section_separators = { left = "", right = "" },
     disabled_filetypes = {
@@ -20,8 +22,15 @@ require("lualine").setup({
   sections = {
     lualine_a = { "mode" },
     lualine_b = { "branch", "diff", "diagnostics" },
-    lualine_c = { "filename" },
-    lualine_x = { "encoding", "fileformat", "filetype" },
+    lualine_c = {
+      {
+        "buffers",
+        mode = 4,
+        show_filename_only = false,
+        use_mode_colors = true,
+      },
+    },
+    lualine_x = { "encoding", "filetype" },
     lualine_y = { "progress" },
     lualine_z = { "location" },
   },
