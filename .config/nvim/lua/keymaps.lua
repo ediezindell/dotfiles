@@ -12,8 +12,11 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<Esc><Esc>", ":<C-u>set nohlsearch<CR>", opts)
 
 -- split view
-keymap("n", "ss", ":split<CR>", opts)  -- 上下
+keymap("n", "ss", ":split<CR>", opts) -- 上下
 keymap("n", "sv", ":vsplit<CR>", opts) -- 左右
+
+-- yank from cursor to end of line
+keymap("n", "Y", "y$", opts)
 
 -- donot yank
 keymap("n", "x", '"_x', opts)
