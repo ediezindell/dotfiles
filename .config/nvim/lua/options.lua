@@ -8,6 +8,7 @@ local options = {
   inccommand = "split",
   ambiwidth = "double",
   cursorline = true,
+  cursorcolumn = true,
   tabstop = 2,
   shiftwidth = 2,
   number = true,
