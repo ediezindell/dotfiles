@@ -40,7 +40,7 @@ keymap("n", "<leader>t", ":ToggleTerm<CR>", term_opts)
 keymap("n", "<leader>gd", ":DiffviewOpen<CR>", opts)
 
 -- disable arrow keys
-vim.keymap.set({ "i", "n", "v" }, "<Up>", "", {})
-vim.keymap.set({ "i", "n", "v" }, "<Down>", "", {})
-vim.keymap.set({ "i", "n", "v" }, "<Left>", "", {})
-vim.keymap.set({ "i", "n", "v" }, "<Right>", "", {})
+vim.keymap.set({ "n", "v" }, "<Up>", "", {})
+vim.keymap.set({ "n", "v" }, "<Down>", "", {})
+vim.keymap.set({ "n", "v" }, "<Left>", "", {})
+vim.keymap.set({ "n", "v" }, "<Right>", "", {})
