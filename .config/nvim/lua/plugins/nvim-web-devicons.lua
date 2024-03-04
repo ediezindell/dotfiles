@@ -4,20 +4,22 @@ return {
   -- event = "VimEnter",
   config = function()
     require("nvim-web-devicons").setup({
-      override = {
-        zsh = {
+      override_by_extension = {
+        ["zsh"] = {
           icon = "",
           color = "#428850",
           cterm_color = "65",
           name = "Zsh",
         },
-        ts = {
+        ["ts"] = {
           icon = "󰛦",
           color = "#3178C6",
+          cterm_color = "74",
+          name = "Cts",
         },
       },
       color_icons = true,
-      default = true,
+      default = false,
     })
   end,
 }
