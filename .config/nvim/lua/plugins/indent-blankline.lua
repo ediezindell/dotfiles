@@ -1,7 +1,9 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
-  requires = {},
+  requires = {
+    "nvim-treesitter/nvim-treesitter",
+  },
   config = function()
     local highlight = {
       "RainbowRed",
@@ -27,8 +29,10 @@ return {
     require("ibl").setup({
       indent = {
         highlight = highlight,
-        char = "|",
+        -- char = "",
       },
+      -- whitespace = { highlight = highlight, remove_blankline_trail = false },
+      -- scope = { enabled = true },
     })
   end,
 }
