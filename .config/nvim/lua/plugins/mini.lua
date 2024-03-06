@@ -1,4 +1,34 @@
 return {
+  -- Option + j/k で移動
+  {
+    "echasnovski/mini.move",
+    version = false,
+    config = true,
+  },
+  -- fの強化
+  {
+    "echasnovski/mini.jump",
+    version = false,
+    config = true,
+  },
+  -- gSで引数を1行にまとめたり複数行に展開したり
+  {
+    "echasnovski/mini.splitjoin",
+    version = false,
+    config = true,
+  },
+  -- start page
+  {
+    "echasnovski/mini.starter",
+    version = false,
+    config = true,
+  },
+  -- autoclose
+  {
+    "echasnovski/mini.pairs",
+    version = false,
+    config = true,
+  },
   {
     -- コメント
     "echasnovski/mini.comment",
