@@ -2,9 +2,11 @@ vim.cmd("autocmd!")
 
 vim.scriptencoding = "utf-8"
 
+-- leaderキーを指定
 vim.api.nvim_set_var("mapleader", " ")
 vim.api.nvim_set_var("maplocalleader", "_")
 
+-- lazy.nvimの有効化
 vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

@@ -1,5 +1,6 @@
 vim.cmd([[colorscheme monokai]])
 
+-- italicにしないようhi guiを再設定
 local italicTypes = {
   "Function",
   "Keyword",
