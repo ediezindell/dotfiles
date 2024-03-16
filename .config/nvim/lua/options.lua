@@ -26,6 +26,10 @@ local options = {
   pumblend = 0,              -- ポップアップメニューの背景透過度
   clipboard = "unnamedplus", -- クリップボードを共有
   signcolumn = "yes:2",      -- 記号を常に2文字分の幅で表示
+  title = true,              -- 現在開いているファイル名などをタイトルに反映
+  hlsearch = true,           -- 検索ハイライト
+  showcmd = true,            -- 入力中のコマンドを表示
+  helplang = { "ja", "en" }, -- ドキュメントの言語の優先度を設定
 }
 
 for k, v in pairs(options) do

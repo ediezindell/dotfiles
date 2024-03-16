@@ -24,11 +24,11 @@ return {
     config = true,
   },
   -- autoclose
-  {
-    "echasnovski/mini.pairs",
-    version = false,
-    config = true,
-  },
+  -- {
+  --   "echasnovski/mini.pairs",
+  --   version = false,
+  --   config = true,
+  -- },
   {
     -- コメント
     "echasnovski/mini.comment",
