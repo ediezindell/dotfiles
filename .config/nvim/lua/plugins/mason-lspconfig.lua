@@ -17,6 +17,7 @@ return {
         "cssls",
         "html",
         "tsserver",
+        "intelephense",
       },
     })
     masonLspconfig.setup_handlers({
@@ -31,6 +32,18 @@ return {
                 globals = {
                   "vim",
                 },
+              },
+            },
+          },
+        })
+      end,
+      ["intelephense"] = function()
+        lspconfig.intelephense.setup({
+          settings = {
+            intelephense = {
+              stubs = {
+                "wordpress",
+                "wordpress-globals",
               },
             },
           },
