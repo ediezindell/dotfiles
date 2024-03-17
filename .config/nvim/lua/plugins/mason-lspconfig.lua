@@ -25,89 +25,10 @@ return {
         lspconfig[server_name].setup({})
       end,
       ["lua_ls"] = function()
-        lspconfig.lua_ls.setup({
-          settings = {
-            Lua = {
-              diagnostics = {
-                globals = {
-                  "vim",
-                },
-              },
-            },
-          },
-        })
+        lspconfig.lua_ls.setup(require("lsp.lua"))
       end,
       ["intelephense"] = function()
-        lspconfig.intelephense.setup({
-          settings = {
-            intelephense = {
-              stubs = {
-                "bcmath",
-                "bz2",
-                "calendar",
-                "Core",
-                "curl",
-                "date",
-                "dba",
-                "dom",
-                "enchant",
-                "fileinfo",
-                "filter",
-                "ftp",
-                "gd",
-                "gettext",
-                "hash",
-                "iconv",
-                "imap",
-                "intl",
-                "json",
-                "ldap",
-                "libxml",
-                "mbstring",
-                "mcrypt",
-                "mysql",
-                "mysqli",
-                "password",
-                "pcntl",
-                "pcre",
-                "PDO",
-                "pdo_mysql",
-                "Phar",
-                "readline",
-                "recode",
-                "Reflection",
-                "regex",
-                "session",
-                "SimpleXML",
-                "soap",
-                "sockets",
-                "sodium",
-                "SPL",
-                "standard",
-                "superglobals",
-                "sysvsem",
-                "sysvshm",
-                "tokenizer",
-                "xml",
-                "xdebug",
-                "xmlreader",
-                "xmlwriter",
-                "yaml",
-                "zip",
-                "zlib",
-                "wordpress",
-                "woocommerce",
-                "acf-pro",
-                "acf-stubs",
-                "wordpress-globals",
-                "wp-cli",
-                "genesis",
-                "polylang",
-                "sbi",
-              },
-            },
-          },
-        })
+        lspconfig.intelephense.setup(require("lsp.php"))
       end,
     })
 

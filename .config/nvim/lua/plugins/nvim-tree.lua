@@ -62,10 +62,10 @@ return {
       actions = {
         expand_all = {
           max_folder_discovery = 100,
-          exclude = { ".git", "target", "build" },
+          exclude = { ".git", "target", "build", "node_modules" },
         },
       },
-      on_attach = require("actions/nvim-tree-actions").on_attach,
+      on_attach = require("actions.nvim-tree-actions").on_attach,
       -- on_attach = 'default'
     })
   end,
