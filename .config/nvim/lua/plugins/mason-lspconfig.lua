@@ -17,6 +17,7 @@ return {
         "cssls",
         "html",
         "tsserver",
+        "tailwindcss",
         "intelephense",
       },
     })
