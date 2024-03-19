@@ -14,7 +14,7 @@ local config = {
   -- appearance
   color_scheme = "nord",
   window_background_opacity = 0.9,
-  font = wezterm.font(fonts[0], {
+  font = wezterm.font(fonts[1], {
     weight = "Medium",
     stretch = "Normal",
     style = "Normal",
