@@ -68,5 +68,8 @@ return {
       on_attach = require("actions.nvim-tree-actions").on_attach,
       -- on_attach = 'default'
     })
+
+    local opts = { noremap = true, silent = true }
+    vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
   end,
 }

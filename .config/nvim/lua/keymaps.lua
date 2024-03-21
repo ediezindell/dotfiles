@@ -1,40 +1,34 @@
-local opts = { noremap = true, silent = true }
-local term_opts = { silent = true }
-local keymap = vim.api.nvim_set_keymap
+local keymap = function(mode, lhs, rhs)
+  local opts = { noremap = true, silent = true }
+  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+end
+local normalKeymap = function(lhs, rhs)
+  keymap("n", lhs, rhs)
+end
 
 -- 簡易Window移動
-keymap("n", "<C-h>", "<C-w>h", opts)
-keymap("n", "<C-j>", "<C-w>j", opts)
-keymap("n", "<C-k>", "<C-w>k", opts)
-keymap("n", "<C-l>", "<C-w>l", opts)
+normalKeymap("<C-h>", "<C-w>h")
+normalKeymap("<C-j>", "<C-w>j")
+normalKeymap("<C-k>", "<C-w>k")
+normalKeymap("<C-l>", "<C-w>l")
 
 -- Esc2回でハイライト解除
-keymap("n", "<Esc><Esc>", ":<C-u>set nohlsearch<CR>", opts)
+normalKeymap("<Esc><Esc>", ":<C-u>set nohlsearch<CR>")
 
 -- split view
-keymap("n", "<leader>ss", ":split<CR>", opts)  -- 上下
-keymap("n", "<leader>sv", ":vsplit<CR>", opts) -- 左右
+normalKeymap("<leader>ss", ":split<CR>") -- 上下
+normalKeymap("<leader>sv", ":vsplit<CR>") -- 左右
 
 -- yank from cursor to end of line
-keymap("n", "Y", "y$", opts)
+normalKeymap("Y", "y$")
 
 -- donot yank
-keymap("n", "x", '"_x', opts)
-keymap("n", "X", '"_X', opts)
-keymap("n", "s", '"_s', opts)
-
-
--- nvim-tree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
-
--- terminal
-keymap("n", "<leader>t", ":ToggleTerm<CR>", term_opts)
-
--- diffview
-keymap("n", "<leader>gd", ":DiffviewOpen<CR>", opts)
+normalKeymap("x", '"_x')
+normalKeymap("X", '"_X')
+normalKeymap("s", '"_s')
 
 -- disable arrow keys
-vim.keymap.set({ "n", "v" }, "<Up>", "", {})
-vim.keymap.set({ "n", "v" }, "<Down>", "", {})
-vim.keymap.set({ "n", "v" }, "<Left>", "", {})
-vim.keymap.set({ "n", "v" }, "<Right>", "", {})
+local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
+for _, key in pairs(arrowKeys) do
+  vim.keymap.set({ "n", "v" }, key, "", {})
+end
