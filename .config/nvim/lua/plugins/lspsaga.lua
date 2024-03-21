@@ -7,15 +7,19 @@ return {
   config = function()
     local saga = require("lspsaga")
     saga.init_lsp_saga({
+      -- 記号の再設定
       error_sign = "",
       warn_sign = "",
       hint_sign = "󰌵",
       infor_sign = "",
+
+      -- LSPとファイル種別の対応
       server_filetype_map = {
         typescript = "typescript",
       },
     })
 
+    -- keymap
     local opts = { noremap = true, silent = true }
     vim.keymap.set("n", "<C-j>", "<Cmd>Lspsaga diagnostic_jump_next<CR>", opts)
     vim.keymap.set("n", "K", "<Cmd>Lspsaga hover_doc<CR>", opts)
@@ -24,6 +28,7 @@ return {
     vim.keymap.set("n", "gp", "<Cmd>Lspsaga preview_definition<CR>", opts)
     vim.keymap.set("n", "gr", "<Cmd>Lspsaga rename<CR>", opts)
 
+    -- 見た目の設定
     local floatConfig = {
       focusable = true,
       style = "minimal",

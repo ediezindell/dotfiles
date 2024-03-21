@@ -1,5 +1,5 @@
 return {
-  -- Option + j/k で移動
+  -- Option + j/k でカーソルを移動
   {
     "echasnovski/mini.move",
     version = false,

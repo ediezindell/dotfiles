@@ -3,7 +3,10 @@ return {
   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   build = "cd app && yarn install",
   init = function()
-    vim.g.mkdp_filetypes = { "markdown" }
+    -- ファイルタイプを指定
+    vim.g.mkdp_filetypes = {
+      "markdown",
+    }
   end,
-  ft = { "markdown" },
+  ft = { "markdown" }, -- markdownファイルを開いた場合のみ読み込み
 }

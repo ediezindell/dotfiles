@@ -9,6 +9,7 @@ return {
     local lspconfig = require("lspconfig")
     local masonLspconfig = require("mason-lspconfig")
     masonLspconfig.setup({
+      -- 自動インストールするLSP
       ensure_installed = {
         "jsonls",
         "lua_ls",
@@ -26,13 +27,14 @@ return {
         lspconfig[server_name].setup({})
       end,
       ["lua_ls"] = function()
-        lspconfig.lua_ls.setup(require("lsp.lua"))
+        lspconfig.lua_ls.setup(require("lsp.lua")) -- 外部設定ファイルの読み込み
       end,
       ["intelephense"] = function()
-        lspconfig.intelephense.setup(require("lsp.php"))
+        lspconfig.intelephense.setup(require("lsp.php")) -- 外部設定ファイルの読み込み
       end,
     })
 
+    -- keymap
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(_)
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")

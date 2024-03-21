@@ -4,8 +4,8 @@ return {
   -- event = "VimEnter",
   config = function()
     require("gitsigns").setup({
-      numhl = true,
-      linehl = true,
+      numhl = true, -- 行数表示ハイライト
+      linehl = true, -- 行全体ハイライト
       -- word_diff = true,
     })
   end,

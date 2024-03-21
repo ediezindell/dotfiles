@@ -4,6 +4,7 @@ return {
   config = function()
     require("hlslens").setup()
 
+    -- keymap
     local opts = { noremap = true, silent = true }
 
     vim.api.nvim_set_keymap(

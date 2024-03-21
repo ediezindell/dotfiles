@@ -4,6 +4,7 @@ return {
   -- event = "VimEnter",
   config = function()
     require("nvim-web-devicons").setup({
+      -- アイコンの上書き
       override_by_extension = {
         ["zsh"] = {
           icon = "",
