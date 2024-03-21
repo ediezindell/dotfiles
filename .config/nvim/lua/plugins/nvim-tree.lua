@@ -1,14 +1,4 @@
 -- file tree
-vim.cmd([[
-    :hi      NvimTreeExecFile    guifg=#ffa0a0
-    :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
-    :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
-    :hi link NvimTreeImageFile   Title
-]])
-
-vim.api.nvim_set_var("loaded_netrw", 1)
-vim.api.nvim_set_var("loaded_netrwPlugin", 1)
-vim.api.nvim_set_var("termguicolors", true)
 
 return {
   "nvim-tree/nvim-tree.lua",
@@ -69,6 +59,19 @@ return {
       -- on_attach = 'default'
     })
 
+    -- コマンド設定
+    vim.cmd([[
+      :hi      NvimTreeExecFile    guifg=#ffa0a0
+      :hi      NvimTreeSpecialFile guifg=#ff80ff gui=underline
+      :hi      NvimTreeSymlink     guifg=Yellow  gui=italic
+      :hi link NvimTreeImageFile   Title
+    ]])
+
+    vim.api.nvim_set_var("loaded_netrw", 1)
+    vim.api.nvim_set_var("loaded_netrwPlugin", 1)
+    vim.api.nvim_set_var("termguicolors", true)
+
+    -- keymap
     local opts = { noremap = true, silent = true }
     vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
   end,
