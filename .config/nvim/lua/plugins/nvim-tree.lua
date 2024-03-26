@@ -9,9 +9,9 @@ return {
   -- event = "VimEnter",
   config = function()
     require("nvim-tree").setup({
-      sort_by = "case_sensitive",
+      sort_by = "case_sensitive", -- 大文字と小文字を区別してソート
       sort = {
-        folders_first = true,
+        folders_first = true,     -- フォルダを先頭に表示
       },
       update_focused_file = {
         enable = true,
@@ -19,8 +19,9 @@ return {
       },
       view = {
         adaptive_size = true,
+        -- 行番号表示
         -- number = true,
-        --
+        -- 重ねて表示
         -- float = {
         --   enable = true,
         -- },
