@@ -10,14 +10,18 @@ return {
   },
   config = function()
     local telescope = require("telescope")
+    local actions = require("telescope.actions")
 
     telescope.setup({
       defaults = {
         mappings = {
           i = {
             ["<C-h>"] = "which_key",
+            ["<esc>"] = actions.close,
           },
+          n = { ["q"] = actions.close },
         },
+        layout_strategy = "vertical",
         winblend = 20,
       },
     })
