@@ -30,6 +30,7 @@ local options = {
   hlsearch = true,           -- 検索ハイライト
   showcmd = true,            -- 入力中のコマンドを表示
   helplang = { "ja", "en" }, -- ドキュメントの言語の優先度を設定
+  hidden = true,             -- バッファ切替時に保存していない時のアラートを非表示
 }
 
 for k, v in pairs(options) do

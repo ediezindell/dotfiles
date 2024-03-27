@@ -27,6 +27,10 @@ normalKeymap("x", '"_x')
 normalKeymap("X", '"_X')
 normalKeymap("s", '"_s')
 
+-- buffer
+normalKeymap("<M-h>", ":bprev<CR>")
+normalKeymap("<M-l>", ":bnext<CR>")
+
 -- disable arrow keys
 local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
 for _, key in pairs(arrowKeys) do
