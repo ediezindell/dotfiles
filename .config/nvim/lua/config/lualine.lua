@@ -25,7 +25,7 @@ require("lualine").setup({
     lualine_c = {
       {
         "buffers",
-        mode = 4,
+        mode = 4, -- Shows buffer name + buffer number
         show_filename_only = false,
         use_mode_colors = true,
       },
