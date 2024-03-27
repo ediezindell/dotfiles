@@ -11,7 +11,7 @@ return {
       indent = {
         enable = true,
       },
-      ensure_installed = "maintained",
+      ensure_installed = "all",
     })
   end,
 }
