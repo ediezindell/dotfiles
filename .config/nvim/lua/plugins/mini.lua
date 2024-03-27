@@ -1,4 +1,10 @@
 return {
+  -- クオートや括弧編集
+  {
+    "echasnovski/mini.surround",
+    version = false,
+    config = true,
+  },
   -- Option + j/k でカーソルを移動
   {
     "echasnovski/mini.move",
