@@ -2,11 +2,15 @@ return {
   "Shougo/ddu.vim",
   dependencies = {
     "vim-denops/denops.vim",
+    "Shougo/ddu-ui-ff",
+    "Shougo/ddu-ui-filer",
+    "ryota2357/ddu-column-icon_filename",
+    "Shougo/ddu-commands.vim",
     ------------------------------
     -- | filter                   |
     ------------------------------
-    "Shougo/ddu-filter-matcher_substring",
     "uga-rosa/ddu-filter-converter_devicon", -- icon
+    "yuki-yano/ddu-filter-fzf",
     ------------------------------
     -- | kinds                    |
     ------------------------------
@@ -15,14 +19,21 @@ return {
     ------------------------------
     -- | source                   |
     ------------------------------
+    "Shougo/ddu-source-file",
     "Shougo/ddu-source-file_rec",
-    "4513ECHO/ddu-source-colorscheme", -- color scheme
+    "shun/ddu-source-rg",
+    "shun/ddu-source-buffer",
+    "Shougo/ddu-source-line",
+    "Shougo/ddu-source-register",
     ------------------------------
     -- | ui                       |
     ------------------------------
     "Shougo/ddu-ui-ff", -- fuzzy_finder(あいまい検索)
   },
   config = function()
+    ------------------------------
+    -- | global                   |
+    ------------------------------
     vim.fn["ddu#custom#patch_global"]({
       ui = "ff",
       uiParams = {
@@ -37,14 +48,26 @@ return {
           prompt = "> ",
           split = "floating",
           startFilter = true,
+          startAutoAction = true,
+          autoAction = { name = "preview", delay = 0 },
         },
       },
       sourceOptions = {
         _ = {
-          matchers = {
-            "matcher_substring",
-          },
+          matchers = { "matcher_fzf" },
+          sorters = { "sorter_fzf" },
           ignoreCase = true,
+        },
+        file = {
+          columns = { "icon_filename" },
+        },
+        line = {
+          sorters = {},
+        },
+      },
+      filterParams = {
+        matcher_fzf = {
+          highlightMatched = "Search",
         },
       },
       kindOptions = {
@@ -55,51 +78,69 @@ return {
           defaultAction = "append",
         },
       },
+      actionOptions = {
+        narrow = {
+          quit = true,
+        },
+      },
     })
+
+    ------------------------------
+    -- | local                    |
+    ------------------------------
     vim.fn["ddu#custom#patch_local"]("file_rec", {
       sources = {
         {
-          name = { "file_rec" },
-          options = {
-            converters = {
-              "converter_devicon",
-            },
-          },
+          name = "file_rec",
           params = {
             ignoredDirectories = { "node_modules", ".git", ".vscode" },
           },
         },
       },
     })
-
-    vim.fn["ddu#custom#patch_local"]("colorscheme", {
-      ui = "ff",
+    vim.fn["ddu#custom#patch_local"]("filer", {
+      ui = "filer",
       sources = {
-        {
-          name = { "colorscheme" },
+        { name = "file", params = {} },
+      },
+      resume = true,
+    })
+    vim.fn["ddu#custom#patch_local"]("grep", {
+      sourceParams = {
+        rg = {
+          args = {
+            "--column",
+            "--no-heading",
+            "--color",
+            "never",
+            "-i",
+          },
         },
       },
-      kindOptions = {
-        colorscheme = {
-          defaultAction = "set",
+      uiParams = {
+        ff = {
+          startFilter = false,
         },
       },
+      resume = true,
     })
 
+    ------------------------------
+    -- | autocmd                  |
+    ------------------------------
+    local opts = { noremap = true, silent = true, buffer = true }
+    vim.keymap.set({ "n" }, "<leader>fd", [[<Cmd>call ddu#start(#{name:"file_rec"})<CR>]], opts)
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "ddu-ff",
       callback = function()
-        local opts = { noremap = true, silent = true, buffer = true }
         vim.keymap.set({ "n" }, "q", [[<Cmd>call ddu#ui#do_action("quit")<CR>]], opts)
-        vim.keymap.set({ "n" }, "<Cr>", [[<Cmd>call ddu#ui#do_action("itemAction")<CR>]], opts)
+        vim.keymap.set({ "n" }, "<CR>", [[<Cmd>call ddu#ui#do_action("itemAction")<CR>]], opts)
         vim.keymap.set({ "n" }, "i", [[<Cmd>call ddu#ui#do_action("openFilterWindow")<CR>]], opts)
-        vim.keymap.set({ "n" }, "P", [[<Cmd>call ddu#ui#do_action("togglePreview")<CR>]], opts)
       end,
     })
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "ddu-ff-filter",
       callback = function()
-        local opts = { noremap = true, silent = true, buffer = true }
         vim.keymap.set({ "n", "i" }, "<CR>", [[<Esc><Cmd>close<CR>]], opts)
       end,
     })
