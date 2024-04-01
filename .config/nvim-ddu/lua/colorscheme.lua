@@ -1,13 +1,17 @@
-vim.cmd([[colorscheme monokai]])
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
+  callback = function()
+    -- italicにしないようguiを再設定
+    local italicGroup = {
+      "@function",
+      "@keyword",
+      "@include",
+      "@specialComment",
+      "@comment",
+    }
+    for _, group in ipairs(italicGroup) do
+      vim.cmd("hi " .. group .. " gui=NONE")
+    end
+  end,
+})
 
--- italicにしないようhi guiを再設定
-local italicTypes = {
-  "Function",
-  "Keyword",
-  "Include",
-  "SpecialComment",
-  "Comment",
-}
-for _, type in pairs(italicTypes) do
-  vim.cmd("hi " .. type .. " gui=NONE")
-end
+vim.cmd([[colorscheme monokai]])
