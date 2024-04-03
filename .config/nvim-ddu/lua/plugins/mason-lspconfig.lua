@@ -4,7 +4,7 @@ return {
     { "williamboman/mason.nvim" },
     { "neovim/nvim-lspconfig" },
   },
-  -- event = "VimEnter",
+  event = "VimEnter",
   config = function()
     local lspconfig = require("lspconfig")
     local masonLspconfig = require("mason-lspconfig")

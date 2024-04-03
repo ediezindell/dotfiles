@@ -1,7 +1,7 @@
 return {
   "nvimtools/none-ls.nvim",
   dependencies = { "nvim-lua/plenary.nvim", "vim-test/vim-test" },
-  -- event = "VimEnter",
+  event = "VimEnter",
   config = function()
     local null_ls = require("null-ls")
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

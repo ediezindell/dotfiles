@@ -2,7 +2,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   tag = "0.1.5",
-  -- event = "VimEnter",
+  event = "VimEnter",
   requires = {
     "nvim-tree/nvim-web-devicons",
     "nvim-lua/plenary.nvim",
@@ -19,13 +19,15 @@ return {
             ["<C-h>"] = "which_key",
             ["<esc>"] = actions.close,
           },
-          n = { ["q"] = actions.close },
+          n = {
+            ["<esc>"] = actions.close,
+            ["q"] = actions.close,
+          },
         },
         layout_strategy = "vertical",
         winblend = 20,
       },
     })
-    -- telescope.load_extension("fzf")
 
     local builtin = require("telescope.builtin")
 

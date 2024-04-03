@@ -1,6 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  -- event = "VimEnter",
+  event = "VimEnter",
   config = function()
     require("lspconfig")
   end,

@@ -2,7 +2,7 @@
 return {
   "stevearc/oil.nvim",
   opts = {},
-  -- Optional dependencies
+  event = "BufEnter",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     require("oil").setup({

@@ -1,5 +1,6 @@
 return {
   "dinhhuy258/git.nvim",
+  event = "VimEnter",
   config = function()
     require("git").setup({
       keymaps = {

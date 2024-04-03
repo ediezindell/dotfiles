@@ -1,9 +1,10 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   main = "ibl",
-  requires = {
+  dependencies = {
     "nvim-treesitter/nvim-treesitter",
   },
+  event = "BufEnter",
   config = function()
     local highlight = {
       "RainbowRed",

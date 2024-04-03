@@ -1,17 +1,21 @@
 -- file tree
 
+-- netrwの無効化
+vim.api.nvim_set_var("loaded_netrw", 1)
+vim.api.nvim_set_var("loaded_netrwPlugin", 1)
+
 return {
   "nvim-tree/nvim-tree.lua",
   requires = {
     "nvim-tree/nvim-web-devicons",
     "nvim-telescope/telescope.nvim",
   },
-  -- event = "VimEnter",
+  lazy = false,
   config = function()
     require("nvim-tree").setup({
       sort_by = "case_sensitive", -- 大文字と小文字を区別してソート
       sort = {
-        folders_first = true,     -- フォルダを先頭に表示
+        folders_first = true, -- フォルダを先頭に表示
       },
       update_focused_file = {
         enable = true,
