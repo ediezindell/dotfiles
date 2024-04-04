@@ -3,7 +3,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
+    "Shougo/ddc-source-lsp",
   },
   lazy = false,
   config = function()
@@ -16,7 +16,7 @@ return {
     masonLspconfig.setup_handlers({
       function(server_name)
         local opts = {
-          capabilities = require("cmp_nvim_lsp").default_capabilities(),
+          capabilities = require("ddc_source_lsp").make_client_capabilities(),
         }
         lspconfig[server_name].setup(opts)
       end,
