@@ -1,3 +1,4 @@
+-- gbでblame, goでGitHubを開く
 return {
   "dinhhuy258/git.nvim",
   event = "VimEnter",

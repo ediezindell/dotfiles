@@ -16,7 +16,7 @@ normalKeymap("<C-l>", "<C-w>l")
 normalKeymap("<Esc><Esc>", ":<C-u>set nohlsearch<CR>")
 
 -- split view
-normalKeymap("<leader>ss", ":split<CR>") -- 上下
+normalKeymap("<leader>ss", ":split<CR>")  -- 上下
 normalKeymap("<leader>sv", ":vsplit<CR>") -- 左右
 
 -- yank from cursor to end of line
