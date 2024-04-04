@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme", "LspAttach" }, {
       "@include",
       "@specialComment",
       "@comment",
+      "Comment",
     }
     for _, group in ipairs(italicGroup) do
       vim.cmd("hi " .. group .. " gui=NONE")
