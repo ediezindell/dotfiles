@@ -1,9 +1,10 @@
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd({ "ColorScheme", "LspAttach" }, {
   callback = function()
     -- italicにしないようguiを再設定
     local italicGroup = {
       "@keyword.function",
       "@keyword",
+      "@function",
       "@include",
       "@specialComment",
       "@comment",
