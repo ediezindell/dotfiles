@@ -33,6 +33,6 @@ normalKeymap("<M-l>", ":bnext<CR>")
 
 -- disable arrow keys
 local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
-for _, key in pairs(arrowKeys) do
+for _, key in ipairs(arrowKeys) do
   vim.keymap.set({ "n", "v" }, key, "", {})
 end
