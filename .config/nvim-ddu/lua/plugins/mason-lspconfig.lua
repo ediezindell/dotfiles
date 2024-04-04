@@ -11,17 +11,7 @@ return {
     local masonLspconfig = require("mason-lspconfig")
     masonLspconfig.setup({
       -- 自動インストールするLSP
-      ensure_installed = {
-        "jsonls",
-        "lua_ls",
-        "dockerls",
-        "docker_compose_language_service",
-        "cssls",
-        "html",
-        "tsserver",
-        "tailwindcss",
-        "intelephense",
-      },
+      ensure_installed = require("lsp.list"),
     })
     masonLspconfig.setup_handlers({
       function(server_name)
