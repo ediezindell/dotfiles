@@ -1,6 +1,5 @@
 return {
   "Shougo/ddc.vim",
-  -- event = "VimEnter",
   lazy = false,
   dependencies = {
     "vim-denops/denops.vim",
@@ -17,7 +16,7 @@ return {
     -- | source                  |
     ------------------------------
     "Shougo/ddc-source-around",
-    "Shougo/ddc-source-nvim-lsp",
+    "Shougo/ddc-source-lsp",
     "LumaKernel/ddc-source-file",
     ------------------------------
     -- | ui                      |
@@ -25,28 +24,40 @@ return {
     "Shougo/ddc-ui-native", -- nvim本体の補完機能を利用
   },
   config = function()
-    vim.fn["ddc#custom#patch_global"]("ui", "native")
-    vim.fn["ddc#custom#patch_global"]("sources", {
-      "nvim-lsp",
-      "file",
-      "around",
-    })
-    vim.fn["ddc#custom#patch_global"]("sourceOptions", {
-      ["nvim-lsp"] = {
-        mark = "lsp",
-        forceCompletionPattern = "\\.\\w*|::\\w*|->\\w*",
-        -- dup = "force",
+    vim.fn["ddc#custom#patch_global"]({
+      ui = "native",
+      sources = {
+        "lsp",
+        "around",
+        "file",
       },
-      file = {
-        mark = "F",
-        isVolatile = true,
-        forceCompletionPattern = "\\S/\\S*",
+      sourceOptions = {
+        lsp = {
+          mark = "lsp",
+          forceCompletionPattern = "\\.\\w*|::\\w*|->\\w*",
+        },
+        file = {
+          mark = "F",
+          isVolatile = true,
+          forceCompletionPattern = "\\S/\\S*",
+        },
+        around = { mark = "A" },
+        _ = {
+          matchers = { "matcher_fuzzy" },
+          sorters = { "sorter_fuzzy" },
+          converters = { "converter_fuzzy" },
+        },
       },
-      around = { mark = "A" },
-      _ = {
-        matchers = { "matcher_fuzzy" },
-        sorters = { "sorter_fuzzy" },
-        converters = { "converter_fuzzy" },
+      sourceParams = {
+        lsp = {
+          snippetEngine = vim.fn["denops#callback#register"]({
+            function(body)
+              return vim.fn["vsnip#anonymous"](body)
+            end,
+          }),
+          enableResolveItem = true,
+          enableAdditionalTextEdit = true,
+        },
       },
     })
     vim.fn["ddc#enable"]()
