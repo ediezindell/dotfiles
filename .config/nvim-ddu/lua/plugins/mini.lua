@@ -166,6 +166,6 @@ return {
         end,
       })
     end,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
 }

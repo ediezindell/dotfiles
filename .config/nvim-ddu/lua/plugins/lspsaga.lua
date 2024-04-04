@@ -4,7 +4,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     "nvim-tree/nvim-web-devicons",
   },
-  event = "VimEnter",
+  lazy = false,
   config = function()
     local saga = require("lspsaga")
     saga.init_lsp_saga({

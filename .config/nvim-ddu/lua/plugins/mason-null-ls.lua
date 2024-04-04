@@ -1,9 +1,6 @@
 return {
   "jay-babu/mason-null-ls.nvim",
-  event = {
-    "BufReadPre",
-    "BufNewFile"
-  },
+  lazy = false,
   dependencies = {
     "williamboman/mason.nvim",
     "nvimtools/none-ls.nvim",
