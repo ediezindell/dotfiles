@@ -56,14 +56,14 @@ return {
       require("mini.cursorword").setup({
         delay = 10,
       })
-      vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-          local options = { fg = "lightgray", bg = "darkcyan" }
-          vim.api.nvim_set_hl(0, "MiniCursorword", options)
-          vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", options)
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("BufEnter", {
+      --   pattern = "*",
+      --   callback = function()
+      --     local options = { fg = "lightgray", bg = "darkcyan" }
+      --     vim.api.nvim_set_hl(0, "MiniCursorword", options)
+      --     vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", options)
+      --   end,
+      -- })
     end,
     event = "BufEnter",
   },
