@@ -1,8 +1,9 @@
 return {
   "williamboman/mason-lspconfig.nvim",
   dependencies = {
-    { "williamboman/mason.nvim" },
-    { "neovim/nvim-lspconfig" },
+    "williamboman/mason.nvim",
+    "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-nvim-lsp",
   },
   lazy = false,
   config = function()
@@ -24,7 +25,10 @@ return {
     })
     masonLspconfig.setup_handlers({
       function(server_name)
-        lspconfig[server_name].setup({})
+        local opts = {
+          capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        }
+        lspconfig[server_name].setup(opts)
       end,
       ["lua_ls"] = function()
         lspconfig.lua_ls.setup(require("lsp.lua")) -- 外部設定ファイルの読み込み

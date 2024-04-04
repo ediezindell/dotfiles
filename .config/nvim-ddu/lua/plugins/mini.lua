@@ -67,13 +67,13 @@ return {
     end,
     event = "BufEnter",
   },
-  {
-    -- 補完
-    "echasnovski/mini.completion",
-    version = false,
-    config = true,
-    event = "BufEnter",
-  },
+  -- {
+  --   -- 補完
+  --   "echasnovski/mini.completion",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
   {
     -- Neovimアクションのアニメーション
     "echasnovski/mini.animate",
