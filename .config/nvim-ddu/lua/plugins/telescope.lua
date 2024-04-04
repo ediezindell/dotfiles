@@ -16,11 +16,11 @@ return {
       defaults = {
         mappings = {
           i = {
-            ["<C-h>"] = "which_key",
             ["<esc>"] = actions.close,
           },
           n = {
             ["<esc>"] = actions.close,
+            [":"] = actions.close,
             ["q"] = actions.close,
           },
         },
