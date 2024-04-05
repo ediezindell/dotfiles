@@ -9,10 +9,6 @@ return {
     "MasonLog",
     "MasonUpdate",
   },
-  requires = {
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
-  },
   config = function()
     require("mason").setup({
       ui = {
