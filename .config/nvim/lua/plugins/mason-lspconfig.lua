@@ -3,7 +3,6 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "neovim/nvim-lspconfig",
-    "Shougo/ddc-source-lsp",
     "uga-rosa/ddc-source-lsp-setup",
   },
   lazy = false,
@@ -11,7 +10,6 @@ return {
     local lspconfig = require("lspconfig")
     local masonLspconfig = require("mason-lspconfig")
     masonLspconfig.setup({
-      -- 自動インストールするLSP
       ensure_installed = require("lsp.list"),
     })
     masonLspconfig.setup_handlers({
@@ -20,14 +18,13 @@ return {
         lspconfig[server_name].setup({})
       end,
       lua_ls = function()
-        lspconfig.lua_ls.setup(require("lsp.lua")) -- 外部設定ファイルの読み込み
+        lspconfig.lua_ls.setup(require("lsp.lua"))
       end,
       intelephense = function()
-        lspconfig.intelephense.setup(require("lsp.php")) -- 外部設定ファイルの読み込み
+        lspconfig.intelephense.setup(require("lsp.php"))
       end,
     })
 
-    -- keymap
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(_)
         vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
