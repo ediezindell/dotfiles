@@ -24,7 +24,9 @@ return {
     "Shougo/ddc-ui-native", -- nvim本体の補完機能を利用
   },
   config = function()
-    vim.fn["ddc#custom#patch_global"]({
+    local vimx = require("artemis")
+
+    vimx.fn.ddc.custom.patch_global({
       ui = "native",
       sources = {
         "lsp",
@@ -32,34 +34,37 @@ return {
         "file",
       },
       sourceOptions = {
-        lsp = {
-          mark = "lsp",
-          forceCompletionPattern = "\\.\\w*|::\\w*|->\\w*",
-        },
-        file = {
-          mark = "F",
-          isVolatile = true,
-          forceCompletionPattern = "\\S/\\S*",
-        },
-        around = { mark = "A" },
         _ = {
           matchers = { "matcher_fuzzy" },
           sorters = { "sorter_fuzzy" },
           converters = { "converter_fuzzy" },
         },
+        lsp = {
+          mark = "[LSP]",
+          dup = "keep",
+          keywordPattern = { [["\k+"]] },
+          sorters = { "sorter_lsp-kind" },
+        },
+        around = { mark = "A" },
+        file = {
+          mark = "F",
+          isVolatile = true,
+        },
       },
       sourceParams = {
         lsp = {
-          snippetEngine = vim.fn["denops#callback#register"]({
-            function(body)
-              return vim.fn["vsnip#anonymous"](body)
-            end,
-          }),
+          snippetEngine = vim.fn["denops#callback#register"](function(body)
+            vim.fn["vsnip#anonymous"](body)
+          end),
           enableResolveItem = true,
           enableAdditionalTextEdit = true,
+          confirmBehavior = "insert",
         },
       },
     })
-    vim.fn["ddc#enable"]()
+
+    vimx.fn.ddc.enable()
+
+    -- keymap
   end,
 }

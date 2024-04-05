@@ -4,6 +4,7 @@ return {
     "williamboman/mason.nvim",
     "neovim/nvim-lspconfig",
     "Shougo/ddc-source-lsp",
+    "uga-rosa/ddc-source-lsp-setup",
   },
   lazy = false,
   config = function()
@@ -15,10 +16,8 @@ return {
     })
     masonLspconfig.setup_handlers({
       function(server_name)
-        local opts = {
-          capabilities = require("ddc_source_lsp").make_client_capabilities(),
-        }
-        lspconfig[server_name].setup(opts)
+        require("ddc_source_lsp_setup").setup()
+        lspconfig[server_name].setup({})
       end,
       ["lua_ls"] = function()
         lspconfig.lua_ls.setup(require("lsp.lua")) -- 外部設定ファイルの読み込み
