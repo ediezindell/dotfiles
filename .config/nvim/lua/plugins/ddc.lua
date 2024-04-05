@@ -1,6 +1,6 @@
 return {
   "Shougo/ddc.vim",
-  lazy = false,
+  event = "VimEnter",
   dependencies = {
     "vim-denops/denops.vim",
     "tani/ddc-fuzzy",
@@ -28,6 +28,13 @@ return {
 
     vimx.fn.ddc.custom.patch_global({
       ui = "native",
+      autoCompleteEvents = {
+        "InsertEnter",
+        "TextChangedI",
+        "CmdlineEnter",
+        "CmdlineChanged",
+      },
+      backspaceCompletion = true,
       sources = {
         "lsp",
         "around",
@@ -35,15 +42,20 @@ return {
       },
       sourceOptions = {
         _ = {
+          minAutoCompleteLength = 1,
+          keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
           matchers = { "matcher_fuzzy" },
           sorters = { "sorter_fuzzy" },
           converters = { "converter_fuzzy" },
+          ignoreCase = true,
+          timeout = 500,
         },
         lsp = {
           mark = "[LSP]",
-          dup = "keep",
-          keywordPattern = { [["\k+"]] },
+          matchers = { "matcher_head" },
           sorters = { "sorter_lsp-kind" },
+          forceCompletionPattern = [['\.\w*|:\w*|->\w*']],
+          dup = "keep",
         },
         around = { mark = "A" },
         file = {
@@ -53,12 +65,12 @@ return {
       },
       sourceParams = {
         lsp = {
-          snippetEngine = vim.fn["denops#callback#register"](function(body)
-            vim.fn["vsnip#anonymous"](body)
-          end),
           enableResolveItem = true,
           enableAdditionalTextEdit = true,
-          confirmBehavior = "insert",
+          confirmBehavior = "replace",
+          kindLabels = {
+            class = "c",
+          },
         },
       },
     })
