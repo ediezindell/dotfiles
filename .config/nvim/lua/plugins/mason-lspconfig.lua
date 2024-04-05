@@ -19,10 +19,10 @@ return {
         require("ddc_source_lsp_setup").setup()
         lspconfig[server_name].setup({})
       end,
-      ["lua_ls"] = function()
+      lua_ls = function()
         lspconfig.lua_ls.setup(require("lsp.lua")) -- 外部設定ファイルの読み込み
       end,
-      ["intelephense"] = function()
+      intelephense = function()
         lspconfig.intelephense.setup(require("lsp.php")) -- 外部設定ファイルの読み込み
       end,
     })
