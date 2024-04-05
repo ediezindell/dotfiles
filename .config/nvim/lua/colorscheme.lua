@@ -4,9 +4,13 @@ vim.api.nvim_create_autocmd({ "ColorScheme", "LspAttach" }, {
     local italicGroup = {
       "@keyword.function",
       "@keyword",
+      "Keyword",
       "@function",
+      "Function",
       "@include",
+      "Include",
       "@specialComment",
+      "SpecialComment",
       "@comment",
       "Comment",
     }
