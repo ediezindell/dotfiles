@@ -4,7 +4,7 @@ return {
   dependencies = {
     "nvim-treesitter/nvim-treesitter",
   },
-  event = "BufEnter",
+  -- event = "BufEnter",
   config = function()
     local highlight = {
       "RainbowRed",

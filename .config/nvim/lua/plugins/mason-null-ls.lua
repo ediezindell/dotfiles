@@ -1,6 +1,6 @@
 return {
   "jay-babu/mason-null-ls.nvim",
-  lazy = false,
+  -- lazy = false,
   dependencies = {
     "williamboman/mason.nvim",
     "nvimtools/none-ls.nvim",

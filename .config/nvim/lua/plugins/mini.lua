@@ -4,35 +4,35 @@ return {
     "echasnovski/mini.surround",
     version = false,
     config = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   -- Option + j/k でカーソルを移動
   {
     "echasnovski/mini.move",
     version = false,
     config = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   -- fの強化
   {
     "echasnovski/mini.jump",
     version = false,
     config = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   -- gSで引数を1行にまとめたり複数行に展開したり
   {
     "echasnovski/mini.splitjoin",
     version = false,
     config = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   -- start page
   {
     "echasnovski/mini.starter",
     version = false,
     config = true,
-    event = "VimEnter",
+    -- event = "VimEnter",
   },
   -- autoclose
   -- {
@@ -46,7 +46,7 @@ return {
     "echasnovski/mini.comment",
     version = false,
     config = true,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   {
     -- カーソル上の単語ハイライト
@@ -65,7 +65,7 @@ return {
       --   end,
       -- })
     end,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   -- {
   --   -- 補完
@@ -79,7 +79,7 @@ return {
     "echasnovski/mini.animate",
     version = false,
     config = true,
-    event = "VimEnter",
+    -- event = "VimEnter",
   },
   {
     -- 括弧間移動
@@ -103,7 +103,7 @@ return {
         yank = { suffix = "y", options = {} },
       })
     end,
-    event = "BufEnter",
+    -- event = "BufEnter",
   },
   {
     -- インデント表示

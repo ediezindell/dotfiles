@@ -3,5 +3,5 @@ return {
   opts = {
     -- options
   },
-  event = { "BufEnter", "BufNewFile" },
+  -- event = { "BufEnter", "BufNewFile" },
 }

@@ -1,7 +1,7 @@
 -- display git status
 return {
   "lewis6991/gitsigns.nvim",
-  event = "BufEnter",
+  -- event = "BufEnter",
   config = function()
     require("gitsigns").setup({
       numhl = true, -- 行数表示ハイライト

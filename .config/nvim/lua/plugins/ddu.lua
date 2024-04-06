@@ -39,14 +39,14 @@ return {
       ui = "ff",
       uiParams = {
         ff = {
-          floatingBorder = "rounded",        -- フローティングウィンドウのborder設定
+          floatingBorder = "rounded", -- フローティングウィンドウのborder設定
           filterFloatingPosition = "bottom",
           filterSplitDirection = "floating", -- フィルターをフローティングウィンドウで表示
           previewFloating = true,
           previewFloatingBorder = "rounded",
           previewFloatingTitle = "Preview",
           previewSplit = "horizontal",
-          prompt = "> ",      -- フィルター入力欄の表示
+          prompt = "> ", -- フィルター入力欄の表示
           split = "floating", -- フローティングウィンドウで表示する
           startFilter = true, -- 自動的にフィルターも表示する
           startAutoAction = true,

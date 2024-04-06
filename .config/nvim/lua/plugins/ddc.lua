@@ -1,6 +1,6 @@
 return {
   "Shougo/ddc.vim",
-  event = "VimEnter",
+  -- event = "VimEnter",
   dependencies = {
     "vim-denops/denops.vim",
     "tani/ddc-fuzzy",

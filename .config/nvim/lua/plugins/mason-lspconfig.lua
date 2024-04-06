@@ -5,7 +5,7 @@ return {
     "neovim/nvim-lspconfig",
     "uga-rosa/ddc-source-lsp-setup",
   },
-  lazy = false,
+  -- lazy = false,
   config = function()
     local lspconfig = require("lspconfig")
     local masonLspconfig = require("mason-lspconfig")

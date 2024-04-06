@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local opts = {
   defaults = {
-    lazy = true,
+    -- lazy = true,
   },
 }
 require("lazy").setup("plugins", opts)

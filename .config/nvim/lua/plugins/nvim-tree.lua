@@ -10,7 +10,7 @@ return {
     "nvim-tree/nvim-web-devicons",
     "nvim-telescope/telescope.nvim",
   },
-  lazy = false,
+  -- lazy = false,
   config = function()
     require("nvim-tree").setup({
       sort_by = "case_sensitive", -- 大文字と小文字を区別してソート
