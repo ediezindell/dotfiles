@@ -1,6 +1,7 @@
 {
   "any-jump.vim": { "branch": "master", "commit": "f95674d9a4251ac02f452d5f1861e4422f4652c7" },
   "climbdir.nvim": { "branch": "main", "commit": "dcccc2f17a3014ec456976f10c8ebbe36c1148a9" },
+  "codesnap.nvim": { "branch": "main", "commit": "0217f58e7c92ba181dee03a91c2fd5af9e691241" },
   "ddc-filter-matcher_head": { "branch": "main", "commit": "17b656e38221743290bd0cd26f5b177efe318d77" },
   "ddc-filter-sorter_rank": { "branch": "main", "commit": "8b51a0690d030bc22777549c3944012d42fa02a3" },
   "ddc-fuzzy": { "branch": "main", "commit": "ee205bba8011a941380412a34e47ca67bb5fa41f" },
