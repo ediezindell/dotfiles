@@ -4,19 +4,20 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "nvimtools/none-ls.nvim",
+    "nvimtools/none-ls-extras.nvim",
+    "gbprod/none-ls-shellcheck.nvim",
     "nvim-lua/plenary.nvim",
     "vim-test/vim-test",
   },
   config = function()
-    require("mason").setup()
     local null_ls = require("null-ls")
     local mason_null_ls = require("mason-null-ls")
     mason_null_ls.setup({
       ensure_installed = {
         "prettierd",
-        "biome",
+        -- "biome",
         "stylua",
-        -- "eslint",
+        "eslint_d",
         "shfmt",
         -- "deno",
       },
@@ -34,15 +35,21 @@ return {
       },
     })
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+    local fmt = null_ls.builtins.formatting
+    -- local diag = null_ls.builtins.diagnostics
     null_ls.setup({
       -- 自動インストールするLSP
       sources = {
-        null_ls.builtins.formatting.prettierd,
-        null_ls.builtins.formatting.biome,
-        null_ls.builtins.formatting.stylua,
-        -- null_ls.builtins.formatting.eslint,
-        null_ls.builtins.formatting.shfmt,
-        -- null_ls.builtins.formatting.deno_fmt,
+        fmt.prettierd,
+        -- fmt.biome,
+        fmt.stylua,
+        require("none-ls.diagnostics.eslint_d"),
+        require("none-ls.formatting.eslint_d"),
+        require("none-ls.code_actions.eslint_d"),
+        require("none-ls-shellcheck.diagnostics"),
+        require("none-ls-shellcheck.code_actions"),
+        fmt.shfmt,
+        -- fmt.deno_fmt,
       },
       on_attach = function(client, bufnr)
         -- 保存前フォーマット
@@ -52,7 +59,14 @@ return {
             group = augroup,
             buffer = bufnr,
             callback = function()
-              vim.lsp.buf.format({ bufnr = bufnr })
+              vim.lsp.buf.format({
+                async = false,
+                bufnr = bufnr,
+                filter = function(c)
+                  local disabled_format_clients = { "lua_ls" }
+                  return not vim.tbl_contains(disabled_format_clients, c.name)
+                end,
+              })
             end,
           })
         end

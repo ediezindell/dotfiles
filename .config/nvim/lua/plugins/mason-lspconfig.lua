@@ -3,7 +3,8 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "neovim/nvim-lspconfig",
-    "uga-rosa/ddc-source-lsp-setup",
+    -- "hrsh7th/nvim-cmp",
+    -- "hrsh7th/cmp-nvim-lsp",
   },
   lazy = false,
   config = function()
@@ -14,8 +15,10 @@ return {
     })
     masonLspconfig.setup_handlers({
       function(server_name)
-        require("ddc_source_lsp_setup").setup()
-        lspconfig[server_name].setup({})
+        local capabilities = require("cmp_nvim_lsp").default_capabilities()
+        lspconfig[server_name].setup({
+          capabilities = capabilities,
+        })
       end,
       lua_ls = function()
         lspconfig.lua_ls.setup(require("lsp.lua"))
