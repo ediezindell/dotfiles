@@ -12,31 +12,28 @@ return {
   config = function()
     local null_ls = require("null-ls")
     local mason_null_ls = require("mason-null-ls")
+    local fmt = null_ls.builtins.formatting
+    -- local diag = null_ls.builtins.diagnostics
+
     mason_null_ls.setup({
       ensure_installed = {
         "prettierd",
         -- "biome",
         "stylua",
         "eslint_d",
-        "shfmt",
+        -- "shfmt",
         -- "deno",
       },
       automatic_installation = true, -- 自動インストール有効化
       handlers = {
         function() end,
-        -- Lua
         stylua = function()
-          null_ls.register(null_ls.builtins.formatting.stylua)
-        end,
-        -- shell script
-        shfmt = function(source_name, methods)
-          mason_null_ls.default_setup(source_name, methods)
+          null_ls.register(fmt.stylua)
         end,
       },
     })
+
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-    local fmt = null_ls.builtins.formatting
-    -- local diag = null_ls.builtins.diagnostics
     null_ls.setup({
       -- 自動インストールするLSP
       sources = {
@@ -48,7 +45,7 @@ return {
         require("none-ls.code_actions.eslint_d"),
         require("none-ls-shellcheck.diagnostics"),
         require("none-ls-shellcheck.code_actions"),
-        fmt.shfmt,
+        -- fmt.shfmt,
         -- fmt.deno_fmt,
       },
       on_attach = function(client, bufnr)
@@ -63,7 +60,9 @@ return {
                 async = false,
                 bufnr = bufnr,
                 filter = function(c)
-                  local disabled_format_clients = { "lua_ls" }
+                  local disabled_format_clients = {
+                    "lua_ls",
+                  }
                   return not vim.tbl_contains(disabled_format_clients, c.name)
                 end,
               })
