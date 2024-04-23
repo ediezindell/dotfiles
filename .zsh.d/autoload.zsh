@@ -1,10 +1,5 @@
 # starship
 eval "$(starship init zsh)"
-. "$HOME/.asdf/asdf.sh"
-
-# volta
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
 
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
@@ -18,3 +13,6 @@ export NEOVIM_HOME=$HOME/.local/nvim
 if [ -d "${NEOVIM_HOME}" ]; then
   export PATH="${NEOVIM_HOME}/bin:$PATH"
 fi
+
+# mise
+eval "$(~/.local/bin/mise activate zsh)"
