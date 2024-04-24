@@ -1,47 +1,26 @@
 # Tokyo-Night
-
-# promptのカラーを設定しています、$変数は後述で設定している変数が差し込まれます
 format = """
+[░▒▓](#a3aed2)\
+[  ](bg:#a3aed2 fg:#090c0c)\
+[](bg:#769ff0 fg:#a3aed2)\
 $directory\
-[](fg:#88C0D0 bg:#394260)\
+[](fg:#769ff0 bg:#394260)\
 $git_branch\
 $git_status\
-[](fg:#394260)\
-$fill\
-[](fg:#212736)\
+[](fg:#394260 bg:#212736)\
 $nodejs\
 $rust\
 $golang\
 $php\
-[](fg:#1d2230 bg:#212736)\
+[](fg:#212736 bg:#1d2230)\
 $time\
-[](fg:#88C0D0 bg:#1d2230)\
-$os\
-[](fg:#88C0D0)\
+[ ](fg:#1d2230)\
 \n$character"""
 
-# コマンドラインに1行分のスペースを入れない
-add_newline = false
-
-# left_promptとright_promptの間を何で埋めるか設定
-[fill]
-symbol = ' '
-
-[os]
-format = "[$symbol]($style)"
-style = "fg:#2E3440 bg:#88C0D0 bold"
-disabled = false
-
-[os.symbols]
-Macos = "  " # nf-fa-apple
-Ubuntu = "  " # nf-linux-ubuntu
-Debian = "  " # nf-linux-debian
-
 [directory]
-style = "fg:#2E3440 bg:#88C0D0 bold"
+style = "fg:#e3e5e5 bg:#769ff0"
 format = "[ $path ]($style)"
-truncation_length = 10
-truncate_to_repo = false
+truncation_length = 3
 truncation_symbol = "…/"
 
 [directory.substitutions]
@@ -49,11 +28,6 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-
-[aws]
-disabled = true
-[gcloud]
-disabled = true
 
 [git_branch]
 symbol = ""
@@ -89,4 +63,3 @@ disabled = false
 time_format = "%R" # Hour:Minute Format
 style = "bg:#1d2230"
 format = '[[  $time ](fg:#a0a9cb bg:#1d2230)]($style)'
-
