@@ -74,7 +74,8 @@ local openNewWeztermPane = function(opt)
     ("--percent=%d"):format(percent),
     ("--%s"):format(direction),
     "--",
-    "zsh",
+    -- "zsh",
+    "sh",
   }
   local obj = vim.system(cmd, { text = true }):wait()
   local wezterm_pane_id = assert(tonumber(obj.stdout))
@@ -185,7 +186,6 @@ local weztermPreview = {
       closeWeztermPane(getPreviewWeztermPaneId())
     end
     local oil = require("oil")
-    local util = require("oil.util")
     local preview_entry_id = nil
     local preview_cmd = nil
 
@@ -261,6 +261,21 @@ local weztermPreview = {
   end,
   desc = "Preview with Wezterm",
 }
+
+local selectHandler = {
+  callback = function()
+    local oil = require("oil")
+    local entry = oil.get_cursor_entry()
+    local path = assert(getEntryAbsolutePath())
+
+    if entry.type == "file" and isImage(path) then
+      weztermPreview.callback()
+    else
+      require("oil.actions").select.callback()
+    end
+  end,
+}
+
 return {
   "stevearc/oil.nvim",
   init = function()
@@ -281,7 +296,8 @@ return {
       keymaps = {
         ["?"] = "actions.show_help",
         ["gx"] = "actions.open_external",
-        ["<CR>"] = "actions.select",
+        -- ["<CR>"] = "actions.select",
+        ["<CR>"] = selectHandler,
         ["-"] = "actions.parent",
         ["<C-p>"] = "actions.preview",
         ["gp"] = weztermPreview,
