@@ -19,7 +19,7 @@ local config = {
     stretch = "Normal",
     style = "Normal",
   }),
-  font_size = 16,
+  font_size = 15,
 
   -- keybinds
   disable_default_key_bindings = true,
