@@ -1,3 +1,7 @@
+# grep
+alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+
 # ls
 alias l="ls -l"
 alias ll="ls -l"
