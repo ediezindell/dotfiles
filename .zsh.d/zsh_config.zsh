@@ -3,6 +3,9 @@
 # 環境変数を補完する
 setopt AUTO_PARAM_KEYS
 
+# 履歴を共有
+setopt share_history
+
 # 履歴ファイルの保存先
 HISTFILE=~/.zsh_history
 
