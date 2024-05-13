@@ -8,9 +8,10 @@ return {
       code_font_family = "Moralerspace Argon HWNF",
       -- watermark_font_family = "Moralerspace Neon HWNF",
       breadcrumbs_separator = "/",
-      has_breadcrumbs = true,
+      -- has_breadcrumbs = true,
+      has_breadcrumbs = false,
       bg_theme = "default",
-      watermark = "yoshiaki.inoue",
+      -- watermark = "yoshiaki.inoue",
       save_path = "~/Pictures",
     })
   end,

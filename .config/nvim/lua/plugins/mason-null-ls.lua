@@ -1,3 +1,31 @@
+local function get_project_config()
+  local root_files = {
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.yaml",
+    ".eslintrc.yml",
+    ".eslintrc.json",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    "eslint.config.ts",
+    "eslint.config.mts",
+    "eslint.config.cts",
+    "biome.json",
+  }
+  for _, root_file in ipairs(root_files) do
+    if vim.fn.findfile(root_file, ".;") ~= "" then
+      if root_file:find("eslint") then
+        return { formatter = "eslint", linter = "prettier" }
+      elseif root_file == "biome.json" then
+        return { formatter = "biome" }
+      end
+    end
+  end
+  return nil
+end
+
 return {
   "jay-babu/mason-null-ls.nvim",
   lazy = false,
@@ -10,43 +38,40 @@ return {
     "vim-test/vim-test",
   },
   config = function()
-    local null_ls = require("null-ls")
-    local mason_null_ls = require("mason-null-ls")
-    local fmt = null_ls.builtins.formatting
-    -- local diag = null_ls.builtins.diagnostics
+    local nls = require("null-ls")
+    local mason_nls = require("mason-null-ls")
+    local fmt = nls.builtins.formatting
 
-    mason_null_ls.setup({
+    local shellcheck = require("none-ls-shellcheck")
+
+    mason_nls.setup({
       ensure_installed = {
-        "prettierd",
-        -- "biome",
+        "biome",
         "stylua",
-        "eslint_d",
-        -- "shfmt",
-        -- "deno",
       },
       automatic_installation = true, -- 自動インストール有効化
       handlers = {
         function() end,
         stylua = function()
-          null_ls.register(fmt.stylua)
+          nls.register(fmt.stylua)
+        end,
+        biome = function()
+          local config = get_project_config()
+          if config and config.formatter == "biome" then
+            print("this is biome project!")
+          end
         end,
       },
     })
 
     local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-    null_ls.setup({
+    nls.setup({
       -- 自動インストールするLSP
       sources = {
-        fmt.prettierd,
-        -- fmt.biome,
+        fmt.biome,
         fmt.stylua,
-        require("none-ls.diagnostics.eslint_d"),
-        require("none-ls.formatting.eslint_d"),
-        require("none-ls.code_actions.eslint_d"),
-        require("none-ls-shellcheck.diagnostics"),
-        require("none-ls-shellcheck.code_actions"),
-        -- fmt.shfmt,
-        -- fmt.deno_fmt,
+        shellcheck.diagnostics,
+        shellcheck.code_actions,
       },
       on_attach = function(client, bufnr)
         -- 保存前フォーマット

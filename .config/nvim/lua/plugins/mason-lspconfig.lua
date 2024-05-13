@@ -26,6 +26,12 @@ return {
       intelephense = function()
         lspconfig.intelephense.setup(require("lsp.php"))
       end,
+      biome = function()
+        lspconfig.biome.setup(require("lsp.biome"))
+      end,
+      eslint = function()
+        lspconfig.eslint.setup(require("lsp.eslint"))
+      end,
     })
 
     vim.api.nvim_create_autocmd("LspAttach", {
