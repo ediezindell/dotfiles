@@ -14,5 +14,12 @@ if [ -d "${NEOVIM_HOME}" ]; then
   export PATH="${NEOVIM_HOME}/bin:$PATH"
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
 # mise
-eval "$(~/.local/bin/mise activate zsh)"
+eval "$(mise activate zsh --shims)" # should be first
+eval "$(mise activate zsh)"
+
+export CARGO_HOME=$HOME/.cargo
+if [ -d "${CARGO_HOME}" ]; then
+  export PATH="${CARGO_HOME}/bin:$PATH"
+fi
