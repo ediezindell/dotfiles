@@ -48,6 +48,10 @@ return {
       ensure_installed = {
         "biome",
         "stylua",
+        "eslint_d",
+        "php-cs-fixer",
+        -- "shfmt",
+        -- "deno",
       },
       automatic_installation = true, -- 自動インストール有効化
       handlers = {
@@ -60,6 +64,9 @@ return {
           if config and config.formatter == "biome" then
             print("this is biome project!")
           end
+        end,
+        ["php-cs-fixer"] = function()
+          nls.register(fmt["php-cs-fixer"])
         end,
       },
     })

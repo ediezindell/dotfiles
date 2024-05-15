@@ -64,6 +64,7 @@ return {
         "genesis",
         "polylang",
         "sbi",
+        "random",
       },
     },
   },
