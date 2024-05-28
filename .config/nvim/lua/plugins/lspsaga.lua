@@ -1,3 +1,4 @@
+-- LSPのUIを強化する
 return {
   "kkharji/lspsaga.nvim",
   dependencies = {

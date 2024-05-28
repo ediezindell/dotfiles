@@ -1,3 +1,4 @@
+-- コードのスクリーンショット生成
 return {
   "mistricky/codesnap.nvim",
   build = "make",

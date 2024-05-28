@@ -1,4 +1,4 @@
--- display git status
+-- Gitの変更状況をエディタ上に表示する
 return {
   "lewis6991/gitsigns.nvim",
   event = "BufEnter",

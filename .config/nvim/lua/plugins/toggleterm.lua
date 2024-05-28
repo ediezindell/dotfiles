@@ -1,5 +1,5 @@
+-- ターミナルを表示する
 return {
-  -- ターミナル表示
   "akinsho/toggleterm.nvim",
   version = "*",
   config = function()

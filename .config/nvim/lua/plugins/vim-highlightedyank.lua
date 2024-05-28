@@ -1,3 +1,4 @@
+-- ヤンクした箇所をハイライトする
 return {
   "machakann/vim-highlightedyank",
   config = function()

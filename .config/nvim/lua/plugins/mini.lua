@@ -14,12 +14,12 @@ return {
     event = "BufEnter",
   },
   -- fの強化
-  {
-    "echasnovski/mini.jump",
-    version = false,
-    config = true,
-    event = "BufEnter",
-  },
+  -- {
+  --   "echasnovski/mini.jump",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
   -- gSで引数を1行にまとめたり複数行に展開したり
   {
     "echasnovski/mini.splitjoin",

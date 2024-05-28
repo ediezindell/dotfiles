@@ -1,3 +1,4 @@
+-- Masonの設定を行う
 return {
   "williamboman/mason-lspconfig.nvim",
   dependencies = {

@@ -1,3 +1,4 @@
+-- ショートカットキーを表示する
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",

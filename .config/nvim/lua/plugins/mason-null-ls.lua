@@ -1,3 +1,5 @@
+-- null-ls (LSPではないものをLSP化する) を利用する
+
 local function get_project_config()
   local root_files = {
     ".eslintrc",

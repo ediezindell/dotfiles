@@ -1,4 +1,5 @@
---- ref: https://zenn.dev/vim_jp/articles/68eb77d2f2a37a
+-- マクロ記録時にカラーテーマを変更する
+-- ref: https://zenn.dev/vim_jp/articles/68eb77d2f2a37a
 ---Debounce a function
 ---@param func function
 ---@param wait number

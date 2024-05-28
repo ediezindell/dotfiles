@@ -1,3 +1,4 @@
+-- Markdownをブラウザでプレビュー表示する
 return {
   "iamcco/markdown-preview.nvim",
   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

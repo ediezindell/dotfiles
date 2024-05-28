@@ -1,4 +1,4 @@
--- status line customize
+-- ステータスラインをカスタマイズする
 return {
   "nvim-lualine/lualine.nvim",
   requires = {

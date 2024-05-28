@@ -1,4 +1,4 @@
--- jump to definition
+-- 定義ジャンプ
 return {
   "pechorin/any-jump.vim",
   event = "BufEnter",

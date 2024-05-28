@@ -1,3 +1,4 @@
+-- TypeScriptでコメント操作を強化する
 return {
   "JoosepAlviste/nvim-ts-context-commentstring",
   config = function()

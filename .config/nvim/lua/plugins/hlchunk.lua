@@ -1,7 +1,6 @@
+-- インデントを可視化する
 return {
   "shellRaining/hlchunk.nvim",
   event = { "UIEnter" },
-  config = function()
-    require("hlchunk").setup({})
-  end,
+  config = true,
 }

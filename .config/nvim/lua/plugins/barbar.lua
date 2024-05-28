@@ -1,3 +1,4 @@
+-- タブバーを表示
 return {
   "romgrk/barbar.nvim",
   dependencies = {
