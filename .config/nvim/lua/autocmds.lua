@@ -23,3 +23,11 @@ end
 
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+-- 検索時にhlsearchを有効にする
+vim.api.nvim_create_augroup("AutoHLS", { clear = true })
+vim.api.nvim_create_autocmd("CmdlineLeave", {
+  pattern = { "/", "?", "*" },
+  command = "set hlsearch",
+  group = "AutoHLS",
+})
