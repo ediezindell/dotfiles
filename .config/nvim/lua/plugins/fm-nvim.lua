@@ -1,4 +1,4 @@
--- Gituiをnvim場で使えるようにする
+-- Gituiをnvim上で使えるようにする
 return {
   "is0n/fm-nvim",
   event = "VimEnter",
