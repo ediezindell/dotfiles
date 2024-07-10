@@ -9,13 +9,13 @@ return {
     vim.keymap.set(
       "n",
       "n",
-      [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+      [[<Cmd>set hlsearch<CR><Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
       opts
     )
     vim.keymap.set(
       "n",
       "N",
-      [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+      [[<Cmd>set hlsearch<CR><Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
       opts
     )
     vim.keymap.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
