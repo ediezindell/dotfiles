@@ -4,6 +4,12 @@ function b() {
   read branchNumber\?"Enter Branch Number: "
   git switch $(echo $branches | cut -c 3- | awk NR==$branchNumber)
 }
+function ba() {
+  branches=$(git branch -a --sort=-committerdate)
+  echo $branches | cat -n
+  read branchNumber\?"Enter Branch Number: "
+  git switch $(echo ${branches/remote\/origin\//} | cut -c 3- | awk NR==$branchNumber)
+}
 
 function bg() {
   if [[ $1 =~ '^[0-9]+$' ]]; then
