@@ -1,4 +1,4 @@
--- pachage manager
+-- package manager
 return {
   "folke/lazy.nvim",
 }
