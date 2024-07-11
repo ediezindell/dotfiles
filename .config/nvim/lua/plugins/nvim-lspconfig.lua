@@ -1,0 +1,64 @@
+return {
+  "neovim/nvim-lspconfig",
+  dependencies = {
+    "hrsh7th/nvim-cmp",
+    "hrsh7th/cmp-nvim-lsp",
+    "nvimtools/none-ls.nvim",
+    "nvimtools/none-ls-extras.nvim",
+  },
+  lazy = false,
+  config = function()
+    local lspconfig = require("lspconfig")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    local lspList = {
+      "html",
+      "cssls",
+    }
+    for _, server_name in ipairs(lspList) do
+      lspconfig[server_name].setup({})
+    end
+    lspconfig.typos_lsp.setup({
+      init_options = {
+        config = "~/.config/nvim/spell/.typos.toml",
+      },
+    })
+
+    lspconfig.denols.setup({
+      root_dir = lspconfig.util.root_pattern("deno.json"),
+      init_options = {
+        lint = true,
+        unstable = true,
+        suggest = {
+          imports = {
+            hosts = {
+              ["https://deno.land"] = true,
+              ["https://cdn.nest.land"] = true,
+              ["https://crux.land"] = true,
+            },
+          },
+        },
+      },
+      capabilities = capabilities,
+    })
+    lspconfig.tsserver.setup({
+      root_dir = lspconfig.util.root_pattern("package.json"),
+      capabilities = capabilities,
+    })
+    lspconfig.lua_ls.setup(require("lsp.lua"))
+    lspconfig.intelephense.setup(require("lsp.php"))
+    -- lspconfig.biome.setup(require("lsp.biome"))
+
+    -- フォーマッターとリンターの設定
+    local null_ls = require("null-ls")
+
+    null_ls.setup({
+      sources = {
+        require("none-ls.diagnostics.eslint"),
+        require("none-ls.code_actions.eslint"),
+        null_ls.builtins.formatting.prettier,
+        -- null_ls.builtins.formatting.biome,
+        null_ls.builtins.formatting.stylua,
+      },
+    })
+  end,
+}
