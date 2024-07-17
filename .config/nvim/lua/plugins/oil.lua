@@ -28,9 +28,6 @@ local isImage = function(url)
   end)
 end
 
-local open_file_with_quicklook = function(path)
-  vim.cmd(("silent !qlmanage -p %s &"):format(path))
-end
 local getEntryAbsolutePath = function()
   local oil = require("oil")
   local entry = oil.get_cursor_entry()
@@ -41,13 +38,16 @@ local getEntryAbsolutePath = function()
   return dir .. entry.name, entry, dir
 end
 
-local openWithQuickLook = {
-  callback = function()
-    local path = assert((getEntryAbsolutePath()))
-    open_file_with_quicklook(path)
-  end,
-  desc = "Open with QuickLook",
-}
+-- local open_file_with_quicklook = function(path)
+--   vim.cmd(("silent !qlmanage -p %s &"):format(path))
+-- end
+-- local openWithQuickLook = {
+--   callback = function()
+--     local path = assert((getEntryAbsolutePath()))
+--     open_file_with_quicklook(path)
+--   end,
+--   desc = "Open with QuickLook",
+-- }
 
 local getNeovimWeztermPane = function()
   local wezterm_pane_id = vim.env.WEZTERM_PANE

@@ -47,7 +47,21 @@ return {
     lspconfig.lua_ls.setup(require("lsp.lua"))
     lspconfig.intelephense.setup(require("lsp.php"))
     -- lspconfig.biome.setup(require("lsp.biome"))
-
+    lspconfig.stylelint_lsp.setup({
+      filetypes = {
+        "css",
+        "scss",
+        "less",
+        "sass",
+        "postcss",
+      },
+      settings = {
+        stylelintplus = {
+          autoFixOnSave = true,
+          autoFixOnFormat = true,
+        },
+      },
+    })
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
 
