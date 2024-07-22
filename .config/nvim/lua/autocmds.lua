@@ -46,9 +46,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
+-- 保存時フォーマット
 vim.cmd([[
  augroup FormatAutogroup
     autocmd!
     autocmd BufWritePre * lua vim.lsp.buf.format()
   augroup END
 ]])
+
+-- スクロール位置を記憶
+vim.api.nvim_create_autocmd("BufReadPost", {
+  callback = function()
+    local last_pos = vim.fn.line([['"]])
+    if last_pos > 0 and last_pos <= vim.fn.line("$") then
+      vim.cmd("normal! g'\"")
+    end
+  end,
+})
