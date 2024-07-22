@@ -113,43 +113,15 @@ return {
     end,
   },
   {
-    -- Option + j/k でカーソルを移動
+    -- Option + j/k で行ごと移動
     "echasnovski/mini.move",
     version = false,
     config = true,
     event = "BufEnter",
   },
-  -- {
-  --   -- fの強化
-  --   "echasnovski/mini.jump",
-  --   version = false,
-  --   config = true,
-  --   event = "BufEnter",
-  -- },
   {
     -- gSで引数を1行にまとめたり複数行に展開したり
     "echasnovski/mini.splitjoin",
-    version = false,
-    config = true,
-    event = "BufEnter",
-  },
-  {
-    -- start page
-    "echasnovski/mini.starter",
-    version = false,
-    config = true,
-    event = "VimEnter",
-  },
-  -- {
-  --   -- autoclose
-  --   "echasnovski/mini.pairs",
-  --   version = false,
-  --   config = true,
-  --   event = "BufEnter",
-  -- },
-  {
-    -- コメント
-    "echasnovski/mini.comment",
     version = false,
     config = true,
     event = "BufEnter",
@@ -165,27 +137,13 @@ return {
       vim.api.nvim_create_autocmd("BufEnter", {
         pattern = "*",
         callback = function()
-          local options = { fg = "lightgray", bg = "darkcyan" }
+          -- local options = { fg = "lightgray", bg = "darkcyan" }
           -- vim.api.nvim_set_hl(0, "MiniCursorword", options)
           -- vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", options)
         end,
       })
     end,
     event = "BufEnter",
-  },
-  -- {
-  --   -- 補完
-  --   "echasnovski/mini.completion",
-  --   version = false,
-  --   config = true,
-  --   event = "BufEnter",
-  -- },
-  {
-    -- Neovimアクションのアニメーション
-    "echasnovski/mini.animate",
-    version = false,
-    config = true,
-    event = "VimEnter",
   },
   {
     -- 括弧間移動
@@ -211,6 +169,48 @@ return {
     end,
     event = "BufEnter",
   },
+  -- {
+  --   -- fの強化
+  --   "echasnovski/mini.jump",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
+  -- {
+  --   -- start page
+  --   "echasnovski/mini.starter",
+  --   version = false,
+  --   config = true,
+  --   event = "VimEnter",
+  -- },
+  -- {
+  --   -- autoclose
+  --   "echasnovski/mini.pairs",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
+  -- {
+  --   -- コメント
+  --   "echasnovski/mini.comment",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
+  -- {
+  --   -- 補完
+  --   "echasnovski/mini.completion",
+  --   version = false,
+  --   config = true,
+  --   event = "BufEnter",
+  -- },
+  -- {
+  --   -- Neovimアクションのアニメーション
+  --   "echasnovski/mini.animate",
+  --   version = false,
+  --   config = true,
+  --   event = "VimEnter",
+  -- },
   -- {
   --   -- インデント表示
   --   "echasnovski/mini.indentscope",
