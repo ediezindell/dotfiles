@@ -278,6 +278,7 @@ local selectHandler = {
 
 return {
   "stevearc/oil.nvim",
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
   init = function()
     local oilPathPatterns = { "oil://", "oil-ssh://", "oil-trash://" }
     local path = vim.fn.expand("%:p")
@@ -322,7 +323,7 @@ return {
       use_default_keymaps = false,
       delete_to_trash = is_trash,
       trash_command = trash_command,
-      default_file_explorer = false,
+      default_file_explorer = true,
       columns = {
         "permissions",
         "size",
@@ -332,10 +333,8 @@ return {
     }
   end,
   event = { "BufReadPre", "BufNewFile" },
-  dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function(_, opts)
     require("oil").setup(opts)
-    local keymapopts = {}
-    vim.keymap.set("n", "-", "<CMD>Oil<CR>", keymapopts)
+    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
   end,
 }
