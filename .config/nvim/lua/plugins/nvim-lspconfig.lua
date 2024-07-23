@@ -6,7 +6,7 @@ return {
     "nvimtools/none-ls.nvim",
     "nvimtools/none-ls-extras.nvim",
   },
-  lazy = false,
+  event = { "BufReadPre", "BufNewFile" },
   config = function()
     local lspconfig = require("lspconfig")
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
