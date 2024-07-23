@@ -283,6 +283,9 @@ return {
       "echasnovski/mini.icons",
       opts = {
         filetype = {
+          typescript = {
+            hl = "MiniIconsCyan",
+          },
           lua = {
             hl = "MiniIconsCyan",
           },
