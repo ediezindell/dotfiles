@@ -1,7 +1,6 @@
 -- ファイル検索
 return {
   "nvim-telescope/telescope.nvim",
-  tag = "0.1.5",
   event = "VimEnter",
   requires = {
     "nvim-tree/nvim-web-devicons",
