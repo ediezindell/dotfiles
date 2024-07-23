@@ -278,7 +278,18 @@ local selectHandler = {
 
 return {
   "stevearc/oil.nvim",
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  dependencies = {
+    {
+      "echasnovski/mini.icons",
+      opts = {
+        filetype = {
+          lua = {
+            hl = "MiniIconsCyan",
+          },
+        },
+      },
+    },
+  },
   init = function()
     local oilPathPatterns = { "oil://", "oil-ssh://", "oil-trash://" }
     local path = vim.fn.expand("%:p")
