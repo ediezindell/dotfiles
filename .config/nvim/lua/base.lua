@@ -6,6 +6,16 @@ vim.scriptencoding = "utf-8"
 vim.api.nvim_set_var("mapleader", " ")
 vim.api.nvim_set_var("maplocalleader", "_")
 
+-- ignore parser error
+-- @see https://zenn.dev/kawarimidoll/articles/18ee967072def7
+vim.treesitter.start = (function(wrapped)
+  return function(bufnr, lang)
+    lang = lang or vim.fn.getbufvar(bufnr or "", "&filetype")
+    print(lang)
+    pcall(wrapped, bufnr, lang)
+  end
+end)(vim.treesitter.start)
+
 -- lazy.nvimの有効化
 vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
