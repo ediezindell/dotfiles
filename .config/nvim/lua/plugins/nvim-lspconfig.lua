@@ -62,6 +62,8 @@ return {
         },
       },
     })
+    lspconfig.emmet_language_server.setup({})
+
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
 
