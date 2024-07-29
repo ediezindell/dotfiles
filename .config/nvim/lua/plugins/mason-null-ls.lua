@@ -17,6 +17,8 @@ return {
         "typos-lsp",
         "lua-language-server",
         "typescript-language-server",
+        "css-lsp",
+        "stylelint-lsp",
       },
       automatic_installation = true, -- 自動インストール有効化
     })
