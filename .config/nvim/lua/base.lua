@@ -11,7 +11,6 @@ vim.api.nvim_set_var("maplocalleader", "_")
 vim.treesitter.start = (function(wrapped)
   return function(bufnr, lang)
     lang = lang or vim.fn.getbufvar(bufnr or "", "&filetype")
-    print(lang)
     pcall(wrapped, bufnr, lang)
   end
 end)(vim.treesitter.start)
