@@ -78,7 +78,7 @@ return {
       -- Path to broot config
       broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson",
 
-      NormalKeymap("<Up>", "<Cmd>Gitui<CR>"),
+      NormalCommandKeymap("<Up>", "Gitui"),
     })
   end,
 }
