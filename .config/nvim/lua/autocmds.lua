@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- 保存時フォーマット
 vim.cmd([[
- augroup FormatAutogroup
+  augroup FormatAutogroup
     autocmd!
     autocmd BufWritePre * lua vim.lsp.buf.format()
   augroup END
