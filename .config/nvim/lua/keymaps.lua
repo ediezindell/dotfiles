@@ -1,35 +1,22 @@
-local keymap = function(mode, lhs, rhs)
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
-local normalKeymap = function(lhs, rhs)
-  keymap("n", lhs, rhs)
-end
-
 -- 簡易Window移動
-normalKeymap("<C-h>", "<C-w>h")
-normalKeymap("<C-j>", "<C-w>j")
-normalKeymap("<C-k>", "<C-w>k")
-normalKeymap("<C-l>", "<C-w>l")
+NormalKeymap("<C-h>", "<C-w>h")
+NormalKeymap("<C-j>", "<C-w>j")
+NormalKeymap("<C-k>", "<C-w>k")
+NormalKeymap("<C-l>", "<C-w>l")
 
 -- Esc2回でハイライト解除
-normalKeymap("<Esc><Esc>", ":<C-u>set nohlsearch<CR>")
+NormalKeymap("<Esc><Esc>", "<Cmd>set nohlsearch<CR>")
 
 -- split view
-normalKeymap("<leader>ss", ":split<CR>") -- 上下
-normalKeymap("<leader>sv", ":vsplit<CR>") -- 左右
+NormalKeymap("<leader>ss", "<Cmd>split<CR>") -- 上下
+NormalKeymap("<leader>sv", "<Cmd>vsplit<CR>") -- 左右
 
 -- yank from cursor to end of line
-normalKeymap("Y", "y$")
-
--- donot yank
--- normalKeymap("x", '"_x')
--- normalKeymap("X", '"_X')
-normalKeymap("s", '"_s')
+NormalKeymap("Y", "y$")
 
 -- buffer
-normalKeymap("<M-h>", ":bprev<CR>")
-normalKeymap("<M-l>", ":bnext<CR>")
+NormalKeymap("<M-h>", "<Cmd>bprev<CR>")
+NormalKeymap("<M-l>", "<Cmd>bnext<CR>")
 
 -- disable arrow keys
 local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }

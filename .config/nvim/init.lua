@@ -1,3 +1,4 @@
+require("util")
 require("base")
 require("autocmds")
 require("options")
