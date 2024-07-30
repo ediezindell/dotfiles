@@ -63,3 +63,17 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end
   end,
 })
+
+-- 保存時にディレクトリが存在しなければ作成する
+local auto_mkdir_group = vim.api.nvim_create_augroup("auto_mkdir_group", { clear = true })
+local function auto_mkdir()
+  local dir = vim.fn.expand("<afile>:p:h")
+  if vim.fn.isdirectory(dir) == 0 then
+    vim.fn.mkdir(dir, "p")
+  end
+end
+vim.api.nvim_create_autocmd("BufWritePre", {
+  group = auto_mkdir_group,
+  pattern = "*",
+  callback = auto_mkdir,
+})
