@@ -77,3 +77,53 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = auto_mkdir,
 })
+
+-- 前方一致するファイルを選択して開く
+--- @see https://zenn.dev/kawarimidoll/articles/33cf46fae69809
+local function check_prefix_match_files()
+  -- 現在のファイル名とディレクトリを取得
+  local fname = vim.fn.expand("<afile>")
+  local dname = vim.fn.fnamemodify(fname, ":h")
+
+  -- 当該ディレクトリ内のファイル一覧を取得
+  local files_in_dir = vim.split(vim.fn.glob(dname == "." and "*" or dname .. "/*"), "\n")
+
+  -- ファイル名が前方一致するものを抽出
+  local possible = vim.tbl_filter(function(v)
+    return v:find("^" .. vim.pesc(fname)) ~= nil
+  end, files_in_dir)
+
+  -- 候補がなければ終了
+  if vim.tbl_isempty(possible) then
+    return
+  end
+
+  -- 候補のリストを confirm() を使って表示
+  local choices = {}
+  for k, v in ipairs(possible) do
+    table.insert(choices, string.format("&%d %s", k, v))
+  end
+
+  local choice = vim.fn.confirm(
+    string.format('"%s" does not exist. Do you want to open file below?', fname),
+    table.concat(choices, "\n"),
+    0
+  )
+
+  -- 選択されなければ終了
+  if choice == 0 then
+    return
+  end
+
+  -- 選択されたファイルを開く タイマーを使う理由は後述
+  vim.fn.timer_start(0, function()
+    vim.cmd("edit " .. vim.fn.fnameescape(possible[choice]))
+  end)
+end
+
+-- 存在しないファイルが開かれたときに起動
+vim.api.nvim_create_autocmd("BufNewFile", {
+  pattern = "*",
+  callback = check_prefix_match_files,
+  group = vim.api.nvim_create_augroup("check_prefix_match_files", { clear = true }),
+})
