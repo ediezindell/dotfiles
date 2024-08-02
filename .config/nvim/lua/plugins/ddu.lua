@@ -66,7 +66,7 @@ local globalConfig = {
   },
 }
 
-local autocmd = function()
+local setAutocmd = function()
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "ddu-ff",
     callback = function()
@@ -95,7 +95,7 @@ end
 local config = function()
   vim.fn["ddu#custom#patch_global"](globalConfig)
 
-  autocmd()
+  setAutocmd()
   keymap()
 end
 
