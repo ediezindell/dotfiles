@@ -102,7 +102,7 @@ end
 ---@type LazySpec
 local spec = {
   "Shougo/ddu.vim",
-  event = { "BufEnter" },
+  lazy = false,
   dependencies = dependencies,
   config = config,
 }
