@@ -43,6 +43,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "ge", "<cmd>lua vim.diagnostic.open_float()<CR>")
     vim.keymap.set("n", "g]", "<cmd>lua vim.diagnostic.goto_next()<CR>")
     vim.keymap.set("n", "g[", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "rounded",
+    })
   end,
 })
 
