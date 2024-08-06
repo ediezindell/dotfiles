@@ -85,7 +85,9 @@ return {
     "echasnovski/mini.diff",
     version = false,
     config = function()
-      require("mini.diff").setup({})
+      if not vim.tbl_contains({ "oil" }, vim.bo.filetype) then
+        require("mini.diff").setup({})
+      end
     end,
     event = "BufEnter",
   },
