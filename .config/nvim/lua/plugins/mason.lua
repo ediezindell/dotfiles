@@ -1,5 +1,6 @@
 -- null-ls (LSPではないものをLSP化する) を利用する
-return {
+---@type LazySpec
+local spec = {
   "jay-babu/mason-null-ls.nvim",
   lazy = false,
   dependencies = {
@@ -49,3 +50,5 @@ return {
     })
   end,
 }
+
+return spec

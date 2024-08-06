@@ -1,7 +1,8 @@
 -- gbでblame, goでGitHubを開く
-return {
+---@type LazySpec
+local spec = {
   "dinhhuy258/git.nvim",
-  event = "VimEnter",
+  event = "BufEnter",
   config = function()
     require("git").setup({
       keymaps = {
@@ -13,3 +14,5 @@ return {
     })
   end,
 }
+
+return spec

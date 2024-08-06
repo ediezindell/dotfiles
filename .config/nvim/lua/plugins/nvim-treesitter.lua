@@ -1,7 +1,8 @@
 -- code highlight
-return {
+---@type LazySpec
+local spec = {
   "nvim-treesitter/nvim-treesitter",
-  event = { 'BufNewFile', 'BufRead' },
+  event = { "BufNewFile", "BufRead" },
   run = ":TSUpdate",
   config = function()
     require("nvim-treesitter").setup({
@@ -15,3 +16,5 @@ return {
     })
   end,
 }
+
+return spec

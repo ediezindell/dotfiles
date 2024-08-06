@@ -26,12 +26,14 @@ local function vsplit_and_sync()
   vim.wo.scrollbind = true
 end
 
-return {
+---@type LazySpec
+local spec = {
   dir = "",
   name = "split",
-  lazy = true,
-  event = "BufEnter",
+  cmd = "VSplit",
   config = function()
     vim.api.nvim_create_user_command("VSplit", vsplit_and_sync, {})
   end,
 }
+
+return spec

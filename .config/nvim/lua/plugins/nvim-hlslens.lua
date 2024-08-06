@@ -1,5 +1,6 @@
 -- 検索のヒット件数を表示
-return {
+---@type LazySpec
+local spec = {
   "kevinhwang91/nvim-hlslens",
   config = function()
     require("hlslens").setup()
@@ -23,5 +24,7 @@ return {
     vim.keymap.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], opts)
     vim.keymap.set("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], opts)
   end,
-  event = "BufEnter",
+  event = "SearchWrapped",
 }
+
+return spec

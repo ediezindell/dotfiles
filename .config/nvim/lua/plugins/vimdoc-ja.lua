@@ -1,5 +1,8 @@
 -- 日本語ドキュメント
-return {
+---@type LazySpec
+local spec = {
   "vim-jp/vimdoc-ja",
   event = "VimEnter",
 }
+
+return spec

@@ -276,7 +276,8 @@ local selectHandler = {
   end,
 }
 
-return {
+---@type LazySpec
+local spec = {
   "stevearc/oil.nvim",
   dependencies = {
     {
@@ -352,3 +353,5 @@ return {
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
   end,
 }
+
+return spec

@@ -1,7 +1,8 @@
 -- Gituiをnvim上で使えるようにする
-return {
+---@type LazySpec
+local spec = {
   "is0n/fm-nvim",
-  event = "VimEnter",
+  event = "BufEnter",
   config = function()
     require("fm-nvim").setup({
       -- (Vim) Command used to open files
@@ -82,3 +83,5 @@ return {
     })
   end,
 }
+
+return spec

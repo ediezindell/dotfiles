@@ -16,6 +16,7 @@ local dependencies = {
   ------------------------------
   "Shougo/ddu-source-file_rec",
   "shun/ddu-source-rg",
+  "uga-rosa/ddu-source-lsp",
   ------------------------------
   -- | ui                       |
   ------------------------------
@@ -40,6 +41,7 @@ local globalConfig = {
   sources = {
     "file_rec",
     "rg",
+    "lsp",
   },
   sourceParams = {
     file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode" } },
@@ -60,6 +62,8 @@ local globalConfig = {
   },
   kindOptions = {
     file = { defaultAction = "open" },
+    lsp = { defaultAction = "open" },
+    lsp_codeAction = { defaultAction = "apply" },
   },
   filterParams = {
     matcher_substring = { highlightMatched = "Search" },
@@ -88,8 +92,12 @@ local setAutocmd = function()
 end
 
 local keymap = function()
-  NormalCommandKeymap("<leader>ff", 'call ddu#start(#{name:"file_rec"})')
-  NormalCommandKeymap("<leader>fg", 'call ddu#start(#{name:"rg"})')
+  NormalCommandKeymap("<leader>ff", 'call ddu#start(#{name: "file_rec"})')
+  NormalCommandKeymap("<leader>fg", 'call ddu#start(#{name: "rg"})')
+  NormalCommandKeymap(
+    "<leader>fl",
+    'call ddu#start(#{sync: v:true, sources: [#{name: "lsp_definition"}], uiParams: #{ff: #{immediateAction: "open"}}})'
+  )
 end
 
 local config = function()
@@ -102,7 +110,7 @@ end
 ---@type LazySpec
 local spec = {
   "Shougo/ddu.vim",
-  lazy = false,
+  -- lazy = false,
   dependencies = dependencies,
   config = config,
 }

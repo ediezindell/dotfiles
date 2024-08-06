@@ -1,5 +1,6 @@
 -- nvim-tree用のアイコンセット
-return {
+---@type LazySpec
+local spec = {
   "nvim-tree/nvim-web-devicons",
   event = "VimEnter",
   config = function()
@@ -24,3 +25,5 @@ return {
     })
   end,
 }
+
+return spec

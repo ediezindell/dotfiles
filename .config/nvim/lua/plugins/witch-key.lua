@@ -1,5 +1,6 @@
 -- ショートカットキーを表示する
-return {
+---@type LazySpec
+local spec = {
   "folke/which-key.nvim",
   event = "VeryLazy",
   init = function()
@@ -8,3 +9,5 @@ return {
   end,
   opts = {},
 }
+
+return spec

@@ -1,4 +1,7 @@
 -- VimScriptを強化する
-return {
+---@type LazySpec
+local spec = {
   "tani/vim-artemis",
 }
+
+return spec

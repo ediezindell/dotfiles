@@ -1,5 +1,6 @@
 -- warningを一覧表示する
-return {
+---@type LazySpec
+local spec = {
   "folke/trouble.nvim",
   opts = {}, -- for default options, refer to the configuration section for custom setup.
   cmd = "Trouble",
@@ -36,3 +37,5 @@ return {
     },
   },
 }
+
+return spec

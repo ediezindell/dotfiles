@@ -1,5 +1,6 @@
 -- Markdownをブラウザでプレビュー表示する
-return {
+---@type LazySpec
+local spec = {
   "iamcco/markdown-preview.nvim",
   cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   build = "cd app && yarn install",
@@ -11,3 +12,5 @@ return {
   end,
   ft = { "markdown" }, -- markdownファイルを開いた場合のみ読み込み
 }
+
+return spec

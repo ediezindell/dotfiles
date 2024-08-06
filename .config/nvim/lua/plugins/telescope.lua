@@ -1,5 +1,6 @@
 -- ファイル検索
-return {
+---@type LazySpec
+local spec = {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
   requires = {
@@ -42,3 +43,5 @@ return {
     vim.keymap.set("n", "<leader>fh", builtin.help_tags)
   end,
 }
+
+return spec

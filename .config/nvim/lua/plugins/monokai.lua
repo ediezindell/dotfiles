@@ -1,5 +1,8 @@
 -- color theme
-return {
+---@type LazySpec
+local spec = {
   "tanvirtin/monokai.nvim",
   event = "VimEnter",
 }
+
+return spec

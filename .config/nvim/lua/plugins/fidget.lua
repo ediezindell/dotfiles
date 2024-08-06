@@ -1,8 +1,8 @@
 -- 右下に通知や進捗情報を表示
-return {
+---@type LazySpec
+local spec = {
   "j-hui/fidget.nvim",
-  opts = {
-    -- options
-  },
+  opts = {},
   event = { "BufEnter", "BufNewFile" },
 }
+return spec

@@ -1,5 +1,6 @@
 -- インデントを可視化する
-return {
+---@type LazySpec
+local spec = {
   "shellRaining/hlchunk.nvim",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
@@ -15,3 +16,5 @@ return {
     })
   end,
 }
+
+return spec

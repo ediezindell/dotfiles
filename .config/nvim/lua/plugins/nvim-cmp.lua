@@ -1,5 +1,6 @@
 -- 補完
-return {
+---@type LazySpec
+local spec = {
   "hrsh7th/nvim-cmp",
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
@@ -48,19 +49,19 @@ return {
         ["<Up>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.close()
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Up>', true, true, true), 'n', true)
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Up>", true, true, true), "n", true)
           else
             fallback()
           end
-        end, { 'i', 'c' }),
+        end, { "i", "c" }),
         ["<Down>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.close()
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Down>', true, true, true), 'n', true)
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Down>", true, true, true), "n", true)
           else
             fallback()
           end
-        end, { 'i', 'c' }),
+        end, { "i", "c" }),
       }),
 
       formatting = {
@@ -102,3 +103,5 @@ return {
     vim.cmd("let g:vsnip_filetypes = {}")
   end,
 }
+
+return spec
