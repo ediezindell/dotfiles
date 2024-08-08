@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "is0n/fm-nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   config = function()
     require("fm-nvim").setup({
       -- (Vim) Command used to open files

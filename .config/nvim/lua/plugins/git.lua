@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "dinhhuy258/git.nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   config = function()
     require("git").setup({
       keymaps = {

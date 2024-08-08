@@ -5,7 +5,7 @@ local spec = {
   requires = {
     "kyazdani42/nvim-web-devicons",
   },
-  event = "BufEnter",
+  event = "VeryLazy",
   config = function()
     require("config.lualine") -- 外部設定ファイルの読み込み
   end,

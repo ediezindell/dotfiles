@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "jinh0/eyeliner.nvim",
-  event = { "BufEnter" },
+  event = "VeryLazy",
   config = function()
     require("eyeliner").setup({
       highlight_on_key = true,

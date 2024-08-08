@@ -2,6 +2,7 @@
 return {
   "mistricky/codesnap.nvim",
   build = "make",
+  cmd = { "CodeSnap", "CodeSnapSave" },
   config = function()
     require("codesnap").setup({
       mac_window_bar = false,
@@ -16,5 +17,4 @@ return {
       save_path = "~/Pictures",
     })
   end,
-  cmd = { "CodeSnap", "CodeSnapSave" },
 }

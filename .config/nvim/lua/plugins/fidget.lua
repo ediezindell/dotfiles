@@ -2,7 +2,6 @@
 ---@type LazySpec
 local spec = {
   "j-hui/fidget.nvim",
-  opts = {},
-  event = { "BufEnter", "BufNewFile" },
+  event = "VeryLazy",
 }
 return spec
