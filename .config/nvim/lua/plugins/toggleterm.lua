@@ -12,7 +12,7 @@ local spec = {
     local term_opts = { silent = true }
     vim.keymap.set("n", "<leader>t", ":ToggleTerm<CR>", term_opts)
   end,
-  cmd = "ToggleTerm",
+  event = "VeryLazy",
 }
 
 return spec
