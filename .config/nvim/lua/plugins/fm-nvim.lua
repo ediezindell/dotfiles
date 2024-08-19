@@ -79,7 +79,7 @@ local spec = {
       -- Path to broot config
       broot_conf = vim.fn.stdpath("data") .. "/site/pack/packer/start/fm-nvim/assets/broot_conf.hjson",
 
-      NormalCommandKeymap("<Up>", "Gitui"),
+      NormalCommandKeymap("<Up>", "Gitui", "Gitui"),
     })
   end,
 }

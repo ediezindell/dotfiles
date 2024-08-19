@@ -2,30 +2,34 @@
 ---@param mode string モード
 ---@param lhs string 入力
 ---@param rhs string 実行内容
-Keymap = function(mode, lhs, rhs)
-  local opts = { noremap = true, silent = true }
+---@param desc string 説明
+Keymap = function(mode, lhs, rhs, desc)
+  local opts = { noremap = true, silent = true, desc = desc }
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
 ---インサートモードのkeymapを設定する
 ---@param lhs string 入力
 ---@param rhs string 実行内容
-InsertKeymap = function(lhs, rhs)
-  Keymap("i", lhs, rhs)
+---@param desc string 説明
+InsertKeymap = function(lhs, rhs, desc)
+  Keymap("i", lhs, rhs, desc)
 end
 
 ---ノーマルモードのkeymapを設定する
 ---@param lhs string 入力
 ---@param rhs string 実行内容
-NormalKeymap = function(lhs, rhs)
-  Keymap("n", lhs, rhs)
+---@param desc string 説明
+NormalKeymap = function(lhs, rhs, desc)
+  Keymap("n", lhs, rhs, desc)
 end
 
 ---ノーマルモードでコマンドを実行するkeymapを設定する
 ---@param lhs string 入力
 ---@param command string コマンド
-NormalCommandKeymap = function(lhs, command)
-  NormalKeymap(lhs, "<Cmd>" .. command .. "<CR>")
+---@param desc string 説明
+NormalCommandKeymap = function(lhs, command, desc)
+  NormalKeymap(lhs, "<Cmd>" .. command .. "<CR>", desc)
 end
 
 ---Debounce a function

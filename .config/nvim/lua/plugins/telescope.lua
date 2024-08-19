@@ -34,13 +34,11 @@ local spec = {
       },
     })
 
-    local builtin = require("telescope.builtin")
-
     -- keymap
-    vim.keymap.set("n", "<leader>ff", builtin.find_files)
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep)
-    vim.keymap.set("n", "<leader>fb", builtin.buffers)
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags)
+    NormalCommandKeymap("<leader>ff", [[lua require("telescope.builtin").find_files()]], "telescope find_files")
+    NormalCommandKeymap("<leader>fg", [[lua require("telescope.builtin").live_grep()]], "telescope live_grep")
+    NormalCommandKeymap("<leader>fb", [[lua require("telescope.builtin").buffers()]], "telescope buffers")
+    NormalCommandKeymap("<leader>fh", [[lua require("telescope.builtin").help_tags()]], "telescope help")
   end,
 }
 
