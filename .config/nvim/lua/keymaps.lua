@@ -19,3 +19,6 @@ local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
 for _, key in ipairs(arrowKeys) do
   vim.keymap.set({ "n", "v" }, key, "", {})
 end
+
+InsertKeymap("<Tab>", "<C-t>")
+InsertKeymap("<S-Tab>", "<C-d>")

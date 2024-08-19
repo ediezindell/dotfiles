@@ -7,6 +7,13 @@ Keymap = function(mode, lhs, rhs)
   vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
+---インサートモードのkeymapを設定する
+---@param lhs string 入力
+---@param rhs string 実行内容
+InsertKeymap = function(lhs, rhs)
+  Keymap("i", lhs, rhs)
+end
+
 ---ノーマルモードのkeymapを設定する
 ---@param lhs string 入力
 ---@param rhs string 実行内容
