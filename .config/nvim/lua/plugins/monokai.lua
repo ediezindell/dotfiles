@@ -17,6 +17,7 @@ local spec = {
         typescriptExport = getFg(palette.aqua),
         typescriptVariable = getFg(palette.aqua),
         tsxIntrinsicTagName = getFg(palette.pink),
+        sassId = getFg(palette.green),
       },
     })
   end,
