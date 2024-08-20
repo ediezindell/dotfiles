@@ -1,4 +1,5 @@
-return {
+---@type LazySpec
+local spec = {
   "neovim/nvim-lspconfig",
   dependencies = {
     "hrsh7th/nvim-cmp",
@@ -78,3 +79,5 @@ return {
     })
   end,
 }
+
+return spec

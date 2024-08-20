@@ -1,5 +1,6 @@
 -- コードのスクリーンショット生成
-return {
+---@type LazySpec
+local spec = {
   "mistricky/codesnap.nvim",
   build = "make",
   cmd = { "CodeSnap", "CodeSnapSave" },
@@ -18,3 +19,5 @@ return {
     })
   end,
 }
+
+return spec
