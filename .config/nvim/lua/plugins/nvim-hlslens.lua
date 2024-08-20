@@ -6,23 +6,20 @@ local spec = {
     require("hlslens").setup()
 
     -- keymap
-    local opts = { noremap = true, silent = true }
-    vim.keymap.set(
-      "n",
+    NormalKeymap(
       "n",
       [[<Cmd>set hlsearch<CR><Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      opts
+      "search next"
     )
-    vim.keymap.set(
-      "n",
+    NormalKeymap(
       "N",
       [[<Cmd>set hlsearch<CR><Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-      opts
+      "search prev"
     )
-    vim.keymap.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
-    vim.keymap.set("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], opts)
-    vim.keymap.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], opts)
-    vim.keymap.set("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], opts)
+    NormalKeymap("*", [[*<Cmd>lua require('hlslens').start()<CR>]], "*")
+    NormalKeymap("#", [[#<Cmd>lua require('hlslens').start()<CR>]], "#")
+    NormalKeymap("g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], "g*")
+    NormalKeymap("g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], "g#")
   end,
   event = "SearchWrapped",
 }

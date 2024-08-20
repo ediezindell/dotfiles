@@ -34,15 +34,15 @@ vim.api.nvim_create_autocmd("CmdlineLeave", {
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(_)
-    vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-    vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-    vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-    vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.rename()<CR>")
-    vim.keymap.set("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-    vim.keymap.set("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-    vim.keymap.set("n", "ge", "<cmd>lua vim.diagnostic.open_float()<CR>")
-    vim.keymap.set("n", "g]", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-    vim.keymap.set("n", "g[", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+    NormalCommandKeymap("K", "lua vim.lsp.buf.hover()", "lsp-hover")
+    NormalCommandKeymap("gd", "lua vim.lsp.buf.definition()", "lsp-def")
+    NormalCommandKeymap("gt", "lua vim.lsp.buf.type_definition()", "lsp-type-def")
+    NormalCommandKeymap("gr", "lua vim.lsp.buf.rename()", "lsp-rename")
+    NormalCommandKeymap("gn", "lua vim.lsp.buf.rename()", "lsp-rename")
+    NormalCommandKeymap("ga", "lua vim.lsp.buf.code_action()", "lsp-codeaction")
+    NormalCommandKeymap("ge", "lua vim.diagnostic.open_float()", "lsp-open-float")
+    NormalCommandKeymap("g]", "lua vim.diagnostic.goto_next()", "lsp-goto-next")
+    NormalCommandKeymap("g[", "lua vim.diagnostic.goto_prev()", "lsp-goto-prev")
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       border = "rounded",
