@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "tanvirtin/monokai.nvim",
-  event = "LspAttach",
+  event = "VeryLazy",
   config = function()
     local monokai = require("monokai")
     local palette = monokai.classic
