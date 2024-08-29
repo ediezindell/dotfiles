@@ -14,11 +14,15 @@ NormalKeymap("Y", "y$", "yank to EOL")
 NormalCommandKeymap("<leader>ss", "split", "split") -- 上下
 NormalCommandKeymap("<leader>sv", "vsplit", "vsplit") -- 左右
 
+-- クリップボードの内容でバッファを置換
+NormalCommandKeymap("<leader><C-v>", [[%d | normal! "+P]], "Replace buffer with clipboard contents")
+
 -- 方向キー無効化
 local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
 for _, key in ipairs(arrowKeys) do
   vim.keymap.set({ "n", "v" }, key, "", {})
 end
 
+-- insert mode中にTabでインデント
 InsertKeymap("<Tab>", "<C-t>", "indent")
 InsertKeymap("<S-Tab>", "<C-d>", "indent")
