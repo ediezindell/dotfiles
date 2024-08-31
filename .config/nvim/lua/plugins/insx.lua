@@ -4,7 +4,7 @@ local spec = {
   event = "VeryLazy",
   config = function()
     -- local insx = require("insx")
-    require("insx.preset.standard").setup()
+    -- require("insx.preset.standard").setup()
   end,
 }
 
