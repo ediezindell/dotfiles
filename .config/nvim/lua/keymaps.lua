@@ -26,3 +26,8 @@ end
 -- insert mode中にTabでインデント
 InsertKeymap("<Tab>", "<C-t>", "indent")
 InsertKeymap("<S-Tab>", "<C-d>", "indent")
+
+---@see https://zenn.dev/vim_jp/articles/2024-06-05-vim-middle-class-features
+for _, quote in ipairs({ '"', "'", "`" }) do
+  vim.keymap.set({ "x", "o" }, "a" .. quote, "2i" .. quote)
+end
