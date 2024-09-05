@@ -8,7 +8,8 @@ function ba() {
   branches=$(git branch -a --sort=-committerdate)
   echo $branches | cat -n
   read branchNumber\?"Enter Branch Number: "
-  git switch $(echo ${branches/remote\/origin\//} | cut -c 3- | awk NR==$branchNumber)
+  echo ${branches//remote\/origin\//}
+  git switch $(echo ${branches//remotes\/origin\//} | cut -c 3- | awk NR==$branchNumber)
 }
 
 function bg() {
