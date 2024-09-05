@@ -16,6 +16,7 @@ end
 local isImage = function(url)
   local extension = url:match("^.+(%..+)$")
   local imageExt = {
+    ".ico",
     ".bmp",
     ".jpg",
     ".jpeg",
