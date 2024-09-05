@@ -41,7 +41,7 @@ local spec = {
       },
       capabilities = capabilities,
     })
-    lspconfig.tsserver.setup({
+    lspconfig.vtsls.setup({
       root_dir = lspconfig.util.root_pattern("package.json"),
       capabilities = capabilities,
     })

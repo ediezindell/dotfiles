@@ -40,7 +40,7 @@ local spec = {
       ensure_installed = {
         "typos-lsp",
         "lua-language-server",
-        "typescript-language-server",
+        "vtsls",
         "css-lsp",
         "stylelint-lsp",
         "emmet-language-server",
