@@ -18,6 +18,8 @@ local spec = {
         typescriptVariable = getFg(palette.aqua),
         tsxIntrinsicTagName = getFg(palette.pink),
         sassId = getFg(palette.green),
+        HighlightUndo = { fg = palette.white, bg = palette.orange },
+        HighlightRedo = { fg = palette.white, bg = palette.orange },
       },
     })
   end,
