@@ -35,10 +35,10 @@ local spec = {
     })
 
     -- keymap
-    NormalCommandKeymap("<leader>ff", [[lua require("telescope.builtin").find_files()]], "telescope find_files")
-    NormalCommandKeymap("<leader>fg", [[lua require("telescope.builtin").live_grep()]], "telescope live_grep")
-    NormalCommandKeymap("<leader>fb", [[lua require("telescope.builtin").buffers()]], "telescope buffers")
-    NormalCommandKeymap("<leader>fh", [[lua require("telescope.builtin").help_tags()]], "telescope help")
+    CommandKeymap("<leader>ff", [[lua require("telescope.builtin").find_files()]], "telescope find_files")
+    CommandKeymap("<leader>fg", [[lua require("telescope.builtin").live_grep()]], "telescope live_grep")
+    CommandKeymap("<leader>fb", [[lua require("telescope.builtin").buffers()]], "telescope buffers")
+    CommandKeymap("<leader>fh", [[lua require("telescope.builtin").help_tags()]], "telescope help")
   end,
 }
 

@@ -92,9 +92,9 @@ local setAutocmd = function()
 end
 
 local keymap = function()
-  NormalCommandKeymap("<leader>ff", 'call ddu#start(#{name: "file_rec"})', "ddu file_rec")
-  NormalCommandKeymap("<leader>fg", 'call ddu#start(#{name: "rg"})', "ddu rg")
-  NormalCommandKeymap(
+  CommandKeymap("<leader>ff", 'call ddu#start(#{name: "file_rec"})', "ddu file_rec")
+  CommandKeymap("<leader>fg", 'call ddu#start(#{name: "rg"})', "ddu rg")
+  CommandKeymap(
     "<leader>fl",
     'call ddu#start(#{sync: v:true, sources: [#{name: "lsp_definition"}], uiParams: #{ff: #{immediateAction: "open"}}})',
     "ddu lsp-def"
