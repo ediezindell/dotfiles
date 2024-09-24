@@ -23,3 +23,5 @@ export CARGO_HOME=$HOME/.cargo
 if [ -d "${CARGO_HOME}" ]; then
   export PATH="${CARGO_HOME}/bin:$PATH"
 fi
+
+export PATH="$HOME/bin:$PATH"

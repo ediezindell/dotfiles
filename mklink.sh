@@ -34,3 +34,6 @@ for file in ${configfiles}; do
     echo "${file} exist, skip"
   fi
 done
+
+ln -s "${PWD}/bin" "${HOME}/bin"
+chmod -R +x "${PWD}/bin"
