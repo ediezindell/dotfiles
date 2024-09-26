@@ -13,13 +13,13 @@ local fonts = {
 local config = {
   -- appearance
   color_scheme = "nord",
-  window_background_opacity = 0.9,
+  window_background_opacity = 0.8,
   font = wezterm.font(fonts[1], {
     weight = "Medium",
     stretch = "Normal",
     style = "Normal",
   }),
-  font_size = 15,
+  font_size = 16,
   hyperlink_rules = {
     -- Matches: a URL in parens: (URL)
     {
@@ -56,24 +56,23 @@ local config = {
     --   format = "mailto:$0",
     -- },
   },
+  -- macos_window_background_blur = 20, -- ぼかし
+  window_decorations = "RESIZE", -- メニューバー非表示
+  hide_tab_bar_if_only_one_tab = true, -- タブが1つしか無い場合はタブバー非表示
+  show_new_tab_button_in_tab_bar = false, -- 新しいタブを開くボタン非表示
+  colors = {
+    tab_bar = {
+      inactive_tab_edge = "none", -- タブ間のボーダー非表示
+    },
+  },
 
   -- keybinds
   disable_default_key_bindings = true,
   keys = keybind.keys,
   key_tables = keybind.key_tables,
-  macos_window_background_blur = 20,
-  window_decorations = "RESIZE",
-  hide_tab_bar_if_only_one_tab = true,
-  show_new_tab_button_in_tab_bar = false,
-  show_close_tab_button_in_tabs = false,
-  colors = {
-    tab_bar = {
-      inactive_tab_edge = "none",
-    },
-  },
 }
 
-wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+wezterm.on("format-tab-title", function(tab)
   local background = "#2E323C"
   local foreground = "#f8f8f0"
 
@@ -82,7 +81,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   end
 
   local space = "      "
-  local title = space .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. space
+  local title = space .. tab.active_pane.title .. space
 
   return {
     { Background = { Color = background } },
