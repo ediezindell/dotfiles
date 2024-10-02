@@ -45,6 +45,7 @@ local spec = {
         "stylelint-lsp",
         "emmet-language-server",
         "html-lsp",
+        "astro-language-server",
       },
       automatic_installation = true, -- 自動インストール有効化
     })

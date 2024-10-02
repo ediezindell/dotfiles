@@ -64,6 +64,7 @@ local spec = {
       },
     })
     lspconfig.emmet_language_server.setup({})
+    lspconfig.astro.setup({})
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
