@@ -25,7 +25,7 @@ local spec = {
     })
 
     lspconfig.denols.setup({
-      root_dir = lspconfig.util.root_pattern("deno.json"),
+      root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
       init_options = {
         lint = true,
         unstable = true,
@@ -44,6 +44,7 @@ local spec = {
     lspconfig.vtsls.setup({
       root_dir = lspconfig.util.root_pattern("package.json"),
       capabilities = capabilities,
+      single_file_support = false,
     })
     lspconfig.lua_ls.setup(require("lsp.lua"))
     lspconfig.intelephense.setup(require("lsp.php"))
