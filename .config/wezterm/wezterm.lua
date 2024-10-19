@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local keybind = require("keybinds")
+local act = wezterm.action
 
 local fonts = {
   "Moralerspace Argon HWNF",
@@ -88,6 +89,27 @@ wezterm.on("format-tab-title", function(tab)
     { Foreground = { Color = foreground } },
     { Text = title },
   }
+end)
+
+wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
+  local scrollback = pane:get_lines_as_text()
+  local name = os.tmpname()
+  local f = io.open(name, "w+")
+  if f ~= nil then
+    f:write(scrollback)
+    f:flush()
+    f:close()
+  end
+  window:perform_action(
+    act({
+      SpawnCommandInNewTab = {
+        args = { "nvim", name },
+      },
+    }),
+    pane
+  )
+  wezterm.sleep_ms(1000)
+  os.remove(name)
 end)
 
 return config
