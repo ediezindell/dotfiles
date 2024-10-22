@@ -46,6 +46,8 @@ local spec = {
         "emmet-language-server",
         "html-lsp",
         "astro-language-server",
+        "markuplint",
+        "intelephense",
       },
       automatic_installation = true, -- 自動インストール有効化
     })
