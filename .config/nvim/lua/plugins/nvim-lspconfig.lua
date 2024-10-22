@@ -63,9 +63,14 @@ local spec = {
           autoFixOnFormat = true,
         },
       },
+      capabilities = capabilities,
     })
-    lspconfig.emmet_language_server.setup({})
-    lspconfig.astro.setup({})
+    lspconfig.emmet_language_server.setup({
+      capabilities = capabilities,
+    })
+    lspconfig.astro.setup({
+      capabilities = capabilities,
+    })
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
@@ -77,6 +82,10 @@ local spec = {
         null_ls.builtins.formatting.prettier,
         -- null_ls.builtins.formatting.biome,
         null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.markuplint.with({
+          extra_filetypes = { "astro" },
+          command = "markuplint",
+        }),
       },
     })
   end,
