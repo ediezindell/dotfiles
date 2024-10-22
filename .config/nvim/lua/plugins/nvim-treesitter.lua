@@ -8,9 +8,11 @@ local spec = {
     require("nvim-treesitter").setup({
       highlight = {
         enable = true,
+        disable = { "text" },
       },
       indent = {
         enable = true,
+        disable = { "text" },
       },
       ensure_installed = "all",
     })
