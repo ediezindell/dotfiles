@@ -14,14 +14,18 @@ if [ -d "${NEOVIM_HOME}" ]; then
   export PATH="${NEOVIM_HOME}/bin:$PATH"
 fi
 
+export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
-# mise
-eval "$(mise activate zsh --shims)" # should be first
-eval "$(mise activate zsh)"
 
+# cargo
 export CARGO_HOME=$HOME/.cargo
 if [ -d "${CARGO_HOME}" ]; then
   export PATH="${CARGO_HOME}/bin:$PATH"
 fi
 
-export PATH="$HOME/bin:$PATH"
+# Volta
+export VOLTA_HOME=$HOME/.volta/bin
+if [ -d "${VOLTA_HOME}" ]; then
+  export PATH="${VOLTA_HOME}/bin:$PATH"
+fi
+
