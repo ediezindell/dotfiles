@@ -2,7 +2,7 @@ local getFg = function(color)
   return { fg = color }
 end
 local getBg = function(color)
-  return { fg = color }
+  return { bg = color }
 end
 
 local getOpts = function(palette)
