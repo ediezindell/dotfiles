@@ -47,6 +47,7 @@ local spec = {
       single_file_support = false,
     })
     lspconfig.lua_ls.setup(require("lsp.lua"))
+    lspconfig.rust_analyzer.setup({})
     lspconfig.intelephense.setup(require("lsp.php"))
     -- lspconfig.biome.setup(require("lsp.biome"))
     lspconfig.stylelint_lsp.setup({
