@@ -1,3 +1,4 @@
+-- Astro
 ---@type LazySpec
 local spec = {
   "wuelnerdotexe/vim-astro",
