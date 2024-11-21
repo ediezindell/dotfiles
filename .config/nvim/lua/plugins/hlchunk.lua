@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "shellRaining/hlchunk.nvim",
-  event = { "BufReadPre", "BufNewFile" },
+  -- event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("hlchunk").setup({
       chunk = {
