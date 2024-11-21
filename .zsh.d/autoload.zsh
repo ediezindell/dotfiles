@@ -1,6 +1,9 @@
 # starship
 eval "$(starship init zsh)"
 
+# zoxide
+eval "$(zoxide init zsh)"
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
