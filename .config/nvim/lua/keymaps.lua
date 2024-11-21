@@ -28,7 +28,7 @@ end
 InsertKeymap("<Tab>", "<C-t>", "indent")
 InsertKeymap("<S-Tab>", "<C-d>", "indent")
 
----@see https://zenn.dev/vim_jp/articles/2024-06-05-vim-middle-class-features
+---@see https://zenn.dev/vim_jp/articles/2024-06-05-vim-middle-class-features#引用符で囲まれた箇所全体を選択する
 for _, quote in ipairs({ '"', "'", "`" }) do
   MotionKeymap("a" .. quote, "2i" .. quote, "引用符で囲まれた箇所全体を選択する")
 end
