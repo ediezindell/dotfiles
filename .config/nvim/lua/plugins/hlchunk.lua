@@ -1,8 +1,7 @@
 -- インデントを可視化する
 ---@type LazySpec
 local spec = {
-  "ediezindell/hlchunk.nvim",
-  branch = "bugfix/infinite-loop",
+  "shellRaining/hlchunk.nvim",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     require("hlchunk").setup({
