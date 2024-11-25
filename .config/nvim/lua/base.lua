@@ -15,6 +15,14 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
+vim.diagnostic.config({
+  virtual_text = {
+    format = function(diagnostic)
+      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+    end,
+  },
+})
+
 -- lazy.nvimの有効化
 vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
