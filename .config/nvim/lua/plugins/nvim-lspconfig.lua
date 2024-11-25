@@ -6,6 +6,7 @@ local spec = {
     "hrsh7th/cmp-nvim-lsp",
     "nvimtools/none-ls.nvim",
     "nvimtools/none-ls-extras.nvim",
+    "yioneko/nvim-vtsls",
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
@@ -41,10 +42,8 @@ local spec = {
       },
       capabilities = capabilities,
     })
-    lspconfig.vtsls.setup({
-      root_dir = lspconfig.util.root_pattern("package.json"),
-      capabilities = capabilities,
-      single_file_support = false,
+    lspconfig.vtsls = require("vtsls").config({
+      refactor_auto_rename = true,
     })
     lspconfig.lua_ls.setup(require("lsp.lua"))
     lspconfig.rust_analyzer.setup({})
