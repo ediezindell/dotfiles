@@ -6,32 +6,32 @@ local spec = {
   cmd = "Trouble",
   keys = {
     {
-      "<leader>xx",
+      "<space>xx",
       "<cmd>Trouble diagnostics toggle<cr>",
       desc = "Diagnostics (Trouble)",
     },
     {
-      "<leader>xX",
+      "<space>xX",
       "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
       desc = "Buffer Diagnostics (Trouble)",
     },
     {
-      "<leader>cs",
+      "<space>cs",
       "<cmd>Trouble symbols toggle focus=false<cr>",
       desc = "Symbols (Trouble)",
     },
     {
-      "<leader>cl",
+      "<space>cl",
       "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
       desc = "LSP Definitions / references / ... (Trouble)",
     },
     {
-      "<leader>xL",
+      "<space>xL",
       "<cmd>Trouble loclist toggle<cr>",
       desc = "Location List (Trouble)",
     },
     {
-      "<leader>xQ",
+      "<space>xQ",
       "<cmd>Trouble qflist toggle<cr>",
       desc = "Quickfix List (Trouble)",
     },

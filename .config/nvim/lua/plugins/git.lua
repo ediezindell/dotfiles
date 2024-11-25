@@ -7,9 +7,9 @@ local spec = {
     require("git").setup({
       keymaps = {
         -- Open blame window
-        blame = "<Leader>gb",
+        blame = "<space>gb",
         -- Open file/folder in git repository
-        browse = "<Leader>go",
+        browse = "<space>go",
       },
     })
   end,
