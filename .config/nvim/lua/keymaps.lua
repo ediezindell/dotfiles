@@ -35,8 +35,6 @@ end
 
 MotionKeymap("i<leader>", "iW", "スペースで囲われた範囲を選択する")
 
-NormalKeymap("M", "%", "対応する括弧へ移動する")
-
 VisualKeymap("y", "mzy`z", "Visual コピー時にカーソル位置を保存")
 VisualKeymap("p", "P", "Visual ペースト時にレジスタの変更を防止")
 
@@ -44,3 +42,5 @@ VisualKeymap("<", "<gv", "Visual 選択時に連続してインデント操作")
 VisualKeymap(">", ">gv", "Visual 選択時に連続してインデント操作")
 
 NormalKeymap("/", [[/\v]], "very magicフラグを入れた状態で検索開始")
+
+NormalKeymap("<S-m>", "`", "jump to mark")
