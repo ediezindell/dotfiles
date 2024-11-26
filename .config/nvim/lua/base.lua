@@ -18,7 +18,11 @@ end)(vim.treesitter.start)
 vim.diagnostic.config({
   virtual_text = {
     format = function(diagnostic)
-      return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+      if diagnostic.code ~= nil then
+        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+      else
+        return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+      end
     end,
   },
 })
