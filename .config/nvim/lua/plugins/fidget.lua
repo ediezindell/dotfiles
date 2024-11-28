@@ -3,5 +3,6 @@
 local spec = {
   "j-hui/fidget.nvim",
   event = "VeryLazy",
+  opts = {},
 }
 return spec

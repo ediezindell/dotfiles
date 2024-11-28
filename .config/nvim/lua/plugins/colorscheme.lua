@@ -27,6 +27,7 @@ local spec = {
   {
     "tanvirtin/monokai.nvim",
     lazy = false,
+    priority = 1000,
     config = function()
       local monokai = require("monokai")
       local opts = getOpts(monokai.classic)
@@ -36,9 +37,11 @@ local spec = {
   {
     "sainnhe/sonokai",
     lazy = false,
-    priority = 1000,
-    config = function()
+    priority = 1001,
+    init = function()
       vim.g.sonokai_enable_italic = false
+    end,
+    config = function()
       vim.cmd.colorscheme("sonokai")
     end,
   },

@@ -17,13 +17,6 @@ CommandKeymap("<leader>sv", "vsplit", "vsplit") -- 左右
 -- クリップボードの内容でバッファを置換
 CommandKeymap("<leader><C-v>", [[%d | normal! "+P]], "Replace buffer with clipboard contents")
 
--- 方向キー無効化
-local arrowKeys = { "<Up>", "<Down>", "<Left>", "<Right>" }
-for _, key in ipairs(arrowKeys) do
-  NormalKeymap(key, "", "disabled")
-  VisualKeymap(key, "", "disabled")
-end
-
 -- insert mode中にTabでインデント
 InsertKeymap("<Tab>", "<C-t>", "indent")
 InsertKeymap("<S-Tab>", "<C-d>", "indent")
@@ -44,3 +37,5 @@ VisualKeymap(">", ">gv", "Visual 選択時に連続してインデント操作")
 NormalKeymap("/", [[/\v]], "very magicフラグを入れた状態で検索開始")
 
 NormalKeymap("<S-m>", "`", "jump to mark")
+
+CommandKeymap("g/", "lua SearchByClipboard()", "クリップボードの内容で検索する")

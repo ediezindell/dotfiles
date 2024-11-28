@@ -66,3 +66,38 @@ Debounce = function(func, wait)
     end)
   end
 end
+
+---エスケープしたクリップボードの内容で検索する
+SearchByClipboard = function()
+  local escape_special_chars = function(str)
+    local escape_table = {
+      ["<"] = [[\<]],
+      [">"] = [[\>]],
+      ["("] = [[\()]],
+      [")"] = [[\)]],
+      ["{"] = [[\{]],
+      ["}"] = [[\}]],
+      ["["] = [[\[]],
+      ["]"] = "\\]",
+      ["/"] = [[\/]],
+      ["\\"] = [[\\]],
+      ['"'] = [[\"]],
+      ["'"] = [[\']],
+      ["="] = [[\=]],
+      ["."] = [[\.]],
+      ["?"] = [[\?]],
+      ["*"] = [[\*]],
+      ["+"] = [[\+]],
+      ["-"] = [[\-]],
+      ["^"] = [[\^]],
+      ["$"] = [[\$]],
+      ["\n"] = [[\n]],
+    }
+    return str:gsub(".", function(c)
+      return escape_table[c] or c
+    end)
+  end
+  local search_term = escape_special_chars(vim.fn.getreg("+"))
+  local command = "/" .. search_term
+  vim.api.nvim_feedkeys(command, "c", true)
+end
