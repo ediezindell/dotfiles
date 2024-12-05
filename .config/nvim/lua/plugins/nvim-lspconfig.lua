@@ -12,13 +12,10 @@ local spec = {
   config = function()
     local lspconfig = require("lspconfig")
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    local lspList = {
-      "html",
-      "cssls",
-    }
-    for _, server_name in ipairs(lspList) do
-      lspconfig[server_name].setup({})
-    end
+    lspconfig.html.setup({})
+    lspconfig.cssls.setup({
+      cmd = { "css-languageserver", "--stdio" },
+    })
     lspconfig.typos_lsp.setup({
       init_options = {
         config = "~/.config/nvim/spell/.typos.toml",
@@ -65,9 +62,9 @@ local spec = {
       },
       capabilities = capabilities,
     })
-    lspconfig.emmet_language_server.setup({
-      capabilities = capabilities,
-    })
+    -- lspconfig.emmet_language_server.setup({
+    --   capabilities = capabilities,
+    -- })
     lspconfig.astro.setup({
       capabilities = capabilities,
     })
