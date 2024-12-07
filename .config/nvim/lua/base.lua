@@ -6,8 +6,8 @@ vim.scriptencoding = "utf-8"
 vim.api.nvim_set_var("mapleader", " ")
 vim.api.nvim_set_var("maplocalleader", "_")
 
--- ignore parser error
--- @see https://zenn.dev/kawarimidoll/articles/18ee967072def7
+-- treesitterのパースエラーを無視
+---@see https://zenn.dev/kawarimidoll/articles/18ee967072def7
 vim.treesitter.start = (function(wrapped)
   return function(bufnr, lang)
     lang = lang or vim.fn.getbufvar(bufnr or "", "&filetype")
@@ -15,6 +15,7 @@ vim.treesitter.start = (function(wrapped)
   end
 end)(vim.treesitter.start)
 
+-- diagnosticの表示フォーマット変更
 vim.diagnostic.config({
   virtual_text = {
     format = function(diagnostic)
