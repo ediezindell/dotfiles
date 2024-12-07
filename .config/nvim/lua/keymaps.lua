@@ -11,11 +11,11 @@ CommandKeymap("<Esc><Esc>", "set nohlsearch", "no highlight")
 NormalKeymap("Y", "y$", "yank to EOL")
 
 -- split view
-CommandKeymap("<leader>ss", "split", "split") -- 上下
-CommandKeymap("<leader>sv", "vsplit", "vsplit") -- 左右
+CommandKeymap("<space>ss", "split", "split") -- 上下
+CommandKeymap("<space>sv", "vsplit", "vsplit") -- 左右
 
 -- クリップボードの内容でバッファを置換
-CommandKeymap("<leader><C-v>", [[%d | normal! "+P]], "Replace buffer with clipboard contents")
+CommandKeymap("<space><C-v>", [[%d | normal! "+P]], "Replace buffer with clipboard contents")
 
 -- insert mode中にTabでインデント
 InsertKeymap("<Tab>", "<C-t>", "indent")
@@ -26,7 +26,7 @@ for _, quote in ipairs({ '"', "'", "`" }) do
   MotionKeymap("a" .. quote, "2i" .. quote, "引用符で囲まれた箇所全体を選択する")
 end
 
-MotionKeymap("i<leader>", "iW", "スペースで囲われた範囲を選択する")
+MotionKeymap("i<space>", "iW", "スペースで囲われた範囲を選択する")
 
 VisualKeymap("y", "mzy`z", "Visual コピー時にカーソル位置を保存")
 VisualKeymap("p", "P", "Visual ペースト時にレジスタの変更を防止")
