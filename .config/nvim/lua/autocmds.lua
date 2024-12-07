@@ -2,7 +2,7 @@ local function aucmd(event, opts)
   vim.api.nvim_create_autocmd(event, opts)
 end
 local function group(name)
-	vim.api.nvim_create_augroup(name, { clear = true })
+  vim.api.nvim_create_augroup(name, { clear = true })
 end
 
 -- Insertモードを抜けた際に英字入力に設定
@@ -126,4 +126,12 @@ end
 aucmd("BufNewFile", {
   callback = handle_missing_file,
   group = group("CheckPrefixMatchFiles"),
+})
+
+-- o/Oによる行の追加時はコメント化しない
+aucmd("FileType", {
+  callback = function()
+    vim.opt_local.fo:remove("o")
+  end,
+  group = group("FormatOptions"),
 })
