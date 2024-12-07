@@ -1,49 +1,40 @@
+---@alias Rhs string | function
+---@alias KeymapFunc fun(mode: string | string[], lhs: string, rhs: Rhs, desc: string)
+---@alias ModeKeymapFunc fun(lhs: string, rhs: Rhs, desc: string)
+
 ---keymapを設定する
----@param mode string | string[] モード
----@param lhs string 入力
----@param rhs string 実行内容
----@param desc string 説明
+---@type KeymapFunc
 Keymap = function(mode, lhs, rhs, desc)
   local opts = { noremap = true, silent = true, desc = desc }
   vim.keymap.set(mode, lhs, rhs, opts)
 end
 
 ---インサートモードのkeymapを設定する
----@param lhs string 入力
----@param rhs string 実行内容
----@param desc string 説明
+---@type ModeKeymapFunc
 InsertKeymap = function(lhs, rhs, desc)
   Keymap("i", lhs, rhs, desc)
 end
 
 ---ノーマルモードのkeymapを設定する
----@param lhs string 入力
----@param rhs string 実行内容
----@param desc string 説明
+---@type ModeKeymapFunc
 NormalKeymap = function(lhs, rhs, desc)
   Keymap("n", lhs, rhs, desc)
 end
 
 ---ビジュアルモードのkeymapを設定する
----@param lhs string 入力
----@param rhs string 実行内容
----@param desc string 説明
+---@type ModeKeymapFunc
 VisualKeymap = function(lhs, rhs, desc)
   Keymap("x", lhs, rhs, desc)
 end
 
 ---モーション用のkeymapを設定する
----@param lhs string 入力
----@param rhs string 実行内容
----@param desc string 説明
+---@type ModeKeymapFunc
 MotionKeymap = function(lhs, rhs, desc)
   Keymap({ "x", "o" }, lhs, rhs, desc)
 end
 
 ---コマンドを実行するkeymapを設定する
----@param lhs string 入力
----@param command string コマンド
----@param desc string 説明
+---@type ModeKeymapFunc
 CommandKeymap = function(lhs, command, desc)
   NormalKeymap(lhs, "<Cmd>" .. command .. "<CR>", desc)
 end
