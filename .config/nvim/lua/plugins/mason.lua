@@ -1,42 +1,39 @@
 -- null-ls (LSPではないものをLSP化する) を利用する
 ---@type LazySpec
 local spec = {
-  "jay-babu/mason-null-ls.nvim",
-  lazy = false,
-  dependencies = {
-    {
-      "williamboman/mason.nvim",
-      build = ":MasonUpdate",
-      cmd = {
-        "Mason",
-        "MasonInstall",
-        "MasonUninstall",
-        "MasonUninstallAll",
-        "MasonLog",
-        "MasonUpdate",
-      },
-      config = function()
-        require("mason").setup({
-          ui = {
-            icons = {
-              package_installed = "✓",
-              package_pending = "➜",
-              package_uninstalled = "✗",
-            },
-            border = "single",
-          },
-        })
-      end,
+  {
+    "williamboman/mason.nvim",
+    build = ":MasonUpdate",
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+      "MasonUpdate",
     },
-    "nvimtools/none-ls.nvim",
-    "nvimtools/none-ls-extras.nvim",
-    "gbprod/none-ls-shellcheck.nvim",
-    "nvim-lua/plenary.nvim",
-    "vim-test/vim-test",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+        border = "single",
+      },
+    },
   },
-  config = function()
-    local mason_nls = require("mason-null-ls")
-    mason_nls.setup({
+  {
+    "jay-babu/mason-null-ls.nvim",
+    lazy = false,
+    dependencies = {
+      "nvimtools/none-ls.nvim",
+      "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-shellcheck.nvim",
+      "nvim-lua/plenary.nvim",
+      "vim-test/vim-test",
+    },
+    opts = {
       ensure_installed = {
         "typos-lsp",
         "lua-language-server",
@@ -50,8 +47,8 @@ local spec = {
         "intelephense",
       },
       automatic_installation = true, -- 自動インストール有効化
-    })
-  end,
+    },
+  },
 }
 
 return spec
