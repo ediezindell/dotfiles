@@ -280,21 +280,8 @@ local selectHandler = {
 ---@type LazySpec
 local spec = {
   "stevearc/oil.nvim",
-  dependencies = {
-    {
-      "echasnovski/mini.icons",
-      opts = {
-        filetype = {
-          typescript = {
-            hl = "MiniIconsCyan",
-          },
-          lua = {
-            hl = "MiniIconsCyan",
-          },
-        },
-      },
-    },
-  },
+  event = { "BufReadPre", "BufNewFile" },
+  keys = { { "-", "<CMD>Oil<CR>" } },
   init = function()
     local oilPathPatterns = { "oil://", "oil-ssh://", "oil-trash://" }
     local path = vim.fn.expand("%:p")
@@ -339,11 +326,6 @@ local spec = {
         "icon",
       },
     }
-  end,
-  event = { "BufReadPre", "BufNewFile" },
-  config = function(_, opts)
-    require("oil").setup(opts)
-    vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
   end,
 }
 

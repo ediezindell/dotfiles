@@ -1,6 +1,20 @@
 -- emmet parserの実装
 ---@type LazySpec
 local spec = {
+  -- アイコン
+  {
+    "echasnovski/mini.icons",
+    opts = {
+      filetype = {
+        typescript = {
+          hl = "MiniIconsCyan",
+        },
+        lua = {
+          hl = "MiniIconsCyan",
+        },
+      },
+    },
+  },
   {
     -- git差分表示
     "echasnovski/mini.diff",

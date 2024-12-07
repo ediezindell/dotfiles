@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "machakann/vim-highlightedyank",
-  config = function()
+  init = function()
     vim.g.highlightedyank_highlight_duration = 300
   end,
   event = { "BufEnter", "BufNewFile" },
