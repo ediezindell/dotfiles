@@ -1,65 +1,77 @@
--- insert mode 抜けた際に英字入力にする
-vim.cmd("autocmd InsertLeave * :silent !/opt/homebrew/bin/im-select com.google.inputmethod.Japanese.Roman")
-
-function _G.set_terminal_keymaps()
-  local terminalKeymap = function(key, value)
-    local opts = { buffer = 0 }
-    vim.keymap.set("t", key, value, opts)
-  end
-  local keymaps = {
-    ["<esc>"] = [[<C-\><C-n>]],
-    ["<C-c>"] = [[<C-\>n>]],
-    -- ["jk"] = [[<C-\>n>]],
-    -- ["<C-h>"] = [[<C-\>wincmd h<CR>]],
-    -- ["<C-j>"] = [[<C-\>wincmd j<CR>]],
-    -- ["<C-k>"] = [[<C-\>wincmd k<CR>]],
-    -- ["<C-l>"] = [[<C-\>wincmd l<CR>]],
-    -- ["<C-w>"] = [[<C-\><C-n><C-w>]],
-  }
-  for k, v in pairs(keymaps) do
-    terminalKeymap(k, v)
-  end
+local function aucmd(event, opts)
+  vim.api.nvim_create_autocmd(event, opts)
+end
+local function group(name)
+	vim.api.nvim_create_augroup(name, { clear = true })
 end
 
--- if you only want these mappings for toggle term use term://*toggleterm#* instead
-vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+-- Insertモードを抜けた際に英字入力に設定
+---@refs https://github.com/daipeihust/im-select
+aucmd("InsertLeave", {
+  command = "silent !im-select com.google.inputmethod.Japanese.Roman",
+  group = group("AutoRoman"),
+})
 
--- 検索時にhlsearchを有効にする
-vim.api.nvim_create_augroup("AutoHLS", { clear = true })
-vim.api.nvim_create_autocmd("CmdlineLeave", {
+-- ターミナルのキーマッピングを設定
+local function set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  local keymaps = {
+    ["<esc>"] = [[<C-\><C-n>]],
+    ["<C-c>"] = [[<C-\><C-n>]],
+  }
+
+  for key, cmd in pairs(keymaps) do
+    vim.keymap.set("t", key, cmd, opts)
+  end
+end
+aucmd("TermOpen", {
+  pattern = "term://*",
+  callback = set_terminal_keymaps,
+  group = group("TermKeymap"),
+})
+
+-- 検索時にhlsearchを有効化
+aucmd("CmdlineLeave", {
   pattern = { "/", "?", "*" },
   command = "set hlsearch",
-  group = "AutoHLS",
+  group = group("AutoHLS"),
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(_)
-    CommandKeymap("K", "lua vim.lsp.buf.hover()", "lsp-hover")
-    CommandKeymap("gd", "lua vim.lsp.buf.definition()", "lsp-def")
-    CommandKeymap("gt", "lua vim.lsp.buf.type_definition()", "lsp-type-def")
-    CommandKeymap("gr", "lua vim.lsp.buf.rename()", "lsp-rename")
-    CommandKeymap("gn", "lua vim.lsp.buf.rename()", "lsp-rename")
-    CommandKeymap("ga", "lua vim.lsp.buf.code_action()", "lsp-codeaction")
-    CommandKeymap("ge", "lua vim.diagnostic.open_float()", "lsp-open-float")
-    CommandKeymap("g]", "lua vim.diagnostic.goto_next()", "lsp-goto-next")
-    CommandKeymap("g[", "lua vim.diagnostic.goto_prev()", "lsp-goto-prev")
+-- LSPアタッチ時のキーマッピングとハンドラ設定
+local function set_lsp_keymaps()
+  local mappings = {
+    K = vim.lsp.buf.hover,
+    gd = vim.lsp.buf.definition,
+    gt = vim.lsp.buf.type_definition,
+    gr = vim.lsp.buf.rename,
+    gn = vim.lsp.buf.rename,
+    ga = vim.lsp.buf.code_action,
+    ge = vim.diagnostic.open_float,
+    ["g]"] = vim.diagnostic.goto_next,
+    ["g["] = vim.diagnostic.goto_prev,
+  }
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "rounded",
-    })
+  for key, func in pairs(mappings) do
+    vim.keymap.set("n", key, func, { buffer = 0 })
+  end
+
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
+end
+aucmd("LspAttach", {
+  callback = set_lsp_keymaps,
+  group = group("LspKeymap"),
+})
+
+-- 保存時にフォーマットを実行
+aucmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format()
   end,
+  group = group("AutoFormat"),
 })
-
--- 保存時フォーマット
-vim.cmd([[
-  augroup FormatAutogroup
-    autocmd!
-    autocmd BufWritePre * lua vim.lsp.buf.format()
-  augroup END
-]])
 
 -- スクロール位置を記憶
-vim.api.nvim_create_autocmd("BufReadPost", {
+aucmd("BufReadPost", {
   callback = function()
     local last_pos = vim.fn.line([['"]])
     if last_pos > 0 and last_pos <= vim.fn.line("$") then
@@ -68,44 +80,35 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
--- 保存時にディレクトリが存在しなければ作成する
-local auto_mkdir_group = vim.api.nvim_create_augroup("auto_mkdir_group", { clear = true })
-local function auto_mkdir()
+-- 保存時にディレクトリが存在しなければ作成
+local function create_missing_dirs()
   local dir = vim.fn.expand("<afile>:p:h")
   if vim.fn.isdirectory(dir) == 0 then
     vim.fn.mkdir(dir, "p")
   end
 end
-vim.api.nvim_create_autocmd("BufWritePre", {
-  group = auto_mkdir_group,
-  pattern = "*",
-  callback = auto_mkdir,
+aucmd("BufWritePre", {
+  callback = create_missing_dirs,
+  group = group("AutoMkdir"),
 })
 
--- 前方一致するファイルを選択して開く
---- @see https://zenn.dev/kawarimidoll/articles/33cf46fae69809
-local function check_prefix_match_files()
-  -- 現在のファイル名とディレクトリを取得
+-- 存在しないファイルが開かれた際の処理
+local function handle_missing_file()
   local fname = vim.fn.expand("<afile>")
   local dname = vim.fn.fnamemodify(fname, ":h")
-
-  -- 当該ディレクトリ内のファイル一覧を取得
   local files_in_dir = vim.split(vim.fn.glob(dname == "." and "*" or dname .. "/*"), "\n")
 
-  -- ファイル名が前方一致するものを抽出
-  local possible = vim.tbl_filter(function(v)
-    return v:find("^" .. vim.pesc(fname)) ~= nil
+  local matches = vim.tbl_filter(function(f)
+    return f:find("^" .. vim.pesc(fname)) ~= nil
   end, files_in_dir)
 
-  -- 候補がなければ終了
-  if vim.tbl_isempty(possible) then
+  if vim.tbl_isempty(matches) then
     return
   end
 
-  -- 候補のリストを confirm() を使って表示
   local choices = {}
-  for k, v in ipairs(possible) do
-    table.insert(choices, string.format("&%d %s", k, v))
+  for i, file in ipairs(matches) do
+    table.insert(choices, string.format("&%d %s", i, file))
   end
 
   local choice = vim.fn.confirm(
@@ -114,20 +117,13 @@ local function check_prefix_match_files()
     0
   )
 
-  -- 選択されなければ終了
-  if choice == 0 then
-    return
+  if choice > 0 then
+    vim.fn.timer_start(0, function()
+      vim.cmd("edit " .. vim.fn.fnameescape(matches[choice]))
+    end)
   end
-
-  -- 選択されたファイルを開く タイマーを使う理由は後述
-  vim.fn.timer_start(0, function()
-    vim.cmd("edit " .. vim.fn.fnameescape(possible[choice]))
-  end)
 end
-
--- 存在しないファイルが開かれたときに起動
-vim.api.nvim_create_autocmd("BufNewFile", {
-  pattern = "*",
-  callback = check_prefix_match_files,
-  group = vim.api.nvim_create_augroup("check_prefix_match_files", { clear = true }),
+aucmd("BufNewFile", {
+  callback = handle_missing_file,
+  group = group("CheckPrefixMatchFiles"),
 })
