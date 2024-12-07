@@ -4,7 +4,7 @@ local spec = {
   "is0n/fm-nvim",
   cmd = "Gitui",
   keys = {
-    { "<Up>", "<Cmd>Gitui<CR>" },
+    { "<Up>", "<Cmd>Gitui<CR>", desc = "open gitui" },
   },
   opts = {
     ui = {

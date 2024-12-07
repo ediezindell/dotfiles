@@ -10,6 +10,7 @@ local spec = {
   keys = { {
     "<space>t",
     "<Cmd>ToggleTerm<CR>",
+    desc = "toggle terminal",
   } },
 }
 

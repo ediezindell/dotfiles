@@ -281,7 +281,7 @@ local selectHandler = {
 local spec = {
   "stevearc/oil.nvim",
   event = { "BufReadPre", "BufNewFile" },
-  keys = { { "-", "<CMD>Oil<CR>" } },
+  keys = { { "-", "<CMD>Oil<CR>", desc = "open parent directory with oil" } },
   init = function()
     local oilPathPatterns = { "oil://", "oil-ssh://", "oil-trash://" }
     local path = vim.fn.expand("%:p")
