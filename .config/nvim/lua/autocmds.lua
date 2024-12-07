@@ -99,29 +99,47 @@ local function handle_missing_file()
   local files_in_dir = vim.split(vim.fn.glob(dname == "." and "*" or dname .. "/*"), "\n")
 
   local matches = vim.tbl_filter(function(f)
-    return f:find("^" .. vim.pesc(fname)) ~= nil
+    return f:find("^" .. vim.pesc(fname)) ~= nil -- 前方一致
   end, files_in_dir)
+  if vim.tbl_isempty(matches) then
+    matches = vim.tbl_filter(function(f)
+      return f:find(vim.pesc(fname)) ~= nil -- 部分一致
+    end, files_in_dir)
+  end
 
   if vim.tbl_isempty(matches) then
     return
   end
 
+  local matchCount = 0
   local choices = {}
   for i, file in ipairs(matches) do
-    table.insert(choices, string.format("&%d %s", i, file))
+    matchCount = i
+    table.insert(choices, string.format("%d %s", i, file))
   end
 
-  local choice = vim.fn.confirm(
-    string.format('"%s" does not exist. Do you want to open file below?', fname),
-    table.concat(choices, "\n"),
-    0
-  )
-
-  if choice > 0 then
+  local function open(file)
     vim.fn.timer_start(0, function()
-      vim.cmd("edit " .. vim.fn.fnameescape(matches[choice]))
+      vim.cmd("bdelete")
+      vim.cmd("edit " .. vim.fn.fnameescape(file))
     end)
   end
+
+  if matchCount == 1 then
+    local file = matches[matchCount]
+    open(file)
+    return
+  end
+
+  vim.ui.select(
+    matches,
+    { prompt = string.format("The '%s' does not exist. Choose from the following options:", fname) },
+    function(file)
+      if file ~= nil then
+        open(file)
+      end
+    end
+  )
 end
 aucmd("BufNewFile", {
   callback = handle_missing_file,
