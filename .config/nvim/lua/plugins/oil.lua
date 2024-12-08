@@ -300,13 +300,13 @@ local spec = {
       keymaps = {
         -- ["<CR>"] = "actions.select",
         ["<CR>"] = selectHandler,
-        ["<C-v>"] = "actions.select_vsplit",
+        -- ["<C-v>"] = "actions.select_vsplit",
         ["<C-p>"] = "actions.preview",
-        ["<C-r>"] = "actions.refresh",
+        -- ["<C-r>"] = "actions.refresh",
         -- ["g."] = "actions.toggle_hidden",
         ["-"] = "actions.parent",
         ["q"] = "actions.close",
-        ["?"] = "actions.show_help",
+        -- ["?"] = "actions.show_help",
       },
       view_options = {
         show_hidden = true,
