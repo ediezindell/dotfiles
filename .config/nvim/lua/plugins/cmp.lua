@@ -38,12 +38,12 @@ local spec = {
 
       mapping = cmp.mapping.preset.insert({
         ["<Tab>"] = cmp.mapping.select_next_item(),
-        ["<C-n>"] = cmp.mapping.select_next_item(),
+        -- ["<C-n>"] = cmp.mapping.select_next_item(),
         ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-b>"] = cmp.mapping.select_prev_item({ count = 4 }),
-        ["<C-f>"] = cmp.mapping.select_next_item({ count = 4 }),
-        ["<C-Space>"] = cmp.mapping.complete(),
+        -- ["<C-p>"] = cmp.mapping.select_prev_item(),
+        -- ["<C-b>"] = cmp.mapping.select_prev_item({ count = 4 }),
+        -- ["<C-f>"] = cmp.mapping.select_next_item({ count = 4 }),
+        -- ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
         ["<Up>"] = cmp.mapping(function(fallback)
