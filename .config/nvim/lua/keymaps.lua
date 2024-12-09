@@ -26,3 +26,19 @@ for _, quote in ipairs({ '"', "'", "`" }) do
 end
 MotionKeymap("i<space>", "iW", "スペースで囲われた範囲を選択する")
 MotionKeymap("a<space>", "2iW", "スペースで囲われた範囲を選択する")
+
+NormalKeymap("<space>bc", function()
+  local ftype = vim.api.nvim_eval("&filetype")
+  vim.cmd(string.format(
+    [[
+    vsplit
+    wincmd l
+    enew
+    setlocal buftype=nofile | set filetype=%s
+    normal! P
+    diffthis
+    wincmd h | diffthis
+    ]],
+    ftype
+  ))
+end, "クリップボードの内容と比較")
