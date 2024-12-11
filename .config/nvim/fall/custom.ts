@@ -1,17 +1,11 @@
 import type { Entrypoint } from "jsr:@vim-fall/custom@^0.1.0";
 import {
-  composeActions,
   composeRenderers,
   refineCurator,
   refineSource,
 } from "jsr:@vim-fall/std@^0.10.0";
 import * as builtin from "jsr:@vim-fall/std@^0.10.0/builtin";
-import * as extra from "jsr:@vim-fall/extra@^0.2.0";
 import { SEPARATOR } from "jsr:@std/path@^1.0.8/constants";
-
-//import { file } from "http://localhost:6000/file:///Users/alisue/ogh/vim-fall/deno-fall-std/builtin/source/file.ts";
-import { MODERN_THEME } from "http://localhost:6000/file:///Users/alisue/ogh/vim-fall/deno-fall-std/builtin/theme/modern.ts";
-import { ASCII_THEME } from "http://localhost:6000/file:///Users/alisue/ogh/vim-fall/deno-fall-std/builtin/theme/ascii.ts";
 
 // NOTE:
 //
@@ -19,8 +13,6 @@ import { ASCII_THEME } from "http://localhost:6000/file:///Users/alisue/ogh/vim-
 // Install https://www.nerdfonts.com/ to use 'builtin.renderer.nerdfont'
 // Install https://github.com/thinca/vim-qfreplace to use 'Qfreplace'
 //
-
-const coordinator = builtin.coordinator.modern;
 
 const myPathActions = {
   ...builtin.action.defaultOpenActions,
@@ -93,8 +85,6 @@ const myFilterFile = (path: string) => {
     ".xls",
     ".xlsx",
     ".zip",
-    "id_ed25519",
-    "id_rsa",
   ];
   for (const exclude of excludes) {
     if (path.endsWith(exclude)) {
@@ -116,10 +106,6 @@ const myFilterDirectory = (path: string) => {
     "build", // C/C++
     "node_modules", // Node.js
     "target", // Rust
-    ".coverage",
-    `nvim${SEPARATOR}pack`,
-    `zsh${SEPARATOR}.addons`,
-    `karabiner${SEPARATOR}automatic_backups`,
   ];
   for (const exclude of excludes) {
     if (path.endsWith(`${SEPARATOR}${exclude}`)) {
@@ -135,13 +121,12 @@ export const main: Entrypoint = ({
   refineSetting,
 }) => {
   refineSetting({
-    coordinator: coordinator({
+    coordinator: builtin.coordinator.modern({
       widthRatio: 0.9,
-      heightRatio: 0.8,
+      heightRatio: 0.9,
     }),
+
     theme: builtin.theme.MODERN_THEME,
-    // theme: MODERN_THEME,
-    // theme: ASCII_THEME,
   });
 
   definePickerFromCurator(
@@ -204,33 +189,13 @@ export const main: Entrypoint = ({
     },
   );
 
-  definePickerFromSource("mru", extra.source.mr, {
-    matchers: [builtin.matcher.fzf],
-    sorters: [
-      builtin.sorter.noop,
-      builtin.sorter.lexical,
-      builtin.sorter.lexical({ reverse: true }),
-    ],
-    renderers: [
-      composeRenderers(builtin.renderer.smartPath, builtin.renderer.nerdfont),
-      builtin.renderer.nerdfont,
-      builtin.renderer.noop,
-    ],
-    previewers: [builtin.previewer.file],
-    actions: {
-      ...myPathActions,
-      ...myQuickfixActions,
-      ...myMiscActions,
-      ...extra.action.defaultMrDeleteActions,
-    },
-    defaultAction: "open",
-  });
-
   definePickerFromSource(
-    "mrw",
+    "file",
     refineSource(
-      extra.source.mr({ type: "mrw" }),
-      builtin.refiner.cwd,
+      builtin.source.file({
+        filterFile: myFilterFile,
+        filterDirectory: myFilterDirectory,
+      }),
       builtin.refiner.relativePath,
     ),
     {
@@ -246,79 +211,6 @@ export const main: Entrypoint = ({
         builtin.renderer.noop,
       ],
       previewers: [builtin.previewer.file],
-      actions: {
-        ...myPathActions,
-        ...myQuickfixActions,
-        ...myMiscActions,
-        ...extra.action.defaultMrDeleteActions,
-      },
-      defaultAction: "open",
-    },
-  );
-
-  definePickerFromSource("mrr", extra.source.mr({ type: "mrr" }), {
-    matchers: [builtin.matcher.fzf],
-    renderers: [
-      composeRenderers(builtin.renderer.smartPath, builtin.renderer.nerdfont),
-      builtin.renderer.nerdfont,
-      builtin.renderer.noop,
-    ],
-    actions: {
-      ...myPathActions,
-      ...myQuickfixActions,
-      ...myMiscActions,
-      ...extra.action.defaultMrDeleteActions,
-      "cd-and-open": composeActions(builtin.action.cd, builtin.action.open),
-    },
-    defaultAction: "cd-and-open",
-    coordinator: coordinator({
-      hidePreview: true,
-    }),
-  });
-
-  definePickerFromSource("mrd", extra.source.mr({ type: "mrd" }), {
-    matchers: [builtin.matcher.fzf],
-    renderers: [
-      composeRenderers(builtin.renderer.smartPath, builtin.renderer.nerdfont),
-      builtin.renderer.nerdfont,
-      builtin.renderer.noop,
-    ],
-    actions: {
-      ...myPathActions,
-      ...myQuickfixActions,
-      ...myMiscActions,
-      ...extra.action.defaultMrDeleteActions,
-      "cd-and-open": composeActions(builtin.action.cd, builtin.action.open),
-    },
-    defaultAction: "cd-and-open",
-    coordinator: coordinator({
-      hidePreview: true,
-    }),
-  });
-
-  definePickerFromSource(
-    "file",
-    refineSource(
-      builtin.source.file({
-        filterFile: myFilterFile,
-        filterDirectory: myFilterDirectory,
-        relativeFromBase: true,
-      }),
-      builtin.refiner.relativePath,
-    ),
-    {
-      matchers: [builtin.matcher.fzf, builtin.matcher.regexp],
-      sorters: [
-        builtin.sorter.noop,
-        builtin.sorter.lexical,
-        builtin.sorter.lexical({ reverse: true }),
-      ],
-      renderers: [
-        composeRenderers(builtin.renderer.smartPath, builtin.renderer.nerdfont),
-        builtin.renderer.nerdfont,
-        builtin.renderer.noop,
-      ],
-      previewers: [builtin.previewer.file, builtin.previewer.noop],
       actions: {
         ...myPathActions,
         ...myQuickfixActions,
@@ -363,6 +255,9 @@ export const main: Entrypoint = ({
       ...builtin.action.defaultBufferActions,
     },
     defaultAction: "open",
+    coordinator: builtin.coordinator.modern({
+      hidePreview: true,
+    }),
   });
 
   definePickerFromSource(
