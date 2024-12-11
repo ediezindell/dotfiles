@@ -32,3 +32,5 @@ if [ -d "${VOLTA_HOME}" ]; then
   export PATH="${VOLTA_HOME}/bin:$PATH"
 fi
 
+# npm completion
+eval "`npm completion`" 
