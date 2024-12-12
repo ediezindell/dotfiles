@@ -24,7 +24,7 @@ local spec = {
 
     lspconfig.denols.setup({
       root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-      single_file_support = true,
+      -- single_file_support = true,
       init_options = {
         lint = true,
         unstable = true,
@@ -40,9 +40,8 @@ local spec = {
       },
       capabilities = capabilities,
     })
-    lspconfig.vtsls = require("vtsls").config({
-      refactor_auto_rename = true,
-    })
+    require("lspconfig.configs").vtsls = require("vtsls").lspconfig
+    lspconfig.vtsls.setup({})
     lspconfig.lua_ls.setup(require("lsp.lua"))
     lspconfig.rust_analyzer.setup({})
     lspconfig.intelephense.setup(require("lsp.php"))
