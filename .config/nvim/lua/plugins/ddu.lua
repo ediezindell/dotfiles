@@ -3,7 +3,7 @@ local spec = {
   "Shougo/ddu.vim",
   lazy = false,
   dependencies = {
-    "vim-denops/denops.vim",
+    "Shougo/ddu-commands.vim",
     "Shougo/ddu-filter-matcher_files",
     "Shougo/ddu-filter-matcher_substring",
     "Shougo/ddu-filter-sorter_alpha",
@@ -11,10 +11,11 @@ local spec = {
     "Shougo/ddu-source-file_rec",
     "Shougo/ddu-ui-ff",
     "kuuote/ddu-source-git_status",
+    "kuuote/ddu-source-mr",
     "kyoh86/ddu-filter-converter_hl_dir",
-    "shun/ddu-source-rg",
+    "lambdalisue/vim-mr",
     "uga-rosa/ddu-filter-converter_devicon",
-    "Shougo/ddu-commands.vim",
+    "vim-denops/denops.vim",
   },
   init = function()
     local group = vim.api.nvim_create_augroup("DduAuGroup", { clear = true })
@@ -39,7 +40,7 @@ local spec = {
   end,
   keys = {
     { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],   desc = "ddu file_rec" },
-    { "<space>fd", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],         desc = "ddu rg" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],         desc = "ddu mr" },
     { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
@@ -76,19 +77,15 @@ local spec = {
       },
       sourceParams = {
         file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode" } },
-        rg = { args = { "--ignore-case", "--column", "--no-heading", "--color", "never" } },
       },
       sourceOptions = {
         _ = {
           matchers = { "matcher_substring" },
           ignoreCase = true,
-          sorters = "sorter_alpha",
+          sorters = { "sorter_alpha" },
         },
         file_rec = {
           converters = { "converter_devicon", "converter_hl_dir" },
-        },
-        rg = {
-          matchers = { "matcher_substring", "matcher_files" },
         },
         git_status = {
           converters = { "converter_git_status" }
@@ -103,7 +100,7 @@ local spec = {
       },
     })
 
-    local sources = { "file_rec", "rg", "git_status" }
+    local sources = { "file_rec", "mr", "git_status" }
     for _, source in ipairs(sources) do
       vim.fn["ddu#custom#patch_local"](source, {
         sources = { source },
