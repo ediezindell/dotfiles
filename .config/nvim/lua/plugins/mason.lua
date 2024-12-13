@@ -1,5 +1,5 @@
 -- null-ls (LSPではないものをLSP化する) を利用する
----@type LazySpec
+---@type LazySpec[]
 local spec = {
   {
     "williamboman/mason.nvim",
@@ -46,7 +46,7 @@ local spec = {
         "markuplint",
         "intelephense",
       },
-      automatic_installation = true, -- 自動インストール有効化
+      automatic_installation = true,
     },
   },
 }
