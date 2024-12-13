@@ -39,32 +39,37 @@ local spec = {
   end,
   keys = {
     { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],   desc = "ddu file_rec" },
-    { "<space>fd", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],         desc = "ddu file_rec" },
+    { "<space>fd", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],         desc = "ddu rg" },
     { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
+    -- local paddingBlock = 0
+    -- local paddingInline = 0
+    local paddingBlock = 2
+    local paddingInline = 1
+    local height = "&lines - " .. paddingBlock * 2
+    local halfWidth = "&columns / 2"
+    local width = halfWidth .. " - " .. paddingInline * 2
     vim.fn["ddu#custom#patch_global"]({
       ui = "ff",
       uiParams = {
         ff = {
-          split = 'floating',
-          winHeight = '&lines',
-          winWidth = '&columns / 2',
-          winRow = 0,
-          winCol = 0,
-          previewFloating = true,
-          previewHeight = '&lines',
-          previewWidth = '&columns / 2',
-          previewRow = 1,
-          previewCol = '&columns / 2',
-          -- floatingBorder        = "rounded",
-          -- previewFloating       = true,
-          -- previewRow            = 12,
-          -- previewFloatingBorder = "rounded",
-          -- prompt                = "> ",
-          -- previewWidth          = "&columns / 2",
-          -- previewHeight         = 16,
-          -- split                 = "floating",
+          -- window
+          split                 = 'floating',
+          floatingBorder        = "rounded",
+          winHeight             = height,
+          winWidth              = width,
+          winRow                = 0,
+          winCol                = 0,
+          -- preview
+          previewFloating       = true,
+          previewFloatingBorder = "rounded",
+          previewHeight         = height,
+          previewWidth          = width,
+          previewRow            = paddingBlock,
+          previewCol            = halfWidth .. " + " .. paddingInline,
+          -- prompt
+          prompt                = "> ",
         },
       },
       sources = {
