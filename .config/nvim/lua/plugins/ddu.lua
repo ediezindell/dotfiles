@@ -43,13 +43,10 @@ local spec = {
     { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
-    -- local paddingBlock = 0
-    -- local paddingInline = 0
-    local paddingBlock = 2
     local paddingInline = 1
-    local height = "&lines - " .. paddingBlock * 2
+    local height = "&lines - 3"
     local halfWidth = "&columns / 2"
-    local width = halfWidth .. " - " .. paddingInline * 2
+    local width = halfWidth .. " - 2"
     vim.fn["ddu#custom#patch_global"]({
       ui = "ff",
       uiParams = {
@@ -66,8 +63,8 @@ local spec = {
           previewFloatingBorder = "rounded",
           previewHeight         = height,
           previewWidth          = width,
-          previewRow            = paddingBlock,
-          previewCol            = halfWidth .. " + " .. paddingInline,
+          previewRow            = 2,
+          previewCol            = halfWidth .. " + 2",
           -- prompt
           prompt                = "> ",
         },
