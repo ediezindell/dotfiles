@@ -28,20 +28,20 @@ local spec = {
         vim.keymap.set({ "n" }, "i", [[<Cmd>call ddu#ui#do_action("openFilterWindow")<CR>]], keymapOpts)
         vim.keymap.set({ "n" }, "P", [[<Cmd>call ddu#ui#do_action("togglePreview")<CR>]], keymapOpts)
       end,
-      group = group
+      group = group,
     })
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "ddu-ff-filter",
       callback = function()
         vim.keymap.set({ "n", "i" }, "<CR>", [[<Esc><Cmd>close<CR>]], keymapOpts)
       end,
-      group = group
+      group = group,
     })
   end,
   keys = {
-    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],   desc = "ddu file_rec" },
-    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],         desc = "ddu mr" },
-    { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
+    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]], desc = "ddu file_rec" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]], desc = "ddu mr" },
+    -- { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
     local height = "&lines - 3"
@@ -52,24 +52,24 @@ local spec = {
       uiParams = {
         ff = {
           -- window
-          split                 = 'floating',
-          floatingBorder        = "rounded",
-          winHeight             = height,
-          winWidth              = width,
-          winRow                = 0,
-          winCol                = 0,
+          split = "floating",
+          floatingBorder = "rounded",
+          winHeight = height,
+          winWidth = width,
+          winRow = 0,
+          winCol = 0,
           -- preview
-          previewFloating       = true,
+          previewFloating = true,
           previewFloatingBorder = "rounded",
-          previewHeight         = height,
-          previewWidth          = width,
-          previewRow            = 2,
-          previewCol            = halfWidth .. " + 2",
+          previewHeight = height,
+          previewWidth = width,
+          previewRow = 2,
+          previewCol = halfWidth .. " + 2",
           -- prompt
-          prompt                = "> ",
+          prompt = "> ",
           -- action
-          startAutoAction       = true,
-          autoAction            = { name = "preview" }
+          startAutoAction = true,
+          autoAction = { name = "preview" },
         },
       },
       sources = {
@@ -88,12 +88,12 @@ local spec = {
           converters = { "converter_devicon", "converter_hl_dir" },
         },
         git_status = {
-          converters = { "converter_git_status" }
-        }
+          converters = { "converter_git_status" },
+        },
       },
       kindOptions = {
         file = { defaultAction = "open" },
-        git_status = { defaultAction = "open" }
+        git_status = { defaultAction = "open" },
       },
       filterParams = {
         matcher_substring = { highlightMatched = "Search" },
@@ -106,12 +106,12 @@ local spec = {
         sources = { source },
         uiParams = {
           ff = {
-            floatingTitle = { { source } }
-          }
-        }
+            floatingTitle = { { source } },
+          },
+        },
       })
     end
-  end
+  end,
 }
 
 return spec

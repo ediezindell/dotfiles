@@ -8,6 +8,12 @@ local spec = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
   },
+  keys = {
+    -- { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
+    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], desc = "telescope live_grep" },
+    -- { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
+    -- { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
+  },
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
@@ -33,12 +39,6 @@ local spec = {
         winblend = 20,
       },
     })
-
-    -- keymap
-    CommandKeymap("<space>ff", [[lua require("telescope.builtin").find_files()]], "telescope find_files")
-    CommandKeymap("<space>fg", [[lua require("telescope.builtin").live_grep()]], "telescope live_grep")
-    CommandKeymap("<space>fb", [[lua require("telescope.builtin").buffers()]], "telescope buffers")
-    CommandKeymap("<space>fh", [[lua require("telescope.builtin").help_tags()]], "telescope help")
   end,
 }
 
