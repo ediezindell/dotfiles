@@ -121,13 +121,13 @@ end
 
 local listWeztermPanes = function()
   local cli_result = vim
-    .system({
-      "wezterm",
-      "cli",
-      "list",
-      ("--format=%s"):format("json"),
-    }, { text = true })
-    :wait()
+      .system({
+        "wezterm",
+        "cli",
+        "list",
+        ("--format=%s"):format("json"),
+      }, { text = true })
+      :wait()
   local json = vim.json.decode(cli_result.stdout)
   local panes = vim.iter(json):map(_l("obj: { pane_id = obj.pane_id, tab_id = obj.tab_id }"))
 
@@ -141,9 +141,10 @@ local getPreviewWeztermPaneId = function()
     return obj.pane_id == neovim_wezterm_pane_id
   end)).tab_id
   local preview_pane = panes:find(function(obj)
-    return --
-      obj.tab_id == current_tab_id --
-        and tonumber(obj.pane_id) > tonumber(neovim_wezterm_pane_id) -- new pane id should be greater than current pane id
+    return
+        obj.tab_id == current_tab_id
+        and tonumber(obj.pane_id) >
+        tonumber(neovim_wezterm_pane_id) -- new pane id should be greater than current pane id
   end)
   return preview_pane ~= nil and preview_pane.pane_id or nil
 end
@@ -297,6 +298,7 @@ local spec = {
     local trash_command = "trash"
     local is_trash = tb(vim.fn.executable(trash_command))
     return {
+      use_default_keymaps = false,
       keymaps = {
         -- ["<CR>"] = "actions.select",
         ["<CR>"] = selectHandler,
@@ -315,7 +317,6 @@ local spec = {
           return vim.tbl_contains(ignore_list, name)
         end,
       },
-      use_default_keymaps = false,
       delete_to_trash = is_trash,
       trash_command = trash_command,
       default_file_explorer = true,
