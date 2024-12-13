@@ -43,7 +43,6 @@ local spec = {
     { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
-    local paddingInline = 1
     local height = "&lines - 3"
     local halfWidth = "&columns / 2"
     local width = halfWidth .. " - 2"
@@ -67,6 +66,9 @@ local spec = {
           previewCol            = halfWidth .. " + 2",
           -- prompt
           prompt                = "> ",
+          -- action
+          startAutoAction       = true,
+          autoAction            = { name = "preview" }
         },
       },
       sources = {
