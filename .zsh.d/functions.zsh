@@ -15,7 +15,7 @@ function bm() {
   fi
   echo $branches | cat -n
   read branchNumber\?"Enter Branch Number: "
-  git switch $(echo $branches | cut -d, -f1 | awk NR==$branchNumber)
+  git switch $(echo $branches | cut -d" " -f1 | awk NR==$branchNumber)
 }
 function b() {
   branches=$(git branch --sort=-committerdate)
