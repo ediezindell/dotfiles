@@ -16,6 +16,7 @@ local spec = {
     "lambdalisue/vim-mr",
     "uga-rosa/ddu-filter-converter_devicon",
     "vim-denops/denops.vim",
+    "matsui54/ddu-source-file_external",
   },
   init = function()
     local group = vim.api.nvim_create_augroup("DduAuGroup", { clear = true })
@@ -39,8 +40,9 @@ local spec = {
     })
   end,
   keys = {
-    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]], desc = "ddu file_rec" },
-    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]], desc = "ddu mr" },
+    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],      desc = "ddu file_rec" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],            desc = "ddu mr" },
+    { "<space>fe", [[<Cmd>call ddu#start( #{ name: "file_external" } )<CR>]], desc = "ddu file_ext" },
     -- { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
@@ -70,6 +72,10 @@ local spec = {
           -- action
           startAutoAction = true,
           autoAction = { name = "preview" },
+          previewWindowOptions = {
+            { "&signcolumn",     "no" },
+            { "&relativenumber", 0 }
+          }
         },
       },
       sources = {
@@ -98,6 +104,16 @@ local spec = {
       filterParams = {
         matcher_substring = { highlightMatched = "Search" },
       },
+    })
+
+    vim.fn["ddu#custom#patch_local"]("file_external", {
+      sources = { "file_external" },
+      sourceParams = {
+        -- cmd = { 'fd', '.', '-H', '-E', '__pycache__', '-t', 'f' }
+        file_external = {
+          cmd = { 'fd', '.', '-H', '-t', 'd' }
+        }
+      }
     })
 
     local sources = { "file_rec", "mr", "git_status" }

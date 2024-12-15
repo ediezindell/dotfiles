@@ -153,3 +153,11 @@ aucmd("FileType", {
   end,
   group = group("FormatOptions"),
 })
+
+aucmd("FileType", {
+  pattern = "ddu-ff",
+  callback = function()
+    vim.cmd([[setlocal signcolumn=no]])
+  end,
+  group = group("DduUiFf")
+})
