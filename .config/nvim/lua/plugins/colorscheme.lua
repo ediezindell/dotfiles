@@ -1,3 +1,5 @@
+-- color theme
+
 local getFg = function(color)
   return { fg = color }
 end
@@ -21,8 +23,7 @@ local getOpts = function(palette)
   }
 end
 
--- color theme
----@type LazySpec
+---@type LazySpec[]
 local spec = {
   {
     "tanvirtin/monokai.nvim",
