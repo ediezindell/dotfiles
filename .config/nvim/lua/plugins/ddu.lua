@@ -109,11 +109,16 @@ local spec = {
     vim.fn["ddu#custom#patch_local"]("file_external", {
       sources = { "file_external" },
       sourceParams = {
-        -- cmd = { 'fd', '.', '-H', '-E', '__pycache__', '-t', 'f' }
         file_external = {
+          -- cmd = { 'fd', '.', '-H', '-E', '__pycache__', '-t', 'f' }
           cmd = { 'fd', '.', '-H', '-t', 'd' }
         }
-      }
+      },
+      uiParams = {
+        ff = {
+          floatingTitle = { { "file_external" } },
+        },
+      },
     })
 
     local sources = { "file_rec", "mr", "git_status" }
