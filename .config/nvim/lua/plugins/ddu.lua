@@ -4,6 +4,7 @@ local spec = {
   lazy = false,
   dependencies = {
     "Shougo/ddu-commands.vim",
+    "Shougo/ddu-filter-converter_display_word",
     "Shougo/ddu-filter-matcher_files",
     "Shougo/ddu-filter-matcher_substring",
     "Shougo/ddu-filter-sorter_alpha",
@@ -14,6 +15,8 @@ local spec = {
     "kuuote/ddu-source-mr",
     "kyoh86/ddu-filter-converter_hl_dir",
     "lambdalisue/vim-mr",
+    "matsui54/ddu-source-file_external",
+    "shun/ddu-source-rg",
     "uga-rosa/ddu-filter-converter_devicon",
     "vim-denops/denops.vim",
     "matsui54/ddu-source-file_external",
@@ -40,15 +43,17 @@ local spec = {
     })
   end,
   keys = {
-    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],      desc = "ddu file_rec" },
-    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],            desc = "ddu mr" },
-    { "<space>fe", [[<Cmd>call ddu#start( #{ name: "file_external" } )<CR>]], desc = "ddu file_ext" },
-    -- { "<space>fg", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
+    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]], desc = "ddu file_rec" },
+    { "<space>fq", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]], desc = "ddu rg" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]], desc = "ddu mr" },
+    { "<space>fd", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
     local height = "&lines - 3"
     local halfWidth = "&columns / 2"
     local width = halfWidth .. " - 2"
+
+    vim.fn["ddu#custom#alias"]("files", "source", "dir_rec", "file_external")
     vim.fn["ddu#custom#patch_global"]({
       ui = "ff",
       uiParams = {
@@ -67,22 +72,30 @@ local spec = {
           previewWidth = width,
           previewRow = 2,
           previewCol = halfWidth .. " + 2",
+          previewWindowOptions = {
+            { "&signcolumn", "no" },
+            { "&foldcolumn", 0 },
+            { "&foldenable", 0 },
+            -- { "&number", 0 },
+            { "&relativenumber", 0 },
+            { "&wrap", 0 },
+          },
           -- prompt
-          prompt = "> ",
+          prompt = "",
           -- action
           startAutoAction = true,
           autoAction = { name = "preview" },
           previewWindowOptions = {
-            { "&signcolumn",     "no" },
-            { "&relativenumber", 0 }
-          }
+            { "&signcolumn", "no" },
+            { "&relativenumber", 0 },
+          },
         },
       },
-      sources = {
-        "file_rec",
-      },
+      sources = { "file_rec" },
       sourceParams = {
         file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode" } },
+        rg = { args = { "--column", "--no-heading", "--color", "never" } },
+        dir_rec = { cmd = { "fd", ".", "-H", "-t", "d" } },
       },
       sourceOptions = {
         _ = {
@@ -93,8 +106,15 @@ local spec = {
         file_rec = {
           converters = { "converter_devicon", "converter_hl_dir" },
         },
+        mr = {
+          converters = { "converter_devicon", "converter_hl_dir" },
+        },
         git_status = {
-          converters = { "converter_git_status" },
+          converters = { "converter_git_status", "converter_devicon", "converter_hl_dir" },
+        },
+        rg = {
+          converters = { "converter_devicon", "converter_hl_dir" },
+          matchers = { "converter_display_word", "matcher_substring" },
         },
       },
       kindOptions = {
@@ -111,8 +131,8 @@ local spec = {
       sourceParams = {
         file_external = {
           -- cmd = { 'fd', '.', '-H', '-E', '__pycache__', '-t', 'f' }
-          cmd = { 'fd', '.', '-H', '-t', 'd' }
-        }
+          cmd = { "fd", ".", "-H", "-t", "d" },
+        },
       },
       uiParams = {
         ff = {
@@ -121,7 +141,7 @@ local spec = {
       },
     })
 
-    local sources = { "file_rec", "mr", "git_status" }
+    local sources = { "file_rec", "mr", "git_status", "rg" }
     for _, source in ipairs(sources) do
       vim.fn["ddu#custom#patch_local"](source, {
         sources = { source },
