@@ -76,7 +76,7 @@ local spec = {
         { name = "nvim_lsp" },
         { name = "vsnip" },
         { name = "nvim_lsp_signature_help" },
-        { name = "calc" },
+        -- { name = "calc" },
       }, {
         { name = "buffer", keyword_length = 2 },
       }),
