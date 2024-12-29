@@ -9,10 +9,10 @@ local spec = {
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
   },
   keys = {
-    -- { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
-    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], desc = "telescope live_grep" },
-    -- { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
-    -- { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
+    { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
+    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]],  desc = "telescope live_grep" },
+    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]],    desc = "telescope buffers" },
+    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]],  desc = "telescope help" },
   },
   config = function()
     local telescope = require("telescope")
