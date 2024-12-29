@@ -1,4 +1,4 @@
-#background-opacity = 0.2
+# background-opacity = 0.2
 clipboard-read = allow
 clipboard-write = allow
 copy-on-select = false
@@ -12,6 +12,17 @@ mouse-hide-while-typing = true
 shell-integration = zsh
 unfocused-split-opacity = 0.5
 window-theme = dark
+
+# disable ligature
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
+# quick-term
+quick-terminal-position = "bottom"
+quick-terminal-screen = "main"
+quick-terminal-animation-duration = 0
+keybind = "global:alt+cmd+space=toggle_quick_terminal"
 
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+tab=next_tab
@@ -40,6 +51,7 @@ keybind = super+shift+comma=reload_config
 keybind = super+shift+d=new_split:down
 keybind = super+t=new_tab
 keybind = super+v=paste_from_clipboard
+keybind = super+t=new_tab
 
 keybind = alt+left=unbind
 keybind = alt+right=unbind
