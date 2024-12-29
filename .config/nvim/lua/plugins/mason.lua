@@ -38,6 +38,7 @@ local spec = {
         "typos-lsp",
         "lua-language-server",
         "vtsls",
+        "stylua",
         -- "css-lsp",
         "stylelint-lsp",
         -- "emmet-language-server",
