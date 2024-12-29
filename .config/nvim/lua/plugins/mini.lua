@@ -34,12 +34,12 @@ local spec = {
     config = function()
       require("mini.surround").setup({
         mappings = {
-          add = "sa", -- Add surrounding in Normal and Visual modes
-          delete = "sd", -- Delete surrounding
-          find = "sf", -- Find surrounding (to the right)
+          add = "sa",       -- Add surrounding in Normal and Visual modes
+          delete = "sd",    -- Delete surrounding
+          find = "sf",      -- Find surrounding (to the right)
           find_left = "sF", -- Find surrounding (to the left)
-          highlight = "", -- Highlight surrounding
-          replace = "sr", -- Replace surrounding
+          highlight = "",   -- Highlight surrounding
+          replace = "sr",   -- Replace surrounding
 
           suffix_last = "", -- Suffix to search with "prev" method
           suffix_next = "", -- Suffix to search with "next" method
@@ -87,7 +87,7 @@ local spec = {
     version = false,
     config = function()
       require("mini.bracketed").setup({
-        buffer = { suffix = "b", options = {} },
+        -- buffer = { suffix = "b", options = {} },
         -- comment = { suffix = "c", options = {} },
         -- conflict = { suffix = "x", options = {} },
         -- diagnostic = { suffix = "d", options = {} },
