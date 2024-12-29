@@ -43,9 +43,9 @@ local spec = {
     })
   end,
   keys = {
-    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]], desc = "ddu file_rec" },
-    { "<space>fq", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]], desc = "ddu rg" },
-    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]], desc = "ddu mr" },
+    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],   desc = "ddu file_rec" },
+    { "<space>fq", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],         desc = "ddu rg" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],         desc = "ddu mr" },
     { "<space>fd", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
   },
   config = function()
@@ -73,12 +73,12 @@ local spec = {
           previewRow = 2,
           previewCol = halfWidth .. " + 2",
           previewWindowOptions = {
-            { "&signcolumn", "no" },
-            { "&foldcolumn", 0 },
-            { "&foldenable", 0 },
+            { "&signcolumn",     "no" },
+            { "&foldcolumn",     0 },
+            { "&foldenable",     0 },
             -- { "&number", 0 },
             { "&relativenumber", 0 },
-            { "&wrap", 0 },
+            { "&wrap",           0 },
           },
           -- prompt
           prompt = "",
@@ -86,14 +86,14 @@ local spec = {
           startAutoAction = true,
           autoAction = { name = "preview" },
           previewWindowOptions = {
-            { "&signcolumn", "no" },
+            { "&signcolumn",     "no" },
             { "&relativenumber", 0 },
           },
         },
       },
       sources = { "file_rec" },
       sourceParams = {
-        file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode" } },
+        file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode", ".next" } },
         rg = { args = { "--column", "--no-heading", "--color", "never" } },
         dir_rec = { cmd = { "fd", ".", "-H", "-t", "d" } },
       },
