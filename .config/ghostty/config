@@ -1,7 +1,14 @@
-# background-opacity = 0.2
+shell-integration = none
+macos-option-as-alt = left
+
+theme = catppuccin-mocha
+background-opacity = 0.85
+# background-blur-radius = 20
+macos-titlebar-style = transparent
+
 clipboard-read = allow
 clipboard-write = allow
-copy-on-select = false
+copy-on-select = true
 cursor-click-to-move = false
 cursor-opacity = 0.7
 cursor-style = bar
@@ -9,9 +16,7 @@ font-family = Moralerspace Argon HWNF
 font-size = 16
 initial-window = false
 mouse-hide-while-typing = true
-shell-integration = zsh
 unfocused-split-opacity = 0.5
-window-theme = dark
 
 # disable ligature
 font-feature = -calt
@@ -97,29 +102,4 @@ keybind = super+tab=unbind
 keybind = super+up=unbind
 keybind = super+w=unbind
 keybind = super+zero=unbind
-keybind = alt+a=unbind
-keybind = alt+b=unbind
-keybind = alt+c=unbind
-keybind = alt+d=unbind
-keybind = alt+e=unbind
-keybind = alt+f=unbind
-keybind = alt+g=unbind
-keybind = alt+h=unbind
-keybind = alt+i=unbind
-keybind = alt+j=unbind
-keybind = alt+k=unbind
-keybind = alt+l=unbind
-keybind = alt+m=unbind
-keybind = alt+n=unbind
-keybind = alt+o=unbind
-keybind = alt+p=unbind
-keybind = alt+q=unbind
-keybind = alt+r=unbind
-keybind = alt+s=unbind
-keybind = alt+t=unbind
-keybind = alt+u=unbind
-keybind = alt+v=unbind
-keybind = alt+w=unbind
-keybind = alt+x=unbind
-keybind = alt+y=unbind
-keybind = alt+z=unbind
+
