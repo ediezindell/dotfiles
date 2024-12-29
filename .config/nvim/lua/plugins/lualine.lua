@@ -2,21 +2,17 @@
 ---@type LazySpec
 local spec = {
   "nvim-lualine/lualine.nvim",
-  requires = {
-    "kyazdani42/nvim-web-devicons",
-  },
-  event = "VeryLazy",
+  event = "BufEnter",
   opts = {
     options = {
       icons_enabled = true,
-      theme = "molokai",
-      -- theme = "horizon",
+      theme = "auto",
       use_mode_colors = true,
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
       disabled_filetypes = {
-        statusline = {},
-        winbar = {},
+        statusline = { "oil" },
+        winbar = { "oil" },
       },
       ignore_focus = {},
       always_divide_middle = true,
@@ -32,21 +28,40 @@ local spec = {
       lualine_b = { "branch", "diff", "diagnostics" },
       lualine_c = {
         {
-          "buffers",
-          mode = 4, -- Shows buffer name + buffer number
-          show_filename_only = false,
-          use_mode_colors = true,
+          "filetype",
+          icon_only = true,
+        },
+        {
+          "filename",
+          file_status = true,
+          newfile_status = true,
+          path = 1, -- 1: Relative path
+          symbols = {
+            modified = "[+]",
+            readonly = "[-]",
+            unnamed = "[No Name]",
+            newfile = "[New]",
+          },
         },
       },
-      lualine_x = { "encoding", "filetype" },
-      lualine_y = { "progress" },
-      lualine_z = { "location" },
+      lualine_x = { "filetype" },
+      lualine_y = {
+        {
+          "fileformat",
+          symbols = {
+            unix = "LF",
+            mac = "CR",
+            os = "CRLF",
+          },
+        },
+      },
+      lualine_z = { "encoding" },
     },
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},
       lualine_c = { "filename" },
-      lualine_x = { "location" },
+      lualine_x = {},
       lualine_y = {},
       lualine_z = {},
     },
