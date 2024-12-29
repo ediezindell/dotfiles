@@ -1,1 +1,16 @@
-background = 
+#background-opacity = 0.2
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = false
+cursor-click-to-move = false
+cursor-opacity = 0.7
+cursor-style = bar
+font-family = Moralerspace Argon HWNF
+font-size = 16
+initial-window = false
+keybind = super+shift+tab=previous_tab
+keybind = super+tab=next_tab
+mouse-hide-while-typing = true
+shell-integration = zsh
+unfocused-split-opacity = 0.5
+window-theme = dark
