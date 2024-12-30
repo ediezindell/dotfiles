@@ -42,6 +42,7 @@ local spec = {
         -- "css-lsp",
         "stylelint-lsp",
         -- "emmet-language-server",
+        "tailwindcss-language-server",
         "html-lsp",
         "astro-language-server",
         "markuplint",

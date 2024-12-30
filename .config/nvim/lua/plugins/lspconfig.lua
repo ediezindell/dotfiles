@@ -68,6 +68,9 @@ local spec = {
     lspconfig.astro.setup({
       capabilities = capabilities,
     })
+    lspconfig.tailwindcss.setup({
+      capabilities = capabilities,
+    })
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
