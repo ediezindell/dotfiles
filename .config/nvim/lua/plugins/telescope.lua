@@ -3,16 +3,19 @@
 local spec = {
   "nvim-telescope/telescope.nvim",
   event = "VimEnter",
-  requires = {
+  dependencies = {
     "nvim-tree/nvim-web-devicons",
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+    "danielvolchek/tailiscope.nvim",
   },
   keys = {
     { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
-    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]],  desc = "telescope live_grep" },
-    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]],    desc = "telescope buffers" },
-    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]],  desc = "telescope help" },
+    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], desc = "telescope live_grep" },
+    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
+    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
+    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
+    { "<space>ft", [[<Cmd>Telescope tailiscope<CR>]], desc = "telescope Tailwind CSS" },
   },
   config = function()
     local telescope = require("telescope")
@@ -38,7 +41,21 @@ local spec = {
         layout_strategy = "vertical",
         winblend = 20,
       },
+      extensions = {
+        tailiscope = {
+          default = "base",
+          doc_icon = "󱏿  ",
+          maps = {
+            i = {
+              back = "<C-h>",
+              open_doc = "<C-o>",
+            },
+          },
+        },
+      },
     })
+
+    require("telescope").load_extension("tailiscope")
   end,
 }
 
