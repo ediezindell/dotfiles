@@ -34,10 +34,11 @@ keybind = super+comma=open_config
 keybind = super+d=new_split:right
 keybind = super+left_bracket=goto_split:previous
 keybind = super+n=new_window
+keybind = super+q=quit
 keybind = super+right_bracket=goto_split:next
 keybind = super+shift+comma=reload_config
 keybind = super+shift+d=new_split:down
-keybind = super+q=quit
+keybind = super+t=new_tab
 keybind = super+v=paste_from_clipboard
 
 keybind = alt+left=unbind
@@ -80,7 +81,6 @@ keybind = super+shift+right_bracket=unbind
 keybind = super+shift+tab=unbind
 keybind = super+shift+up=unbind
 keybind = super+shift+w=unbind
-keybind = super+t=unbind
 keybind = super+tab=unbind
 keybind = super+up=unbind
 keybind = super+w=unbind
