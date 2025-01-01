@@ -51,9 +51,11 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias code="nvim"
+alias vimc="nvim ~/.config/"
+alias vimp="nvim ~/.config/nvim/lua/plugins"
 
 # util
-alias cb="system_profiler SPPowerDataType | grep Wattage"
+alias cb="system_profiler SPPowerDataType | grep 'State of Charge'"
 
 # Application
 alias fork="open -a Fork"
