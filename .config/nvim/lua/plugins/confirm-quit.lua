@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "ediezindell/confirm-quit.nvim",
-  commit = "f5f5636",
+  branch = "feature/custormize-for-me",
   event = "CmdlineEnter",
   opts = {},
 }
