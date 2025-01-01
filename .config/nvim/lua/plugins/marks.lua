@@ -35,7 +35,7 @@ local spec = {
       -- defaults to false.
       annotate = false,
     },
-    mappings = {}
+    mappings = {},
   },
   event = "VeryLazy",
 }

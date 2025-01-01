@@ -4,7 +4,7 @@ local spec = {
   dependencies = {
     "MunifTanjim/nui.nvim",
   },
-  cmd = { "Lspctl", },
+  cmd = { "Lspctl" },
   keys = {
     { "<space>lc", "<Cmd>Lspctl<CR>", desc = "lspctl" },
   },
