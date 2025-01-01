@@ -1,4 +1,10 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export BREW_GLOBAL="/opt/homebrew/bin/brew"
+export BREW_LOCAL="/usr/local/bin/brew"
+if [ -d "${BREW_GLOBAL}" ]; then
+  eval "$(${BREW_GLOBAL} shellenv)"
+elif [ -d "${BREW_LOCAL}" ]; then
+  eval "$(${BREW_LOCAL} shellenv)"
+fi
 
 # starship
 eval "$(starship init zsh)"
