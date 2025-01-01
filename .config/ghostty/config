@@ -1,3 +1,5 @@
+window-theme = ghostty
+gtk-titlebar = false
 shell-integration = none
 macos-option-as-alt = left
 
