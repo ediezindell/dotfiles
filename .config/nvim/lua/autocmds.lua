@@ -107,8 +107,20 @@ local function handle_missing_file()
     end, files_in_dir)
   end
 
+  local function open(file)
+    vim.fn.timer_start(0, function()
+      vim.cmd("bdelete")
+      vim.cmd("edit " .. vim.fn.fnameescape(file))
+    end)
+  end
+
   if vim.tbl_isempty(matches) then
-    return
+    if fname == "," then
+      open(".")
+      return
+    else
+      return
+    end
   end
 
   local matchCount = 0
@@ -116,13 +128,6 @@ local function handle_missing_file()
   for i, file in ipairs(matches) do
     matchCount = i
     table.insert(choices, string.format("%d %s", i, file))
-  end
-
-  local function open(file)
-    vim.fn.timer_start(0, function()
-      vim.cmd("bdelete")
-      vim.cmd("edit " .. vim.fn.fnameescape(file))
-    end)
   end
 
   if matchCount == 1 then
@@ -159,5 +164,5 @@ aucmd("FileType", {
   callback = function()
     vim.cmd([[setlocal signcolumn=no]])
   end,
-  group = group("DduUiFf")
+  group = group("DduUiFf"),
 })
