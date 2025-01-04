@@ -11,6 +11,7 @@ CommandKeymap("g/", "lua SearchByClipboard()", "クリップボードの内容�
 CommandKeymap("<space>ss", "split", "上下分割")
 CommandKeymap("<space>sv", "vsplit", "左右分割")
 CommandKeymap("<space><C-v>", [[%d | normal! "+P]], "クリップボードの内容でバッファを置換")
+CommandKeymap("<space>bd", "%bd|e#|bd#", "現在のバッファ以外を閉じる")
 
 VisualKeymap("y", "mzy`z", "コピー時にカーソル位置を保存")
 VisualKeymap("p", "P", "ペースト時にレジスタの変更を防止")
