@@ -39,7 +39,7 @@ local spec = {
           },
         },
         layout_strategy = "vertical",
-        winblend = 20,
+        -- winblend = 20,
       },
       extensions = {
         tailiscope = {
