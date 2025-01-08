@@ -1,8 +1,8 @@
 export BREW_GLOBAL="/opt/homebrew/bin/brew"
 export BREW_LOCAL="/usr/local/bin/brew"
-if [ -d "${BREW_GLOBAL}" ]; then
+if [ "${BREW_GLOBAL}" ]; then
   eval "$(${BREW_GLOBAL} shellenv)"
-elif [ -d "${BREW_LOCAL}" ]; then
+elif [ "${BREW_LOCAL}" ]; then
   eval "$(${BREW_LOCAL} shellenv)"
 fi
 
