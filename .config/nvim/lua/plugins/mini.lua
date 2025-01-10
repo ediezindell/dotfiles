@@ -59,16 +59,6 @@ local spec = {
     -- カーソル上の単語ハイライト
     "echasnovski/mini.cursorword",
     version = false,
-    init = function()
-      vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*",
-        callback = function()
-          -- local options = { fg = "lightgray", bg = "darkcyan" }
-          -- vim.api.nvim_set_hl(0, "MiniCursorword", options)
-          -- vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", options)
-        end,
-      })
-    end,
     opts = {
       delay = 10,
     },
