@@ -1,8 +1,7 @@
--- emmet parserの実装
 ---@type LazySpec
 local spec = {
-  -- アイコン
   {
+    -- アイコン
     "echasnovski/mini.icons",
     opts = {
       filetype = {
