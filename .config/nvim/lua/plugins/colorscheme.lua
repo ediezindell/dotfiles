@@ -3,6 +3,7 @@
 local getFg = function(color)
   return { fg = color }
 end
+---@diagnostic disable-next-line: unused-local
 local getBg = function(color)
   return { bg = color }
 end
