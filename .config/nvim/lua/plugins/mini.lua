@@ -21,7 +21,7 @@ local spec = {
     version = false,
     cond = not vim.tbl_contains({ "oil" }, vim.bo.filetype),
     opts = {},
-    event = "BufEnter",
+    event = "BufRead",
   },
   {
     -- クオートや括弧編集
