@@ -83,6 +83,7 @@ SearchByClipboard = function()
       ["^"] = [[\^]],
       ["$"] = [[\$]],
       ["\n"] = [[\n]],
+      ["@"] = [[\@]],
     }
     return str:gsub(".", function(c)
       return escape_table[c] or c
