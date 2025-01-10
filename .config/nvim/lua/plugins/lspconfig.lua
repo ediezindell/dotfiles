@@ -14,7 +14,7 @@ local spec = {
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     lspconfig.html.setup({})
     lspconfig.cssls.setup({
-      cmd = { "css-languageserver", "--stdio" },
+      cmd = { "vscode-css-language-server" },
     })
     lspconfig.typos_lsp.setup({
       init_options = {
