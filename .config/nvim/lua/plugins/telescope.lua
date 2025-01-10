@@ -10,11 +10,11 @@ local spec = {
     "danielvolchek/tailiscope.nvim",
   },
   keys = {
+    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
     { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
     { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], desc = "telescope live_grep" },
-    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
     { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
-    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
+    { "<space>fr", [[<Cmd>Telescope resume<CR>]], desc = "telescope resume" },
     { "<space>ft", [[<Cmd>Telescope tailiscope<CR>]], desc = "telescope Tailwind CSS" },
   },
   config = function()
