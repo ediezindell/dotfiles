@@ -19,7 +19,6 @@ local spec = {
     -- git差分表示
     "echasnovski/mini.diff",
     version = false,
-    cond = not vim.tbl_contains({ "oil" }, vim.bo.filetype),
     opts = {},
     event = "BufRead",
   },
