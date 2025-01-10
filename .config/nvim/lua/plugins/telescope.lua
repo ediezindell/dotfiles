@@ -20,6 +20,8 @@ local spec = {
   config = function()
     local telescope = require("telescope")
     local actions = require("telescope.actions")
+    local builtin = require("telescope.builtin")
+    local action_state = require("telescope.actions.state")
 
     telescope.setup({
       defaults = {
@@ -56,6 +58,44 @@ local spec = {
     })
 
     require("telescope").load_extension("tailiscope")
+
+    --- 前回のpickerの前後の候補を開く
+    --- @see https://qiita.com/delphinus/items/3462185863139bdd81ba
+    local function get_picker(prompt_bufnr)
+      local picker = action_state.get_current_picker(prompt_bufnr)
+      if not picker then
+        vim.notify("found no picker", vim.log.levels.WARN)
+        return
+      elseif picker.manager:num_results() <= 1 then
+        vim.notify("picker has no entry to open", vim.log.levels.WARN)
+        actions.close(prompt_bufnr)
+        if picker.initial_mode == "insert" then
+          vim.api.nvim_feedkeys([[<C-\><C-n>]], "i", true)
+        end
+        return
+      end
+      return picker
+    end
+    local function resume_and_select(change)
+      return function()
+        vim.api.nvim_create_autocmd("User", {
+          group = vim.api.nvim_create_augroup("resume_and_select", {}),
+          pattern = "TelescopeResumePost",
+          once = true,
+          callback = function(args)
+            local picker = get_picker(args.buf)
+            if picker then
+              picker:move_selection(change)
+              vim.schedule_wrap(actions.select_default)(args.buf)
+            end
+          end,
+        })
+
+        builtin.resume({})
+      end
+    end
+    NormalKeymap("<Leader>fj", resume_and_select(1), "Resume Telescope picker and open the next candidate")
+    NormalKeymap("<Leader>fk", resume_and_select(-1), "Resume Telescope picker and open the previous candidate")
   end,
 }
 
