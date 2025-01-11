@@ -3,30 +3,36 @@
 local spec = {
   "hrsh7th/nvim-cmp",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-vsnip",
     "hrsh7th/cmp-cmdline",
-    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lsp-document-symbol",
-    "hrsh7th/cmp-calc",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/cmp-path",
     "onsails/lspkind.nvim",
-    "hrsh7th/vim-vsnip",
-    "hrsh7th/vim-vsnip-integ",
     "rafamadriz/friendly-snippets",
+    "saadparwaiz1/cmp_luasnip",
+    {
+      "L3MON4D3/LuaSnip",
+      version = "v2.*",
+      build = "make install_jsregexp",
+      config = function()
+        vim.keymap.set("n", "<leader>ss", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
+        require("luasnip.loaders.from_lua").load()
+      end,
+    },
   },
   config = function()
     local cmp = require("cmp")
+    local luasnip = require("luasnip")
     local lspkind = require("lspkind")
 
     cmp.setup({
       snippet = {
         expand = function(args)
-          vim.fn["vsnip#anonymous"](args.body)
+          luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
       },
-
       window = {
         completion = cmp.config.window.bordered({
           border = "single",
@@ -35,17 +41,41 @@ local spec = {
           border = "single",
         }),
       },
-
       mapping = cmp.mapping.preset.insert({
-        ["<Tab>"] = cmp.mapping.select_next_item(),
-        -- ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        -- ["<C-p>"] = cmp.mapping.select_prev_item(),
-        -- ["<C-b>"] = cmp.mapping.select_prev_item({ count = 4 }),
-        -- ["<C-f>"] = cmp.mapping.select_next_item({ count = 4 }),
-        -- ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-n>"] = cmp.mapping.select_next_item(),
+        ["<C-p>"] = cmp.mapping.select_prev_item(),
         ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            if luasnip.expandable() then
+              luasnip.expand()
+            else
+              cmp.confirm({
+                select = true,
+              })
+            end
+          else
+            fallback()
+          end
+        end),
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.locally_jumpable(1) then
+            luasnip.jump(1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.locally_jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
         ["<Up>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.close()
@@ -63,20 +93,18 @@ local spec = {
           end
         end, { "i", "c" }),
       }),
-
       formatting = {
         format = lspkind.cmp_format({
-          mode = "symbol",
+          -- mode = "symbol",
           maxwidth = 50,
           ellipsis_char = "...",
         }),
       },
-
       sources = cmp.config.sources({
+        { name = "luasnip",                option = { show_autosnippets = true } },
         { name = "nvim_lsp" },
-        { name = "vsnip" },
         { name = "nvim_lsp_signature_help" },
-        -- { name = "calc" },
+        { name = "path" },
       }, {
         { name = "buffer", keyword_length = 2 },
       }),
@@ -96,11 +124,10 @@ local spec = {
       sources = cmp.config.sources({
         { name = "path" },
       }, {
-        { name = "cmdline", keyword_length = 2 },
+        { name = "cmdline" },
       }),
+      matching = { disallow_symbol_nonprefix_matching = false },
     })
-
-    vim.cmd("let g:vsnip_filetypes = {}")
   end,
 }
 

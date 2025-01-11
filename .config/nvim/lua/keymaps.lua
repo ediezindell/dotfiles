@@ -18,8 +18,8 @@ VisualKeymap("p", "P", "ペースト時にレジスタの変更を防止")
 VisualKeymap("<", "<gv", "連続してインデント操作")
 VisualKeymap(">", ">gv", "連続してインデント操作")
 
-InsertKeymap("<Tab>", "<C-t>", "字下げ")
-InsertKeymap("<S-Tab>", "<C-d>", "字上げ")
+-- InsertKeymap("<Tab>", "<C-t>", "字下げ")
+-- InsertKeymap("<S-Tab>", "<C-d>", "字上げ")
 
 ---@see https://zenn.dev/vim_jp/articles/2024-06-05-vim-middle-class-features#引用符で囲まれた箇所全体を選択する
 for _, quote in ipairs({ '"', "'", "`" }) do
