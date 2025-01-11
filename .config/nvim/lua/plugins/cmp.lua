@@ -21,8 +21,10 @@ local spec = {
         require("luasnip.loaders.from_lua").load({ paths = { "snippets" } })
       end,
     },
+    "mlaursen/vim-react-snippets",
   },
   config = function()
+    require("vim-react-snippets").lazy_load()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
