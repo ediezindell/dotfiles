@@ -18,7 +18,7 @@ local spec = {
       build = "make install_jsregexp",
       config = function()
         vim.keymap.set("n", "<leader>ss", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
-        require("luasnip.loaders.from_lua").load()
+        require("luasnip.loaders.from_lua").load({ paths = { "snippets" } })
       end,
     },
   },
@@ -101,7 +101,7 @@ local spec = {
         }),
       },
       sources = cmp.config.sources({
-        { name = "luasnip",                option = { show_autosnippets = true } },
+        { name = "luasnip", option = { show_autosnippets = true } },
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "path" },
