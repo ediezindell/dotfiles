@@ -9,6 +9,8 @@ local spec = {
   event = "VeryLazy",
   init = function()
     vim.g.barbar_auto_setup = false
+    CommandKeymap("[b", "BufferPrevious", "BufferPrevious (barbar)")
+    CommandKeymap("]b", "BufferNext", "BufferNext (barbar)")
     CommandKeymap("<A-w>", "BufferClose", "")
   end,
   opts = {},
