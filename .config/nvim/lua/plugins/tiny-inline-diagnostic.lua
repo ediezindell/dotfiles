@@ -4,7 +4,7 @@ local spec = {
   event = "LspAttach",
   priority = 1000,
   init = function()
-    vim.diagnostic.config({ virtual_text = false })
+    vim.diagnostic.config({ underline = true, virtual_text = false })
   end,
   opts = {
     preset = "ghost",
