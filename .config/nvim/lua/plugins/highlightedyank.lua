@@ -5,7 +5,7 @@ local spec = {
   init = function()
     vim.g.highlightedyank_highlight_duration = 300
   end,
-  event = { "BufEnter", "BufNewFile" },
+  event = "BufEnter",
 }
 
 return spec

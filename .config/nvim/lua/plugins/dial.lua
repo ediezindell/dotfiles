@@ -1,8 +1,7 @@
 ---@type LazySpec
 local spec = {
   "monaqa/dial.nvim",
-  lazy = false,
-  cmd = "LspAttach",
+  event = "BufEnter",
   keys = {
     { "<C-a>", [[ <Cmd>lua require("dial.map").manipulate("increment", "normal")<CR> ]] },
     { "<C-x>", [[ <Cmd>lua require("dial.map").manipulate("decrement", "normal")<CR> ]] },

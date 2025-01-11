@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "andymass/vim-matchup",
-  event = { "BufEnter", "BufNewFile" },
+  event = "BufEnter",
 }
 
 return spec
