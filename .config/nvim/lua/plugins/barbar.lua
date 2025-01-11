@@ -9,6 +9,7 @@ local spec = {
   event = "VeryLazy",
   init = function()
     vim.g.barbar_auto_setup = false
+    CommandKeymap("<A-w>", "BufferClose", "")
   end,
   opts = {},
 }

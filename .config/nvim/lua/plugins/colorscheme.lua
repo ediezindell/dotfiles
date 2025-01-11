@@ -1,5 +1,4 @@
 -- color theme
-
 local getFg = function(color)
   return { fg = color }
 end
@@ -13,13 +12,18 @@ local getOpts = function(palette)
     italics = false,
     custom_hlgroups = {
       Structure = getFg(palette.green),
+
       typescriptImport = getFg(palette.pink),
       typescriptExport = getFg(palette.aqua),
       typescriptVariable = getFg(palette.aqua),
       tsxIntrinsicTagName = getFg(palette.pink),
       sassId = getFg(palette.green),
-      HighlightUndo = { fg = palette.white, bg = palette.orange },
-      HighlightRedo = { fg = palette.white, bg = palette.orange },
+
+      -- for plugins
+      HighlightUndo = { fg = palette.white, bg = palette.orange }, -- highlight-undo
+      HighlightRedo = { fg = palette.white, bg = palette.orange }, -- highlight-undo
+      BufferCurrent = { bg = palette.pink }, -- barbar
+      BufferCurrentMod = { bg = palette.pink, fg = palette.black }, -- barbar
     },
   }
 end
