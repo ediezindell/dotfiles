@@ -100,12 +100,12 @@ local spec = {
 
     local function find_from_pj_root()
       return function()
-        local root = require("nvim-rooter").get_root()
-        if root ~= nil then
-          require("telescope.builtin").find_files({ root = root })
-        else
-          require("telescope.builtin").find_files()
+        local pr_root = require("nvim-rooter").get_root()
+        local opts = nil
+        if pr_root ~= nil then
+          opts = { root = pr_root }
         end
+        builtin.find_files(opts)
       end
     end
     NormalKeymap("<space>ff", find_from_pj_root(), "telescope find_files (from project root)")
