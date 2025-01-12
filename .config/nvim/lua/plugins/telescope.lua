@@ -8,7 +8,10 @@ local spec = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
     "danielvolchek/tailiscope.nvim",
-    "notjedi/nvim-rooter.lua",
+    {
+      "notjedi/nvim-rooter.lua",
+      config = true,
+    },
   },
   keys = {
     { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
@@ -43,6 +46,12 @@ local spec = {
         },
         layout_strategy = "vertical",
         -- winblend = 20,
+      },
+      pickers = {
+        find_files = {
+          hidden = true,
+          file_ignore_patterns = { ".git" },
+        },
       },
       extensions = {
         tailiscope = {
@@ -98,17 +107,19 @@ local spec = {
     NormalKeymap("<Leader>fj", resume_and_select(1), "Resume Telescope picker and open the next candidate")
     NormalKeymap("<Leader>fk", resume_and_select(-1), "Resume Telescope picker and open the previous candidate")
 
-    local function find_from_pj_root()
-      return function()
-        local pr_root = require("nvim-rooter").get_root()
-        local opts = nil
-        if pr_root ~= nil then
-          opts = { root = pr_root }
-        end
-        builtin.find_files(opts)
+    local find_file_from_pj_root = function()
+      local root = require("nvim-rooter").get_root()
+      print(root)
+      local opts = nil
+      if root ~= nil then
+        opts = {
+          root = root,
+        }
       end
+      require("telescope.builtin").find_files(opts)
     end
-    NormalKeymap("<space>ff", find_from_pj_root(), "telescope find_files (from project root)")
+
+    NormalKeymap("<space>ff", find_file_from_pj_root, "telescope find_files (from project root)")
   end,
 }
 
