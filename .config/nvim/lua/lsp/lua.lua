@@ -4,18 +4,24 @@ return {
     Lua = {
       hint = { enable = true },
       format = { enable = true },
-      runtime = {
-        version = "LuaJIT",
-        checkThirdParty = true,
-      },
       diagnostics = {
         globals = { "vim", "wezterm" },
       },
-      workspace = {
-        library = rtp,
-      },
       telemetry = {
         enable = false,
+      },
+      runtime = {
+        version = "LuaJIT",
+        pathStrict = true,
+        path = { "?.lua", "?/init.lua" },
+      },
+      workspace = {
+        library = vim.list_extend(vim.api.nvim_get_runtime_file("lua", true), {
+          "${3rd}/luv/library",
+          "${3rd}/busted/library",
+          "${3rd}/luassert/library",
+        }),
+        checkThirdParty = "Disable",
       },
     },
   },
