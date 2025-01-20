@@ -43,6 +43,12 @@ fi
 # npm completion
 eval "`npm completion`" 
 
+# deno
+export DENO_HOME=$HOME/.deno
+if [ -d "${DENO_HOME}" ]; then
+  export PATH="${DENO_HOME}/bin:$PATH"
+fi
+
 _direnv_hook() {
   trap -- '' SIGINT
   eval "$("/opt/homebrew/bin/direnv" export zsh)"
@@ -56,3 +62,5 @@ typeset -ag chpwd_functions
 if (( ! ${chpwd_functions[(I)_direnv_hook]} )); then
   chpwd_functions=(_direnv_hook $chpwd_functions)
 fi
+
+
