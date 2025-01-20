@@ -3,20 +3,24 @@ local spec = {
   "clxmochamalefic/lspctl.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
+    "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
   },
+  lazy = true,
   cmd = { "Lspctl" },
-  keys = {
-    { "<space>lc", "<Cmd>Lspctl<CR>", desc = "lspctl" },
+  opts = {
+    manager = "mason", -- default: "lspconfig", support: "lspconfig"|"mason"
+    keymap = {
+      info = "h",
+      start = "s",
+      stop = "x",
+      restart = "r",
+      close = "q",
+    },
   },
-  opt = {
-    info = "h",
-    start = "s",
-    stop = "x",
-    restart = "r",
-    close = "q",
-  },
-  config = function(_, opt)
-    require("lspctl").setup(opt)
+  config = function(_, opts)
+    require("lspctl").setup(opts)
   end,
 }
 
