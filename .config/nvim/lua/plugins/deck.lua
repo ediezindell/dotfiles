@@ -40,10 +40,15 @@ local spec = {
     })
 
     -- Example key bindings for launching nvim-deck sources. (These mapping required `deck.easy` calls.)
-    vim.keymap.set("n", "<space>Ff", "<Cmd>Deck files<CR>", { desc = "Show recent files, buffers, and more" })
-    vim.keymap.set("n", "<space>Fr", "<Cmd>Deck grep<CR>", { desc = "Start grep search" })
-    vim.keymap.set("n", "<space>Fg", "<Cmd>Deck git<CR>", { desc = "Open git launcher" })
-    vim.keymap.set("n", "<space>Fh", "<Cmd>Deck helpgrep<CR>", { desc = "Live grep all help tags" })
+    vim.keymap.set(
+      "n",
+      "<space>FF",
+      "<Cmd>Deck files<CR>",
+      { desc = "nvim-deck: Show recent files, buffers, and more" }
+    )
+    vim.keymap.set("n", "<space>FR", "<Cmd>Deck grep<CR>", { desc = "nvim-deck: Start grep search" })
+    vim.keymap.set("n", "<space>FG", "<Cmd>Deck git<CR>", { desc = "nvim-deck: Open git launcher" })
+    vim.keymap.set("n", "<space>FH", "<Cmd>Deck helpgrep<CR>", { desc = "nvim-deck: Live grep all help tags" })
 
     -- Show the latest deck context.
     vim.keymap.set("n", "<Leader>;", function()
