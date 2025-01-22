@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "j-hui/fidget.nvim",
-  event = "VeryLazy",
+  event = "BufEnter",
   config = function()
     local fidget = require("fidget")
     fidget.setup({})

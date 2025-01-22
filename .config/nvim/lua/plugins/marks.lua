@@ -37,7 +37,7 @@ local spec = {
     },
     mappings = {},
   },
-  event = "VeryLazy",
+  event = "BufEnter",
 }
 
 return spec

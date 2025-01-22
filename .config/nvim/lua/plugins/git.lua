@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "dinhhuy258/git.nvim",
-  event = "VeryLazy",
+  event = "BufRead",
   opts = {
     keymaps = {
       blame = "<space>gb",

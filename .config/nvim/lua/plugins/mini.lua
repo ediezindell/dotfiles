@@ -62,7 +62,7 @@ local spec = {
     opts = {
       delay = 10,
     },
-    event = "VeryLazy",
+    event = "BufEnter",
   },
   {
     -- 括弧間移動

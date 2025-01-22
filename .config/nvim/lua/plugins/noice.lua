@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "folke/noice.nvim",
-  event = "VeryLazy",
+  event = "BufEnter",
   init = function()
     vim.opt.cmdheight = 0
   end,

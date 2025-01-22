@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "tzachar/highlight-undo.nvim",
-  event = "VeryLazy",
+  event = "BufEnter",
   opts = {},
 }
 

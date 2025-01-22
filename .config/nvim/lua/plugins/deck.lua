@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "hrsh7th/nvim-deck",
-  lazy = false,
+  event = "BufEnter",
   config = function()
     local deck = require("deck")
 

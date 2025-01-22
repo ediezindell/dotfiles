@@ -1,8 +1,8 @@
 ---@type LazySpec
 local spec = {
   "folke/ts-comments.nvim",
+  ft = { "typescriptreact", "typescript.tsx" },
   opts = {},
-  event = "VeryLazy",
 }
 
 return spec

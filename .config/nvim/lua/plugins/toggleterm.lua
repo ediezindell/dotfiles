@@ -3,7 +3,7 @@
 local spec = {
   "akinsho/toggleterm.nvim",
   version = "*",
-  event = "VeryLazy",
+  cmd = "ToggleTerm",
   opts = {
     insert_mappings = true,
   },

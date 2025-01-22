@@ -1,7 +1,11 @@
 ---@type LazySpec
 local spec = {
   "stevearc/overseer.nvim",
-  event = "VeryLazy",
+  cmd = {
+    "OverseerOpen",
+    "OverseerRun",
+    "OverseerRestartLast",
+  },
   init = function()
     vim.api.nvim_create_user_command("OverseerRestartLast", function()
       local overseer = require("overseer")
