@@ -40,17 +40,17 @@ local spec = {
       monokai.setup(opts)
     end,
   },
-  {
-    "sainnhe/sonokai",
-    lazy = false,
-    priority = 1001,
-    init = function()
-      vim.g.sonokai_enable_italic = false
-    end,
-    config = function()
-      vim.cmd.colorscheme("sonokai")
-    end,
-  },
+  -- {
+  --   "sainnhe/sonokai",
+  --   lazy = false,
+  --   priority = 1001,
+  --   init = function()
+  --     vim.g.sonokai_enable_italic = false
+  --   end,
+  --   config = function()
+  --     vim.cmd.colorscheme("sonokai")
+  --   end,
+  -- },
 }
 
 return spec
