@@ -47,6 +47,7 @@ local spec = {
         "astro-language-server",
         "markuplint",
         "intelephense",
+        "gopls",
       },
       automatic_installation = true,
     },

@@ -80,6 +80,9 @@ local spec = {
     lspconfig.tailwindcss.setup({
       capabilities = capabilities,
     })
+    lspconfig.gopls.setup({
+      capabilities = capabilities,
+    })
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
