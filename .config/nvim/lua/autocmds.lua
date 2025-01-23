@@ -166,3 +166,8 @@ aucmd("FileType", {
   end,
   group = group("DduUiFf"),
 })
+
+aucmd("BufWritePre", {
+  command = "Px2rem",
+  group = group("Px2rem"),
+})
