@@ -62,9 +62,10 @@ add-zsh-hook chpwd node_install
 function parseParentDir() {
   cwd=${1:-$( pwd )}
   path=/
+  echo $path
   for dir in `echo ${cwd//\// }`; do
-    echo $path
     path="${path}${dir}/"
+    echo $path
   done
 }
 
