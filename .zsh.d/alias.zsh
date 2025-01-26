@@ -14,6 +14,7 @@ alias cp="cp -i"
 # cd
 alias ..="cd .."
 alias ...="cd ../.."
+alias cd-="cd -"
 
 # docker
 alias d="docker"
