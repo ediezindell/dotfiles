@@ -59,3 +59,33 @@ function pmc() {
 
 add-zsh-hook chpwd node_install
 
+function parseParentDir() {
+  cwd=${1:-$( pwd )}
+  path=/
+  for dir in `echo ${cwd//\// }`; do
+    echo $path
+    path="${path}${dir}/"
+  done
+}
+
+function cdp() {
+  cwd=${1:-$( pwd )}
+  cd $(parseParentDir $cwd | sort -r | fzf)
+}
+
+function searchGitRoot() {
+  cwd=${1:-$( pwd )}
+  for path in `parseParentDir $cwd`; do
+    if [ -d "$path/.git" ]; then
+      echo $path
+    fi
+  done
+}
+
+function cdr() {
+  cwd=${1:-$( pwd )}
+  root=`searchGitRoot $cwd`
+  if [ -d $root ]; then
+    cd $root
+  fi
+}
