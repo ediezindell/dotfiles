@@ -1,8 +1,4 @@
 NormalKeymap("Y", "y$", "yank to EOL")
-NormalKeymap("<C-h>", "<C-w>h", "move left window")
-NormalKeymap("<C-j>", "<C-w>j", "move down window")
-NormalKeymap("<C-k>", "<C-w>k", "move up window")
-NormalKeymap("<C-l>", "<C-w>l", "move right window")
 NormalKeymap("/", [[/\v]], "very magicフラグを入れた状態で検索開始")
 NormalKeymap("<S-m>", "`", "jump to mark")
 
