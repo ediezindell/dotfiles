@@ -1,7 +1,13 @@
 ---@type LazySpec
 local spec = {
   "folke/ts-comments.nvim",
-  ft = { "typescriptreact", "typescript.tsx" },
+  ft = {
+    "javascriptreact",
+    "javascript.jsx",
+    "typescriptreact",
+    "typescript.tsx",
+    "astro",
+  },
   opts = {},
 }
 

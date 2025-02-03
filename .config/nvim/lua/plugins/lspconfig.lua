@@ -103,7 +103,15 @@ local spec = {
 
     -- TypeScriptのLS起動設定
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+      pattern = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        "astro",
+      },
       callback = function()
         local configs = require("lspconfig.configs")
 
