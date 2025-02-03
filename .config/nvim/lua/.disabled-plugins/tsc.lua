@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "dmmulroy/tsc.nvim",
-  ft = { "typescript", "typescriptreact" },
+  ft = { "typescript", "typescriptreact", "astro" },
   config = true,
 }
 
