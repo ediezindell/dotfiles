@@ -7,11 +7,13 @@ local spec = {
     "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
   },
   event = "BufEnter",
+  keys = {
+    { "[b", "<Cmd>BufferPrevious<CR>", desc = "BufferPrevious (barbar)" },
+    { "]b", "<Cmd>BufferNext<CR>", desc = "BufferNext (barbar)" },
+    { "<A-w>", "<Cmd>BufferClose<CR>", desc = "BufferClose (barbar)" },
+  },
   init = function()
     vim.g.barbar_auto_setup = false
-    CommandKeymap("[b", "BufferPrevious", "BufferPrevious (barbar)")
-    CommandKeymap("]b", "BufferNext", "BufferNext (barbar)")
-    CommandKeymap("<A-w>", "BufferClose", "")
   end,
   opts = {},
 }
