@@ -47,8 +47,12 @@ local function set_lsp_keymaps()
     gn = vim.lsp.buf.rename,
     ga = vim.lsp.buf.code_action,
     ge = vim.diagnostic.open_float,
-    ["g]"] = vim.diagnostic.goto_next,
-    ["g["] = vim.diagnostic.goto_prev,
+    ["g]"] = function()
+      vim.diagnostic.jump({ count = 1, float = true })
+    end,
+    ["g["] = function()
+      vim.diagnostic.jump({ count = -1, float = true })
+    end,
   }
 
   for key, func in pairs(mappings) do
