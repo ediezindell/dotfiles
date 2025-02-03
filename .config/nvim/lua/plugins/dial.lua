@@ -3,10 +3,10 @@ local spec = {
   "monaqa/dial.nvim",
   event = "BufEnter",
   keys = {
-    { "<C-a>", [[ <Cmd>lua require("dial.map").manipulate("increment", "normal")<CR> ]] },
-    { "<C-x>", [[ <Cmd>lua require("dial.map").manipulate("decrement", "normal")<CR> ]] },
-    { "g<C-a>", [[ <Cmd>lua require("dial.map").manipulate("increment", "gnormal")<CR> ]] },
-    { "g<C-x>", [[ <Cmd>lua require("dial.map").manipulate("decrement", "gnormal")<CR> ]] },
+    { "<C-a>", '<Cmd>lua require("dial.map").manipulate("increment", "normal")<CR>' },
+    { "<C-x>", '<Cmd>lua require("dial.map").manipulate("decrement", "normal")<CR>' },
+    { "g<C-a>", '<Cmd>lua require("dial.map").manipulate("increment", "gnormal")<CR>' },
+    { "g<C-x>", '<Cmd>lua require("dial.map").manipulate("decrement", "gnormal")<CR>' },
   },
   config = function()
     local augend = require("dial.augend")
