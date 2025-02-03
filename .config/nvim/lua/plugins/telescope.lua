@@ -12,14 +12,58 @@ local spec = {
       "notjedi/nvim-rooter.lua",
       config = true,
     },
+    {
+      "prochri/telescope-all-recent.nvim",
+      dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "kkharji/sqlite.lua",
+        -- optional, if using telescope for vim.ui.select
+        "stevearc/dressing.nvim",
+      },
+      opts = {
+        -- your config goes here
+      },
+    },
   },
   keys = {
-    { "<space>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], desc = "telescope buffers" },
-    -- { "<space>ff", [[<Cmd>lua require("telescope.builtin").find_files()<CR>]], desc = "telescope find_files" },
-    { "<space>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], desc = "telescope live_grep" },
-    { "<space>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], desc = "telescope help" },
-    { "<space>fr", [[<Cmd>Telescope resume<CR>]], desc = "telescope resume" },
-    { "<space>ft", [[<Cmd>Telescope tailiscope<CR>]], desc = "telescope Tailwind CSS" },
+    {
+      "<space>fb",
+      function()
+        require("telescope.builtin").buffers()
+      end,
+      desc = "telescope buffers",
+    },
+    {
+      "<space>ff",
+      function()
+        require("telescope.builtin").find_files()
+      end,
+      desc = "telescope find_files",
+    },
+    {
+      "<space>fg",
+      function()
+        require("telescope.builtin").live_grep()
+      end,
+      desc = "telescope live_grep",
+    },
+    {
+      "<space>fh",
+      function()
+        require("telescope.builtin").help_tags()
+      end,
+      desc = "telescope help",
+    },
+    {
+      "<space>fr",
+      "<Cmd>Telescope resume<CR>",
+      desc = "telescope resume",
+    },
+    {
+      "<space>ft",
+      "<Cmd>Telescope tailwind<CR>",
+      desc = "telescope Tailwind CSS",
+    },
   },
   config = function()
     local telescope = require("telescope")
@@ -119,7 +163,7 @@ local spec = {
       require("telescope.builtin").find_files(opts)
     end
 
-    NormalKeymap("<space>ff", find_file_from_pj_root, "telescope find_files (from project root)")
+    -- NormalKeymap("<space>ff", find_file_from_pj_root, "telescope find_files (from project root)")
   end,
 }
 
