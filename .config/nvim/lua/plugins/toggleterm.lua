@@ -7,11 +7,13 @@ local spec = {
   opts = {
     insert_mappings = true,
   },
-  keys = { {
-    "<space>t",
-    "<Cmd>ToggleTerm<CR>",
-    desc = "toggle terminal",
-  } },
+  keys = {
+    {
+      "<space>t",
+      "<Cmd>ToggleTerm<CR>",
+      desc = "toggle terminal",
+    },
+  },
 }
 
 return spec
