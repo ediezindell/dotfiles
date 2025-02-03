@@ -292,8 +292,6 @@ local spec = {
     end
   end,
   opts = function()
-    local trash_command = "trash"
-    local is_trash = tb(vim.fn.executable(trash_command))
     return {
       use_default_keymaps = false,
       keymaps = {
@@ -314,8 +312,6 @@ local spec = {
           return vim.tbl_contains(ignore_list, name)
         end,
       },
-      delete_to_trash = is_trash,
-      trash_command = trash_command,
       default_file_explorer = true,
       columns = {
         "permissions",
