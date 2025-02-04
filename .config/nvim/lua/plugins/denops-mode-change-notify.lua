@@ -6,21 +6,28 @@ local spec = {
   },
   event = "BufEnter",
   config = function()
-    vim.api.nvim_create_autocmd("InsertEnter", {
-      pattern = "*",
+    vim.api.nvim_create_autocmd({
+      "ModeChanged",
+    }, {
+      pattern = "*:i",
       callback = function()
         vim.cmd([[call denops#request('denops-mode-change-notify', 'showToast', ["Insert"])]])
       end,
     })
     vim.api.nvim_create_autocmd({
-      "InsertLeave",
-      -- TODO: 適切なイベント
-      -- "VisualLeave",
-      -- "CommandLeave"
+      "ModeChanged",
     }, {
-      pattern = "*",
+      pattern = "*:n",
       callback = function()
         vim.cmd([[call denops#request('denops-mode-change-notify', 'showToast', ["Normal"])]])
+      end,
+    })
+    vim.api.nvim_create_autocmd({
+      "ModeChanged",
+    }, {
+      pattern = "*:v",
+      callback = function()
+        vim.cmd([[call denops#request('denops-mode-change-notify', 'showToast', ["Visual"])]])
       end,
     })
   end,
