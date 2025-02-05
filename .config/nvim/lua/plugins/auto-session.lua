@@ -12,7 +12,7 @@ local spec = {
   ---enables autocomplete for opts
   ---@module "auto-session"
   ---@type AutoSession.Config
-  copts = {
+  opts = {
     -- ⚠️ This will only work if Telescope.nvim is installed
     -- The following are already the default values, no need to provide them if these are already the settings you want.
     session_lens = {
