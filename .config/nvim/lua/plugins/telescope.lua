@@ -84,9 +84,9 @@ local spec = {
           },
         },
         path_display = {
-          filename_first = {
-            reverse_directories = false,
-          },
+          -- filename_first = {
+          --   reverse_directories = false,
+          -- },
         },
         layout_strategy = "vertical",
         -- winblend = 20,
