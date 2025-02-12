@@ -17,6 +17,7 @@ function bm() {
   branches=$(cat $prList | awk -F'\t' '{print $3"\t"$2}')
   if [ -z "$branches" ]; then
     b
+    return
   fi
   echo $branches | cat -n
   read branchNumber\?"Enter Branch Number: "
