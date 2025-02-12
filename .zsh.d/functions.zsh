@@ -7,13 +7,20 @@ function node_install() {
 }
 
 function bm() {
-  if [ -d .git ]; then
-    gh pr list > .git/pr-list
-    branches=$(cat .git/pr-list | awk -F'\t' '{print $3"\t"$2}')
-    echo $branches | cat -n
-    read branchNumber\?"Enter Branch Number: "
-    git switch $(echo $branches | cut -f1 | awk NR==$branchNumber)
+  root=`searchGitRoot`
+  if [ ! -d "$root" ]; then
+    echo "invalid path\nplease run at git root directory"
+    return
   fi
+  prList="$root/.git/pr-list"
+  gh pr list > $prList
+  branches=$(cat $prList | awk -F'\t' '{print $3"\t"$2}')
+  if [ -z "$branches" ]; then
+    b
+  fi
+  echo $branches | cat -n
+  read branchNumber\?"Enter Branch Number: "
+  git switch $(echo $branches | cut -f1 | awk NR==$branchNumber)
 }
 function b() {
   branches=$(git branch --sort=-committerdate)
@@ -84,7 +91,7 @@ function searchGitRoot() {
 function cdr() {
   cwd=${1:-$( pwd )}
   root=`searchGitRoot $cwd`
-  if [ -d $root ]; then
+  if [ -d "$root" ]; then
     cd $root
   fi
 }
