@@ -7,15 +7,13 @@ function node_install() {
 }
 
 function bm() {
-  if [ ! -d .git ]; then
-    branches=$(git branch --sort=-committerdate | awk '{print $NF}')
-  else
-    touch .git/memo
-    branches=$(git branch --sort=-committerdate | awk '{print $NF}' | xargs -L1 -I{} grep "{}" .git/memo)
+  if [ -d .git ]; then
+    gh pr list > .git/pr-list
+    branches=$(cat .git/pr-list | awk -F'\t' '{print $3"\t"$2}')
+    echo $branches | cat -n
+    read branchNumber\?"Enter Branch Number: "
+    git switch $(echo $branches | cut -f1 | awk NR==$branchNumber)
   fi
-  echo $branches | cat -n
-  read branchNumber\?"Enter Branch Number: "
-  git switch $(echo $branches | cut -d" " -f1 | awk NR==$branchNumber)
 }
 function b() {
   branches=$(git branch --sort=-committerdate)
