@@ -175,3 +175,10 @@ aucmd("BufWritePre", {
   command = "Px2rem",
   group = group("Px2rem"),
 })
+
+aucmd({ "BufNewFile", "BufReadPre" }, {
+  once = true,
+  pattern = "*.pug",
+  command = "TSEnable highlight pug",
+  group = group("EnableTSPug"),
+})

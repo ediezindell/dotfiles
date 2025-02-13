@@ -83,6 +83,10 @@ local spec = {
     lspconfig.gopls.setup({
       capabilities = capabilities,
     })
+    -- please run: go install github.com/opa-oz/pug-lsp@latest
+    lspconfig.pug.setup({
+      capabilities = capabilities,
+    })
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")

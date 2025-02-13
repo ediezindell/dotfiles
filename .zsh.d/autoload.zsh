@@ -49,6 +49,12 @@ if [ -d "${DENO_HOME}" ]; then
   export PATH="${DENO_HOME}/bin:$PATH"
 fi
 
+# go
+export GO_HOME=$HOME/go
+if [ -d "${GO_HOME}" ]; then
+  export PATH="${GO_HOME}/bin:$PATH"
+fi
+
 _direnv_hook() {
   trap -- '' SIGINT
   eval "$("/opt/homebrew/bin/direnv" export zsh)"

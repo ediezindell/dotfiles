@@ -3,7 +3,7 @@
 local spec = {
   {
     "nvim-treesitter/nvim-treesitter",
-    event = { "BufNewFile", "BufRead" },
+    event = { "BufNewFile", "BufReadPre" },
     run = ":TSUpdate",
     opts = {
       highlight = {
