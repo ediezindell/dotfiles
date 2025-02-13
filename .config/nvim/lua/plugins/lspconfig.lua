@@ -7,6 +7,7 @@ local spec = {
     "nvimtools/none-ls.nvim",
     "nvimtools/none-ls-extras.nvim",
     "yioneko/nvim-vtsls",
+    "b0o/schemastore.nvim",
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
@@ -86,6 +87,14 @@ local spec = {
     -- please run: go install github.com/opa-oz/pug-lsp@latest
     lspconfig.pug.setup({
       capabilities = capabilities,
+    })
+    lspconfig.jsonls.setup({
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
+        },
+      },
     })
 
     -- フォーマッターとリンターの設定
