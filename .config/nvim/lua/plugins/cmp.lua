@@ -18,7 +18,7 @@ local spec = {
       build = "make install_jsregexp",
       config = function()
         vim.keymap.set("n", "<leader>ss", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
-        require("luasnip.loaders.from_lua").load({ paths = { "snippets" } })
+        require("luasnip.loaders.from_lua").load({ paths = { "~/.config/nvim/snippets" } })
       end,
     },
     "mlaursen/vim-react-snippets",
