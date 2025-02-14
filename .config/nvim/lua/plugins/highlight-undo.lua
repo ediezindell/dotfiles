@@ -2,7 +2,15 @@
 local spec = {
   "tzachar/highlight-undo.nvim",
   event = "BufEnter",
-  opts = {},
+  opts = {
+    ignored_filetypes = {
+      "neo-tree",
+      "fugitive",
+      "TelescopePrompt",
+      "mason",
+      "lazy",
+    },
+  },
 }
 
 return spec
