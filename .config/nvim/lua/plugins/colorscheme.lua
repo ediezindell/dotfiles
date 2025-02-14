@@ -18,6 +18,7 @@ local getOpts = function(palette)
       typescriptVariable = getFg(palette.aqua),
       tsxIntrinsicTagName = getFg(palette.pink),
       sassId = getFg(palette.green),
+      NonText = getFg(palette.grey),
 
       -- for plugins
       HighlightUndo = { fg = palette.white, bg = palette.orange }, -- highlight-undo
