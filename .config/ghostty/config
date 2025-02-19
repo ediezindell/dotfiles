@@ -1,65 +1,75 @@
-window-theme = ghostty
-gtk-titlebar = false
-shell-integration = none
-macos-option-as-alt = left
-
+# 見た目
+window-theme = dark
 theme = catppuccin-mocha
 background-opacity = 0.85
-# background-blur-radius = 20
-macos-titlebar-style = transparent
+font-family = Moralerspace Argon HWNF
+font-size = 16
 
+# MacのOptionをAltとして使う
+macos-option-as-alt = true
+# Macでタイトルバーを非表示
+macos-titlebar-style = hidden
+
+# クリップボードアクセスを許可
 clipboard-read = allow
 clipboard-write = allow
+# マウスで選択したらクリップボードへコピー
 copy-on-select = clipboard
+
+# カーソル関連
 cursor-click-to-move = false
 cursor-opacity = 0.7
 cursor-style = bar
-font-family = Moralerspace Argon HWNF
-font-size = 16
-initial-window = false
+# 入力時にマウスをすぐに非表示
 mouse-hide-while-typing = true
+
+# フォーカスしてない方を暗くする
 unfocused-split-opacity = 0.5
 
-# disable ligature
+# リガチャ無効化
 font-feature = -calt
 font-feature = -liga
 font-feature = -dlig
 
-# disable-default-keybind
-keybind = clear
-
-# quick-term
-quick-terminal-position = bottom
+# クイックターミナル
 quick-terminal-screen = main
+quick-terminal-position = bottom
 quick-terminal-animation-duration = 0
-keybind = "global:alt+cmd+space=toggle_quick_terminal"
 
+# keymaps
+keybind = clear
+# クイックターミナル
+keybind = "global:alt+cmd+space=toggle_quick_terminal"
+# タブ操作
+keybind = super+t=new_tab
 keybind = ctrl+shift+tab=previous_tab
 keybind = ctrl+tab=next_tab
+# 選択範囲操作
 keybind = shift+down=adjust_selection:down
 keybind = shift+end=adjust_selection:end
 keybind = shift+home=adjust_selection:home
 keybind = shift+left=adjust_selection:left
-keybind = shift+page_down=adjust_selection:page_down
-keybind = shift+page_up=adjust_selection:page_up
 keybind = shift+right=adjust_selection:right
 keybind = shift+up=adjust_selection:up
 keybind = super+a=select_all
+# ウィンドウ分割
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+# 分割ウィンドウフォーカス操作
 keybind = super+alt+down=goto_split:bottom
-keybind = super+alt+i=inspector:toggle
 keybind = super+alt+left=goto_split:left
 keybind = super+alt+right=goto_split:right
 keybind = super+alt+up=goto_split:top
+# インスペクタ
+keybind = super+alt+i=inspector:toggle
+# クリップボード
 keybind = super+c=copy_to_clipboard
-keybind = super+comma=open_config
-keybind = super+d=new_split:right
-keybind = super+left_bracket=goto_split:previous
-keybind = super+n=new_window
-keybind = super+q=quit
-keybind = super+right_bracket=goto_split:next
-keybind = super+shift+comma=reload_config
-keybind = super+shift+d=new_split:down
-keybind = super+t=new_tab
 keybind = super+v=paste_from_clipboard
-keybind = super+t=new_tab
+# 設定
+keybind = super+comma=open_config
+keybind = super+shift+comma=reload_config
+# 新規ウィンドウ
+keybind = super+n=new_window
+# 終了
+keybind = super+q=quit
 
