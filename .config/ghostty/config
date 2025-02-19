@@ -29,8 +29,8 @@ font-feature = -dlig
 keybind = clear
 
 # quick-term
-quick-terminal-position = "bottom"
-quick-terminal-screen = "main"
+quick-terminal-position = bottom
+quick-terminal-screen = main
 quick-terminal-animation-duration = 0
 keybind = "global:alt+cmd+space=toggle_quick_terminal"
 
