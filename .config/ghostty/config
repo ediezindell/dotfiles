@@ -7,8 +7,8 @@ font-size = 16
 
 # MacのOptionをAltとして使う
 macos-option-as-alt = true
-# Macでタイトルバーを非表示
-macos-titlebar-style = hidden
+# Macでタイトルバーを透明化
+macos-titlebar-style = transparent
 
 # クリップボードアクセスを許可
 clipboard-read = allow
