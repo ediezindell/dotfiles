@@ -21,8 +21,8 @@ local getOpts = function(palette)
       NonText = getFg(palette.grey),
 
       -- for plugins
-      HighlightUndo = { fg = palette.white, bg = palette.orange }, -- highlight-undo
-      HighlightRedo = { fg = palette.white, bg = palette.orange }, -- highlight-undo
+      UgUndo = { fg = palette.white, bg = palette.orange }, -- undo-glow
+      UgRedo = { fg = palette.white, bg = palette.orange }, -- undo-glow
       BufferCurrent = { bg = palette.pink }, -- barbar
       BufferCurrentMod = { bg = palette.pink, fg = palette.black }, -- barbar
     },
