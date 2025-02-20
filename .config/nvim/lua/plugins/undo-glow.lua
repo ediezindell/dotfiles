@@ -11,7 +11,7 @@ local spec = {
       pattern = "*",
       callback = function()
         -- Either provide a list of ignored filetypes
-        local ignored_filetypes = { "mason", "snacks_picker_list", "lazy" }
+        local ignored_filetypes = { "mason", "snacks_picker_list", "lazy", "oil" }
         if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
           return
         end
