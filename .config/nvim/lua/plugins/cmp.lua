@@ -10,15 +10,16 @@ local spec = {
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-path",
     "onsails/lspkind.nvim",
-    "rafamadriz/friendly-snippets",
     "saadparwaiz1/cmp_luasnip",
     {
       "L3MON4D3/LuaSnip",
+      dependencies = { "rafamadriz/friendly-snippets" },
       version = "v2.*",
       build = "make install_jsregexp",
       config = function()
         vim.keymap.set("n", "<leader>ss", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
         require("luasnip.loaders.from_lua").load({ paths = { "~/.config/nvim/snippets" } })
+        require("luasnip.loaders.from_vscode").lazy_load()
       end,
     },
     "mlaursen/vim-react-snippets",
