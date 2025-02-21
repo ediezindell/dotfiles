@@ -44,13 +44,18 @@ local spec = {
   -- {
   --   "sainnhe/sonokai",
   --   lazy = false,
-  --   priority = 1001,
+  --   priority = 1000,
   --   init = function()
   --     vim.g.sonokai_enable_italic = false
   --   end,
   --   config = function()
   --     vim.cmd.colorscheme("sonokai")
   --   end,
+  -- },
+  -- {
+  --   "jsit/toast.vim",
+  --   lazy = false,
+  --   priority = 1000,
   -- },
 }
 
