@@ -96,3 +96,7 @@ function cdr() {
     cd $root
   fi
 }
+
+function confetti() {
+  open raycast://confetti
+}
