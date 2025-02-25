@@ -16,15 +16,21 @@ vim.treesitter.start = (function(wrapped)
 end)(vim.treesitter.start)
 
 -- diagnosticの表示フォーマット変更
+local function formatDiagnostics(diagnostic)
+  if diagnostic.code ~= nil then
+    return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+  else
+    return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+  end
+end
 vim.diagnostic.config({
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    format = formatDiagnostics,
+  },
   virtual_text = {
-    format = function(diagnostic)
-      if diagnostic.code ~= nil then
-        return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
-      else
-        return string.format("%s (%s)", diagnostic.message, diagnostic.source)
-      end
-    end,
+    format = formatDiagnostics,
   },
 })
 
