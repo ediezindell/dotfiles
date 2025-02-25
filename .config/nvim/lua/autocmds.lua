@@ -47,7 +47,7 @@ local function set_lsp_keymaps()
     gt = vim.lsp.buf.type_definition,
     gr = vim.lsp.buf.rename,
     gn = vim.lsp.buf.rename,
-    ga = vim.lsp.buf.code_action,
+    -- ga = vim.lsp.buf.code_action,
     ge = vim.diagnostic.open_float,
     ["g]"] = function()
       vim.diagnostic.jump({ count = 1, float = true })
