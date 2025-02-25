@@ -93,3 +93,14 @@ SearchByClipboard = function()
   local command = "/" .. search_term
   vim.api.nvim_feedkeys(command, "c", true)
 end
+
+---highlight groupから色を抽出
+---@see https://www.reddit.com/r/neovim/comments/oxddk9/comment/h7maerh/
+GetHighlightColor = function(hlgroup)
+  local fg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(hlgroup)), "fg#")
+  local bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID(hlgroup)), "bg#")
+  return {
+    fg = fg,
+    bg = bg,
+  }
+end

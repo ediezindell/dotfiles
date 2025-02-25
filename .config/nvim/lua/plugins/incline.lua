@@ -2,14 +2,13 @@
 local spec = {
   "b0o/incline.nvim",
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
     "SmiteshP/nvim-navic",
   },
-  event = "BufEnter",
+  event = "LspAttach",
   opts = function()
     local helpers = require("incline.helpers")
     local navic = require("nvim-navic")
-    local devicons = require("nvim-web-devicons")
+    local miniIcons = require("mini.icons")
     return {
       window = {
         padding = 0,
@@ -20,18 +19,27 @@ local spec = {
         if filename == "" then
           filename = "[No Name]"
         end
-        local ft_icon, ft_color = devicons.get_icon_color(filename)
+        local function getIconPart(fname)
+          local ft_icon, ft_hlgroup = miniIcons.get("file", fname)
+
+          if ft_icon == "" then
+            return ""
+          end
+
+          local colors = GetHighlightColor(ft_hlgroup)
+          return colors.fg == "" and { " ", ft_icon, "  " } or { " ", ft_icon, "  ", guifg = colors.fg }
+        end
+        local iconPart = getIconPart(filename)
         local modified = vim.bo[props.buf].modified
         local res = {
-          ft_icon and { " ", ft_icon, "  ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
-          " ",
+          iconPart,
           { filename, gui = modified and "bold,italic" or "bold" },
           guibg = "",
         }
         if props.focused then
           for _, item in ipairs(navic.get_data(props.buf) or {}) do
             table.insert(res, {
-              { " > ", group = "NavicSeparator" },
+              { "  ", group = "NavicSeparator" },
               { item.icon, group = "NavicIcons" .. item.type },
               { item.name, group = "NavicText" },
             })
