@@ -6,7 +6,6 @@ local spec = {
   },
   event = "LspAttach",
   opts = function()
-    local helpers = require("incline.helpers")
     local navic = require("nvim-navic")
     local miniIcons = require("mini.icons")
     return {
