@@ -4,7 +4,25 @@ local spec = {
   dependencies = {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
-    "nvimtools/none-ls.nvim",
+    {
+      "nvimtools/none-ls.nvim",
+      config = function()
+        local null_ls = require("null-ls")
+        null_ls.setup({
+          sources = {
+            require("none-ls.diagnostics.eslint"),
+            require("none-ls.code_actions.eslint"),
+            null_ls.builtins.formatting.prettier,
+            -- null_ls.builtins.formatting.biome,
+            null_ls.builtins.formatting.stylua,
+            null_ls.builtins.diagnostics.markuplint.with({
+              extra_filetypes = { "astro" },
+              command = "markuplint",
+            }),
+          },
+        })
+      end,
+    },
     "nvimtools/none-ls-extras.nvim",
     "yioneko/nvim-vtsls",
     "b0o/schemastore.nvim",
@@ -47,23 +65,6 @@ local spec = {
     -- please run: go install github.com/opa-oz/pug-lsp@latest
     lspconfig.pug.setup({})
     lspconfig.jsonls.setup(require("lsp.json"))
-
-    -- フォーマッターとリンターの設定
-    local null_ls = require("null-ls")
-
-    null_ls.setup({
-      sources = {
-        require("none-ls.diagnostics.eslint"),
-        require("none-ls.code_actions.eslint"),
-        null_ls.builtins.formatting.prettier,
-        -- null_ls.builtins.formatting.biome,
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.diagnostics.markuplint.with({
-          extra_filetypes = { "astro" },
-          command = "markuplint",
-        }),
-      },
-    })
 
     -- TypeScriptのLS起動設定
     vim.api.nvim_create_autocmd("FileType", {
