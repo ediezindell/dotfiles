@@ -40,7 +40,9 @@ aucmd("CmdlineLeave", {
 -- LSPアタッチ時のキーマッピングとハンドラ設定
 local function set_lsp_keymaps()
   local mappings = {
-    K = vim.lsp.buf.hover,
+    K = function()
+      vim.lsp.buf.hover({ border = "rounded" })
+    end,
     gd = vim.lsp.buf.definition,
     gt = vim.lsp.buf.type_definition,
     gr = vim.lsp.buf.rename,
@@ -58,8 +60,6 @@ local function set_lsp_keymaps()
   for key, func in pairs(mappings) do
     vim.keymap.set("n", key, func, { buffer = 0 })
   end
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 end
 aucmd("LspAttach", {
   callback = set_lsp_keymaps,
