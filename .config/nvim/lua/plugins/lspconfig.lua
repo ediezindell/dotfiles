@@ -8,11 +8,19 @@ local spec = {
     "nvimtools/none-ls-extras.nvim",
     "yioneko/nvim-vtsls",
     "b0o/schemastore.nvim",
+    "SmiteshP/nvim-navic",
   },
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local lspconfig = require("lspconfig")
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      on_attach = function(client, bufnr)
+        if client.server_capabilities.documentSymbolProvider then
+          require("nvim-navic").attach(client, bufnr)
+        end
+      end,
+    })
     lspconfig.html.setup({})
     lspconfig.cssls.setup({
       cmd = { "vscode-css-language-server" },
@@ -22,80 +30,23 @@ local spec = {
         config = "~/.config/nvim/spell/.typos.toml",
       },
     })
-
-    lspconfig.denols.setup({
-      root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "denops", ".git"),
-      single_file_support = true,
-      autostart = false,
-      on_attach = function(_, buffer)
-        vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
-          buffer = buffer,
-          callback = function()
-            vim.cmd.DenolsCache()
-          end,
-        })
-      end,
-      init_options = {
-        lint = true,
-        unstable = true,
-        suggest = {
-          imports = {
-            hosts = {
-              ["https://deno.land"] = true,
-              ["https://cdn.nest.land"] = true,
-              ["https://crux.land"] = true,
-              ["https://esm.sh"] = true,
-            },
-          },
-        },
-      },
-      capabilities = capabilities,
-    })
+    lspconfig.denols.setup(require("lsp.deno"))
     lspconfig.vtsls.setup({
-      capabilities = capabilities,
       autostart = false,
     })
     lspconfig.lua_ls.setup(require("lsp.lua"))
     lspconfig.rust_analyzer.setup({})
     lspconfig.intelephense.setup(require("lsp.php"))
-    -- lspconfig.biome.setup(require("lsp.biome"))
-    lspconfig.stylelint_lsp.setup({
-      filetypes = {
-        "css",
-        "scss",
-        "less",
-        "sass",
-        "postcss",
-      },
-      settings = {
-        stylelintplus = {
-          autoFixOnSave = true,
-          autoFixOnFormat = true,
-        },
-      },
-      capabilities = capabilities,
+    lspconfig.biome.setup({
+      autostart = false,
     })
-    lspconfig.astro.setup({
-      capabilities = capabilities,
-    })
-    lspconfig.tailwindcss.setup({
-      capabilities = capabilities,
-    })
-    lspconfig.gopls.setup({
-      capabilities = capabilities,
-    })
+    lspconfig.stylelint_lsp.setup(require("lsp.stylelint"))
+    lspconfig.astro.setup({})
+    lspconfig.tailwindcss.setup({})
+    lspconfig.gopls.setup({})
     -- please run: go install github.com/opa-oz/pug-lsp@latest
-    lspconfig.pug.setup({
-      capabilities = capabilities,
-    })
-    lspconfig.jsonls.setup({
-      settings = {
-        json = {
-          schemas = require("schemastore").json.schemas(),
-          validate = { enable = true },
-        },
-      },
-    })
+    lspconfig.pug.setup({})
+    lspconfig.jsonls.setup(require("lsp.json"))
 
     -- フォーマッターとリンターの設定
     local null_ls = require("null-ls")
