@@ -27,7 +27,7 @@ alias dcudb="docker compose up -d --build"
 # git
 alias g="git"
 alias glo="git log --oneline"
-alias gcm="git checkout main"
+alias gcm="git switch main && git pull"
 alias gs="git status"
 alias gc="git checkout"
 alias gcb="git checkout -b"
@@ -42,6 +42,8 @@ alias gdsw="git diff --staged -w"
 alias gdws="git diff --staged -w"
 alias gl="git log"
 alias glo="git log --oneline"
+alias gloh="git log --oneline | head"
+alias gloo="git log --oneline | head -1"
 # alias nb="git rev-parse --abbrev-ref HEAD"
 
 # node
