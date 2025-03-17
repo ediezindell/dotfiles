@@ -12,6 +12,12 @@ function bm() {
     echo "invalid path\nplease run at git root directory"
     return
   fi
+
+  if git remote -v | grep -q origin; then
+    origin_url=$(git remote get-url origin| sed -e 's/https:\/\/github.com\///' -e 's/\.git$//')
+    gh repo set-default $origin_url
+  fi
+
   prList="$root/.git/pr-list"
   gh pr list > $prList
   branches=$(cat $prList | awk -F'\t' '{print $3"\t"$2}')
