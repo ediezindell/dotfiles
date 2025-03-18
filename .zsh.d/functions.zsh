@@ -27,6 +27,8 @@ function bm() {
   fi
   echo $branches | cat -n
   read branchNumber\?"Enter Branch Number: "
+
+  git fetch
   git switch $(echo $branches | cut -f1 | awk NR==$branchNumber)
 }
 function b() {
