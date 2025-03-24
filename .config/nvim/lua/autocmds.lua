@@ -12,24 +12,6 @@ aucmd("InsertLeave", {
   group = group("AutoRoman"),
 })
 
--- ターミナルのキーマッピングを設定
-local function set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  local keymaps = {
-    ["<esc>"] = [[<C-\><C-n>]],
-    ["<C-c>"] = [[<C-\><C-n>]],
-  }
-
-  for key, cmd in pairs(keymaps) do
-    vim.keymap.set("t", key, cmd, opts)
-  end
-end
-aucmd("TermOpen", {
-  pattern = "term://*",
-  callback = set_terminal_keymaps,
-  group = group("TermKeymap"),
-})
-
 -- 検索時にhlsearchを有効化
 aucmd("CmdlineLeave", {
   pattern = { "/", "?", "*" },

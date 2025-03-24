@@ -8,11 +8,14 @@ local spec = {
       "nvimtools/none-ls.nvim",
       config = function()
         local null_ls = require("null-ls")
+        local opts = {
+          prefer_local = "node_modules/.bin",
+        }
         null_ls.setup({
           sources = {
-            require("none-ls.diagnostics.eslint"),
-            require("none-ls.code_actions.eslint"),
-            null_ls.builtins.formatting.prettier,
+            require("none-ls.diagnostics.eslint").with(opts),
+            require("none-ls.code_actions.eslint").with(opts),
+            null_ls.builtins.formatting.prettier.with(opts),
             -- null_ls.builtins.formatting.biome,
             null_ls.builtins.formatting.stylua,
             null_ls.builtins.diagnostics.markuplint.with({

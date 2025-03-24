@@ -14,6 +14,8 @@ VisualKeymap("p", "P", "ペースト時にレジスタの変更を防止")
 VisualKeymap("<", "<gv", "連続してインデント操作")
 VisualKeymap(">", ">gv", "連続してインデント操作")
 
+TermKeymap("<esc><esc>", [[<C-\><C-n>]], "Normal mode")
+
 -- InsertKeymap("<Tab>", "<C-t>", "字下げ")
 -- InsertKeymap("<S-Tab>", "<C-d>", "字上げ")
 

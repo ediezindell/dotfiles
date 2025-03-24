@@ -6,6 +6,7 @@ local spec = {
   cmd = "ToggleTerm",
   opts = {
     insert_mappings = true,
+    direction = "float",
   },
   keys = {
     {
