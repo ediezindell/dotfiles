@@ -36,7 +36,11 @@ fi
 
 # Volta
 export VOLTA_HOME=$HOME/.volta/bin
-if [ -d "${VOLTA_HOME}" ]; then
+# asdf
+export ASDF_HOME=${ASDF_DATA_DIR:-$HOME/.asdf}
+if [ -d "${ASDF_HOME}" ]; then
+  export PATH="${ASDF_HOME}/shims:$PATH"
+elif [ -d "${VOLTA_HOME}" ]; then
   export PATH="${VOLTA_HOME}/bin:$PATH"
 fi
 
