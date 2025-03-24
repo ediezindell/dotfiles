@@ -1,12 +1,19 @@
 NormalKeymap("Y", "y$", "yank to EOL")
 NormalKeymap("/", [[/\v]], "very magicフラグを入れた状態で検索開始")
 NormalKeymap("<S-m>", "`", "jump to mark")
+NormalKeymap("<space>fE", function()
+  vim.g.disable_auto_format = false
+end, "enable auto format global")
+NormalKeymap("<space>fD", function()
+  vim.g.disable_auto_format = true
+end, "disable auto format global")
+
 NormalKeymap("<space>fe", function()
   vim.b.disable_auto_format = false
-end, "enable auto format")
+end, "enable auto format in this buffer")
 NormalKeymap("<space>fd", function()
   vim.b.disable_auto_format = true
-end, "disable auto format")
+end, "disable auto format in this buffer")
 
 CommandKeymap("<Esc><Esc>", "set nohlsearch", "no highlight")
 CommandKeymap("g/", "lua SearchByClipboard()", "クリップボードの内容で検索する")
