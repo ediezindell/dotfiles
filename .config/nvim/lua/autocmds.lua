@@ -68,6 +68,7 @@ aucmd("BufReadPost", {
       vim.cmd("normal! g'\"")
     end
   end,
+  group = group("SaveScrollPosition"),
 })
 
 -- 保存時にディレクトリが存在しなければ作成
