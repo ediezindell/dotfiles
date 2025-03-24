@@ -51,9 +51,11 @@ aucmd("LspAttach", {
 -- 保存時にフォーマットを実行
 aucmd("BufWritePre", {
   callback = function()
-    if vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true then
-      vim.lsp.buf.format()
-    end
+    vim.lsp.buf.format({
+      filter = function()
+        return vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true
+      end,
+    })
   end,
   group = group("AutoFormat"),
 })
