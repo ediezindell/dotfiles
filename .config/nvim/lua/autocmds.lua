@@ -169,3 +169,11 @@ aucmd({ "BufNewFile", "BufReadPre" }, {
   command = "TSEnable highlight pug",
   group = group("EnableTSPug"),
 })
+
+aucmd("TextYankPost", {
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ timeout = 300 })
+  end,
+  group = group("HighlightYank"),
+})
