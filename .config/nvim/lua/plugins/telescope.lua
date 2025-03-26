@@ -43,7 +43,9 @@ local spec = {
     {
       "<space>fg",
       function()
-        require("telescope.builtin").live_grep()
+        require("telescope.builtin").live_grep({
+          glob_pattern = "!.git",
+        })
       end,
       desc = "telescope live_grep",
     },
@@ -90,6 +92,16 @@ local spec = {
         },
         layout_strategy = "vertical",
         -- winblend = 20,
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden",
+        },
       },
       pickers = {
         find_files = {
