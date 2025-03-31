@@ -97,6 +97,14 @@ local spec = {
           configs.vtsls.launch()
         elseif deno_root ~= nil then
           configs.denols.launch()
+        else
+          vim.ui.select({ "vtsls", "denols", "no launch" }, {
+            prompt = "select LSP for TypeScript: ",
+          }, function(item)
+            if item ~= "no launch" then
+              configs[item].launch()
+            end
+          end)
         end
       end,
     })
