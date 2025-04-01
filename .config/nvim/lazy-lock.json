@@ -19,6 +19,7 @@
   "denops-docker.vim": { "branch": "main", "commit": "fc3546b480a23f5b9e869065cf6acf2df4d40830" },
   "denops-mode-change-notify.vim": { "branch": "main", "commit": "4da6f21f8fe56694e93822f3fc658b08f4006f10" },
   "denops-px2rem.vim": { "branch": "main", "commit": "824dce5ccaa85e0dc00b0bf345d8d0bc7213f87c" },
+  "denops-typescript-estree.vim": { "branch": "main", "commit": "6273edc537a38721ca60a5e34d8b51c302ea3fa4" },
   "denops.vim": { "branch": "main", "commit": "4ff8f353ee54ee67288c1099242444ccb0ab5b69" },
   "dial.nvim": { "branch": "master", "commit": "2c7e2750372918f072a20f3cf754d845e143d7c9" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
