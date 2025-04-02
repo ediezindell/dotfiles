@@ -28,13 +28,13 @@ local spec = {
     event = "BufEnter",
     opts = {
       mappings = {
-        add = "sa", -- Add surrounding in Normal and Visual modes
-        delete = "sd", -- Delete surrounding
-        find = "sf", -- Find surrounding (to the right)
-        find_left = "sF", -- Find surrounding (to the left)
-        highlight = "", -- Highlight surrounding
-        replace = "sr", -- Replace surrounding
+        add = "sa",       -- Add surrounding in Normal and Visual modes
+        delete = "sd",    -- Delete surrounding
+        replace = "sr",   -- Replace surrounding
 
+        find = "",        -- Find surrounding (to the right)
+        find_left = "",   -- Find surrounding (to the left)
+        highlight = "",   -- Highlight surrounding
         suffix_last = "", -- Suffix to search with "prev" method
         suffix_next = "", -- Suffix to search with "next" method
       },
