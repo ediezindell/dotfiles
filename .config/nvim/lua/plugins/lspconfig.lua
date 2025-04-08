@@ -68,6 +68,10 @@ local spec = {
     -- please run: go install github.com/opa-oz/pug-lsp@latest
     lspconfig.pug.setup({})
     lspconfig.jsonls.setup(require("lsp.json"))
+    lspconfig.remark_ls.setup({
+      ---@see https://github.com/remarkjs/remark-language-server
+      settings = { remark = { requireConfig = true } },
+    })
 
     -- TypeScriptのLS起動設定
     vim.api.nvim_create_autocmd("FileType", {

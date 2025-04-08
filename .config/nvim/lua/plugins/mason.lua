@@ -48,6 +48,7 @@ local spec = {
         "markuplint",
         "intelephense",
         "gopls",
+        "remark-language-server",
       },
       automatic_installation = true,
     },
