@@ -87,7 +87,8 @@ aucmd("BufWritePre", {
 local function handle_missing_file()
   local fname = vim.fn.expand("<afile>")
   local dname = vim.fn.fnamemodify(fname, ":h")
-  local files_in_dir = vim.split(vim.fn.glob(dname == "." and "*" or dname .. "/*"), "\n")
+  dname = dname == "." and vim.fn.getcwd() or dname
+  local files_in_dir = vim.split(vim.fn.glob(dname .. "/*"), "\n")
 
   local matches = vim.tbl_filter(function(f)
     return f:find("^" .. vim.pesc(fname)) ~= nil -- 前方一致
@@ -107,7 +108,7 @@ local function handle_missing_file()
 
   if vim.tbl_isempty(matches) then
     if fname == "," then
-      open(".")
+      open(vim.fn.getcwd())
       return
     else
       return
@@ -118,7 +119,7 @@ local function handle_missing_file()
   local choices = {}
   for i, file in ipairs(matches) do
     matchCount = i
-    table.insert(choices, string.format("%d %s", i, file))
+    table.insert(choices, string.format("%d %s", i, dname .. "/" .. file))
   end
 
   if matchCount == 1 then
