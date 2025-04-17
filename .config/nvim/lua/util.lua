@@ -5,33 +5,33 @@ Keymap = function(mode, lhs, rhs, desc, _opts)
 end
 
 ---インサートモードのkeymapを設定する
-InsertKeymap = function(lhs, rhs, desc)
-  Keymap("i", lhs, rhs, desc)
+InsertKeymap = function(lhs, rhs, desc, opts)
+  Keymap("i", lhs, rhs, desc, opts)
 end
 
 ---ノーマルモードのkeymapを設定する
-NormalKeymap = function(lhs, rhs, desc)
-  Keymap("n", lhs, rhs, desc)
+NormalKeymap = function(lhs, rhs, desc, opts)
+  Keymap("n", lhs, rhs, desc, opts)
 end
 
 ---ビジュアルモードのkeymapを設定する
-VisualKeymap = function(lhs, rhs, desc)
-  Keymap("x", lhs, rhs, desc)
+VisualKeymap = function(lhs, rhs, desc, opts)
+  Keymap("x", lhs, rhs, desc, opts)
 end
 
 ---ターミナルモードのkeymapを設定する
-TermKeymap = function(lhs, rhs, desc)
-  Keymap("t", lhs, rhs, desc)
+TermKeymap = function(lhs, rhs, desc, opts)
+  Keymap("t", lhs, rhs, desc, opts)
 end
 
 ---モーション用のkeymapを設定する
-MotionKeymap = function(lhs, rhs, desc)
-  Keymap({ "x", "o" }, lhs, rhs, desc)
+MotionKeymap = function(lhs, rhs, desc, opts)
+  Keymap({ "x", "o" }, lhs, rhs, desc, opts)
 end
 
 ---コマンドを実行するkeymapを設定する
-CommandKeymap = function(lhs, command, desc)
-  NormalKeymap(lhs, "<Cmd>" .. command .. "<CR>", desc)
+CommandKeymap = function(lhs, command, desc, opts)
+  NormalKeymap(lhs, "<Cmd>" .. command .. "<CR>", desc, opts)
 end
 
 ---Debounce a function
