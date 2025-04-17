@@ -14,6 +14,7 @@ end, "enable auto format in this buffer")
 NormalKeymap("<space>fd", function()
   vim.b.disable_auto_format = true
 end, "disable auto format in this buffer")
+NormalKeymap("q:", ":", "", { noremap = true })
 
 CommandKeymap("<Esc><Esc>", "set nohlsearch", "no highlight")
 CommandKeymap("g/", "lua SearchByClipboard()", "クリップボードの内容で検索する")
