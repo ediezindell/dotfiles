@@ -5,7 +5,7 @@ local spec = {
     "lambdalisue/vim-kensaku",
   },
   init = function()
-    vim.keymap.set({ "n", "x", "o" }, ";", function()
+    vim.keymap.set({ "n", "x", "o" }, "+", function()
       return require("jab").jab_win({
         "a",
         "s",

@@ -51,7 +51,7 @@ local spec = {
     vim.keymap.set("n", "<space>FH", "<Cmd>Deck helpgrep<CR>", { desc = "nvim-deck: Live grep all help tags" })
 
     -- Show the latest deck context.
-    vim.keymap.set("n", "<Leader>;", function()
+    vim.keymap.set("n", "<space>;", function()
       local ctx = require("deck").get_history()[1]
       if ctx then
         ctx.show()
