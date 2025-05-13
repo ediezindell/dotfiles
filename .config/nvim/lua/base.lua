@@ -72,3 +72,13 @@ local opts = {
   },
 }
 require("lazy").setup("plugins", opts)
+
+require("vim._extui").enable({
+  enable = true,
+  msg = {
+    pos = "cmd",
+    box = {
+      timeout = 5000,
+    },
+  },
+})
