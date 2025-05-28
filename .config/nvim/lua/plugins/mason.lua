@@ -49,6 +49,7 @@ local spec = {
         "intelephense",
         "gopls",
         "remark-language-server",
+        "python-lsp-server",
       },
       automatic_installation = true,
     },

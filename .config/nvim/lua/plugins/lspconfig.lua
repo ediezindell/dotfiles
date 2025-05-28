@@ -72,6 +72,7 @@ local spec = {
       ---@see https://github.com/remarkjs/remark-language-server
       settings = { remark = { requireConfig = true } },
     })
+    lspconfig.pylsp.setup({})
 
     -- TypeScriptのLS起動設定
     vim.api.nvim_create_autocmd("FileType", {
