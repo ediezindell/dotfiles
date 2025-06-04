@@ -23,6 +23,7 @@ local spec = {
         if client ~= nil and client.name == "Firenvim" then
           vim.o.cmdheight = 0
           vim.o.laststatus = 0
+          vim.o.signcolumn = "no"
           vim.o.guifont = "Moralerspace Argon HWNF"
         end
       end,
