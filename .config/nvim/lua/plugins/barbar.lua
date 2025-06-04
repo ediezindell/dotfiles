@@ -23,6 +23,7 @@ local spec = {
       separator = { left = "" },
       pinned = { button = "", filename = true },
     },
+    auto_hide = true,
   },
 }
 

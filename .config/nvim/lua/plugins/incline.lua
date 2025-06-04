@@ -9,6 +9,9 @@ local spec = {
     local navic = require("nvim-navic")
     local miniIcons = require("mini.icons")
     return {
+      hide = {
+        only_win = true,
+      },
       window = {
         padding = 0,
         margin = { horizontal = 0, vertical = 0 },
