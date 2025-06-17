@@ -1,4 +1,6 @@
+---@type vim.lsp.Config
 return {
+  ft = { "lua" },
   settings = {
     Lua = {
       hint = { enable = true },

@@ -1,4 +1,6 @@
+---@type vim.lsp.Config
 return {
+  ft = { "php" },
   settings = {
     intelephense = {
       stubs = {

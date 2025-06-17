@@ -1,7 +1,6 @@
+---@type vim.lsp.Config
 return {
-  -- root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "denops", ".git"),
   single_file_support = true,
-  autostart = false,
   on_attach = function(_, buffer)
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost" }, {
       buffer = buffer,

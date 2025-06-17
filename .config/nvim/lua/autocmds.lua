@@ -178,3 +178,42 @@ aucmd("TextYankPost", {
   end,
   group = group("HighlightYank"),
 })
+
+-- TypeScriptのLS起動設定
+aucmd("FileType", {
+  pattern = {
+    "javascript",
+    "javascriptreact",
+    "javascript.jsx",
+    "typescript",
+    "typescriptreact",
+    "typescript.tsx",
+    "astro",
+  },
+  callback = function()
+    local ts_root = vim.fs.root(0, {
+      "tsconfig.json",
+      "jsconfig.json",
+    })
+    local deno_root = vim.fs.root(0, {
+      "deno.json",
+      "deno.jsonc",
+      "denops",
+    })
+
+    if ts_root ~= nil then
+      vim.lsp.enable("vtsls")
+    elseif deno_root ~= nil then
+      vim.lsp.enable("denols")
+    else
+      local NO_LAUNCH = "no launch"
+      vim.ui.select({ "vtsls", "denols", NO_LAUNCH }, {
+        prompt = "select LSP for TypeScript: ",
+      }, function(item)
+        if item ~= NO_LAUNCH then
+          vim.lsp.enable(item)
+        end
+      end)
+    end
+  end,
+})
