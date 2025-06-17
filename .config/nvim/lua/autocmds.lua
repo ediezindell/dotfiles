@@ -12,6 +12,74 @@ aucmd("InsertLeave", {
   group = group("AutoRoman"),
 })
 
+-- 日本語入力での誤入力を自動修正（よく使うもののみ安全に実装）
+local japanese_corrections = {
+  -- 基本的なコマンド（ASCII文字のみ使用）
+  ["qa"] = "qa",  -- くぁ -> qa
+  ["wq"] = "wq",  -- われq -> wq  
+  ["w"] = "w",    -- ｗ -> w
+  ["q"] = "q",    -- q -> q
+  ["e"] = "e",    -- え -> e
+  ["h"] = "h",    -- ｈ -> h
+  ["vs"] = "vs",  -- ｖｓ -> vs
+  ["sp"] = "sp",  -- ｓp -> sp
+  ["bd"] = "bd",  -- ぶd -> bd
+  ["buf"] = "buf", -- ぶf -> buf
+  ["tab"] = "tab", -- たあb -> tab
+  ["set"] = "set", -- せt -> set
+  ["git"] = "git", -- ぎt -> git
+  ["lsp"] = "lsp", -- lsp -> lsp
+  ["tel"] = "tel", -- てl -> tel (telescope)
+}
+
+-- 安全なabbreviationの設定
+for _, cmd in pairs(japanese_corrections) do
+  pcall(function()
+    vim.cmd(string.format("cnoreabbrev %s %s", cmd, cmd))
+  end)
+end
+
+-- より高度な日本語入力修正（CmdlineChangedイベントを使用）
+local function fix_japanese_input()
+  local cmdline = vim.fn.getcmdline()
+  local pos = vim.fn.getcmdpos()
+  
+  -- よくある日本語誤入力パターンの修正
+  local corrections = {
+    ["くぁ"] = "qa",
+    ["われq"] = "wq",
+    ["われ"] = "wre",
+    ["えでぃt"] = "edit",
+    ["えx"] = "ex",
+    ["せt"] = "set",
+    ["ぶd"] = "bd",
+    ["たあb"] = "tab",
+    ["ぎt"] = "git",
+    ["てl"] = "tel",
+    ["ｗ"] = "w",
+    ["ｈ"] = "h",
+    ["ｖｓ"] = "vs",
+    ["ｓp"] = "sp",
+  }
+  
+  for japanese, english in pairs(corrections) do
+    if cmdline:find("^" .. japanese) then
+      local new_cmdline = cmdline:gsub("^" .. japanese, english)
+      vim.fn.setcmdline(new_cmdline)
+      break
+    end
+  end
+end
+
+-- CmdlineChangedイベントで日本語入力を監視
+aucmd("CmdlineChanged", {
+  pattern = ":",
+  callback = function()
+    pcall(fix_japanese_input)
+  end,
+  group = group("JapaneseInputFix"),
+})
+
 -- 検索時にhlsearchを有効化
 aucmd("CmdlineLeave", {
   pattern = { "/", "?", "*" },
