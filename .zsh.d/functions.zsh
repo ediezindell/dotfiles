@@ -108,3 +108,17 @@ function cdr() {
 function confetti() {
   open raycast://confetti
 }
+
+function gcb() {
+  if [ -z "$1" ]; then
+    echo "Please provide a new branch name or prefix and Jira URL"
+    return 1
+  fi
+
+  if [ -z "$2" ]; then
+    branch=$1
+  else
+    branch=$1/$(echo "$2" | sed -e "s/.*\///g")
+  fi
+  git checkout -b "$branch"
+}
