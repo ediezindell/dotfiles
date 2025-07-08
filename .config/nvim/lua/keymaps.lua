@@ -1,6 +1,9 @@
 NormalKeymap("Y", "y$", "yank to EOL")
 NormalKeymap("/", [[/\v]], "", { noremap = true, desc = "very magicフラグを入れた状態で検索開始" })
 NormalKeymap("<S-m>", "`", "jump to mark")
+NormalKeymap("<BS>", "<C-o>", "back")
+NormalKeymap("<Left>", "<C-o>", "back")
+NormalKeymap("<Right>", "<C-i>", "forward")
 NormalKeymap("<space>fE", function()
   vim.g.disable_auto_format = false
 end, "enable auto format global")
