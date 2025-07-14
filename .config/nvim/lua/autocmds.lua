@@ -234,6 +234,13 @@ aucmd("BufWritePre", {
 
 aucmd({ "BufNewFile", "BufReadPre" }, {
   once = true,
+  pattern = "*.twig",
+  command = "TSEnable highlight twig",
+  group = group("EnableTSTwig"),
+})
+
+aucmd({ "BufNewFile", "BufReadPre" }, {
+  once = true,
   pattern = "*.pcss",
   command = "TSEnable highlight postcss",
   group = group("EnableTSPostcss"),

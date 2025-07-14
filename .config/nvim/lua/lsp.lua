@@ -13,6 +13,7 @@ vim.lsp.enable({
   "rust_analyzer",
   "stylelint",
   "tailwindcss",
+  "twiggy_language_server",
   "typos_lsp",
   -- "vtsls", -- 条件付きで有効化するためコメントアウト
 })

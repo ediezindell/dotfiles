@@ -50,6 +50,7 @@ local spec = {
         "gopls",
         "remark-language-server",
         "python-lsp-server",
+        "twiggy-language-server",
       },
       automatic_installation = true,
     },
