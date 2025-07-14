@@ -34,6 +34,13 @@ vim.diagnostic.config({
   },
 })
 
+vim.filetype.add({
+  extension = {
+    pcss = "postcss",
+  },
+})
+vim.treesitter.language.register("css", "postcss")
+
 -- lazy.nvimの有効化
 vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

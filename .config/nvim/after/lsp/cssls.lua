@@ -1,5 +1,5 @@
 ---@type vim.lsp.Config
 return {
-  ft = { "css", "scss", "sass" },
-  cmd = { "vscode-css-language-server" },
+  filetypes = { "css", "scss", "sass", "postcss" },
+  -- cmd = { "vscode-css-language-server" },
 }
