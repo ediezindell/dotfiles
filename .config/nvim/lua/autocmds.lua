@@ -232,27 +232,6 @@ aucmd("BufWritePre", {
   group = group("Px2rem"),
 })
 
-aucmd({ "BufNewFile", "BufReadPre" }, {
-  once = true,
-  pattern = "*.twig",
-  command = "TSEnable highlight twig",
-  group = group("EnableTSTwig"),
-})
-
-aucmd({ "BufNewFile", "BufReadPre" }, {
-  once = true,
-  pattern = "*.pcss",
-  command = "TSEnable highlight postcss",
-  group = group("EnableTSPostcss"),
-})
-
-aucmd({ "BufNewFile", "BufReadPre" }, {
-  once = true,
-  pattern = "*.pug",
-  command = "TSEnable highlight pug",
-  group = group("EnableTSPug"),
-})
-
 aucmd("TextYankPost", {
   pattern = "*",
   callback = function()

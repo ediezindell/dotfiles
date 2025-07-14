@@ -5,17 +5,19 @@ local spec = {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     run = ":TSUpdate",
-    opts = {
-      highlight = {
-        enable = true,
-        disable = { "text" },
-      },
-      indent = {
-        enable = true,
-        disable = { "text" },
-      },
-      ensure_installed = "all",
-    },
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        modules = {},
+        ensure_installed = "all",
+        ignore_install = {},
+        sync_install = false,
+        auto_install = true,
+        highlight = {
+          enable = true,
+          disable = { "text" },
+        },
+      })
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
