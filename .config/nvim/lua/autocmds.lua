@@ -15,15 +15,15 @@ aucmd("InsertLeave", {
 -- 日本語入力での誤入力を自動修正（よく使うもののみ安全に実装）
 local japanese_corrections = {
   -- 基本的なコマンド（ASCII文字のみ使用）
-  ["qa"] = "qa",  -- くぁ -> qa
-  ["wq"] = "wq",  -- われq -> wq  
-  ["w"] = "w",    -- ｗ -> w
-  ["q"] = "q",    -- q -> q
-  ["e"] = "e",    -- え -> e
-  ["h"] = "h",    -- ｈ -> h
-  ["vs"] = "vs",  -- ｖｓ -> vs
-  ["sp"] = "sp",  -- ｓp -> sp
-  ["bd"] = "bd",  -- ぶd -> bd
+  ["qa"] = "qa",   -- くぁ -> qa
+  ["wq"] = "wq",   -- われq -> wq
+  ["w"] = "w",     -- ｗ -> w
+  ["q"] = "q",     -- q -> q
+  ["e"] = "e",     -- え -> e
+  ["h"] = "h",     -- ｈ -> h
+  ["vs"] = "vs",   -- ｖｓ -> vs
+  ["sp"] = "sp",   -- ｓp -> sp
+  ["bd"] = "bd",   -- ぶd -> bd
   ["buf"] = "buf", -- ぶf -> buf
   ["tab"] = "tab", -- たあb -> tab
   ["set"] = "set", -- せt -> set
@@ -43,7 +43,7 @@ end
 local function fix_japanese_input()
   local cmdline = vim.fn.getcmdline()
   local pos = vim.fn.getcmdpos()
-  
+
   -- よくある日本語誤入力パターンの修正
   local corrections = {
     ["くぁ"] = "qa",
@@ -61,7 +61,7 @@ local function fix_japanese_input()
     ["ｖｓ"] = "vs",
     ["ｓp"] = "sp",
   }
-  
+
   for japanese, english in pairs(corrections) do
     if cmdline:find("^" .. japanese) then
       local new_cmdline = cmdline:gsub("^" .. japanese, english)
@@ -287,15 +287,15 @@ aucmd("FileType", {
       vim.lsp.enable("vtsls")
     elseif deno_root ~= nil then
       vim.lsp.enable("denols")
-    else
-      local NO_LAUNCH = "no launch"
-      vim.ui.select({ "vtsls", "denols", NO_LAUNCH }, {
-        prompt = "select LSP for TypeScript: ",
-      }, function(item)
-        if item ~= NO_LAUNCH then
-          vim.lsp.enable(item)
-        end
-      end)
+      -- else
+      --   local NO_LAUNCH = "no launch"
+      --   vim.ui.select({ "vtsls", "denols", NO_LAUNCH }, {
+      --     prompt = "select LSP for TypeScript: ",
+      --   }, function(item)
+      --     if item ~= NO_LAUNCH then
+      --       vim.lsp.enable(item)
+      --     end
+      --   end)
     end
   end,
 })
@@ -309,4 +309,53 @@ aucmd("QuickfixCmdPost", {
     end
   end,
   group = group("QuickfixOpen"),
+})
+
+aucmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    local fname = vim.fn.expand("<afile>")
+    print(fname)
+    if fname == "/tmp/input" or fname == "/private/tmp/input" then
+      vim.cmd("ConnectSocket")
+    end
+  end,
+  group = group("ConnectSocket"),
+})
+
+local function apply_eslint_fix_all()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local total_lines = vim.api.nvim_buf_line_count(bufnr)
+
+  local params = {
+    textDocument = vim.lsp.util.make_text_document_params(),
+    range = {
+      start = { line = 0, character = 0 },
+      ["end"] = { line = total_lines - 1, character = 0 }, -- 行末文字数は0でもよい（多くのLSPが自動補正する）
+    },
+    context = {
+      only = { "source" },
+      diagnostics = vim.diagnostic.get(bufnr),
+    },
+  }
+
+  vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(results)
+    for _, res in pairs(results) do
+      for _, action in ipairs(res.result or {}) do
+        if action.edit or action.command then
+          if action.edit then
+            print(action.edit)
+          elseif action.command then
+            print(action.command)
+          end
+          -- vim.lsp.buf.execute_command(action)
+        end
+      end
+    end
+  end)
+end
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
+  callback = apply_eslint_fix_all,
 })

@@ -84,6 +84,6 @@ require("vim._extui").enable({
   enable = true,
   msg = {
     target = "cmd",
-      timeout = 5000,
+    timeout = 5000,
   },
 })
