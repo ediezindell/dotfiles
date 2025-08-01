@@ -15,7 +15,6 @@ clipboard-read = allow
 clipboard-write = allow
 # マウスで選択したらクリップボードへコピー
 copy-on-select = clipboard
-
 # カーソル関連
 cursor-click-to-move = false
 cursor-opacity = 0.7
@@ -73,3 +72,6 @@ keybind = super+n=new_window
 # 終了
 keybind = super+q=quit
 
+# scroll back
+# keybind = super+shift+up=write_scrollback_file:open
+keybind = super+shift+up=write_scrollback_file:paste
