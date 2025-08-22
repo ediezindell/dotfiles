@@ -37,5 +37,8 @@ setopt hist_reduce_blanks
 setopt hist_save_no_dups
 
 # vimのkeybind
-bindkey -v
+# bindkey -v
+# emacsのkeybind
+bindkey -e
 
+export EDITOR=nvim

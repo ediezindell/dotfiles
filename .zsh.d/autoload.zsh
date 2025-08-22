@@ -73,4 +73,7 @@ if (( ! ${chpwd_functions[(I)_direnv_hook]} )); then
   chpwd_functions=(_direnv_hook $chpwd_functions)
 fi
 
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey "^o" edit-command-line
 
