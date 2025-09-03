@@ -26,6 +26,7 @@ local spec = {
   },
   build = "make tiktoken",
   opts = {
+    model = "gpt-5",
     prompts = require("ojo"),
     system_prompt = require("ojo").OjoInstructions.system_prompt,
   },
