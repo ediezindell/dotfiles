@@ -1,7 +1,7 @@
 -- gbでblame, goでGitHubを開く
 ---@type LazySpec
 local spec = {
-  "ediezindell/git.nvim",
+  "dinhhuy258/git.nvim",
   event = "BufRead",
   opts = {
     keymaps = {
