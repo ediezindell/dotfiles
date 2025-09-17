@@ -75,5 +75,10 @@ fi
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
+
+# Ctrl+oでコマンドライン編集モードに移行
 bindkey "^o" edit-command-line
+
+# Alt+aを無効化
+bindkey -r "^[a"
 
