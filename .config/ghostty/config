@@ -2,13 +2,19 @@
 window-theme = dark
 theme = Catppuccin Mocha
 background-opacity = 0.85
-font-family = Moralerspace Argon HWNF
+font-family = "Guguru Sans Code Console NF"
 font-size = 16
+# custom-shader = "~/.config/ghostty/cursor_blaze.glsl"
+# background-image = "~/Pictures/cats/cat132.jpg"
+# background-image-opacity = 0.2
+window-decoration = false
+macos-window-buttons = hidden
+macos-secure-input-indication = false
 
 # MacのOptionをAltとして使う
 macos-option-as-alt = true
-# Macでタイトルバーを透明化
-macos-titlebar-style = transparent
+# Macでタイトルバーを隠す
+macos-titlebar-style = tabs
 
 # クリップボードアクセスを許可
 clipboard-read = allow
@@ -71,6 +77,11 @@ keybind = super+shift+comma=reload_config
 keybind = super+n=new_window
 # 終了
 keybind = super+q=quit
+# command palette
+keybind = super+shift+p=toggle_command_palette
+# undo/redo
+keybind = super+z=undo
+keybind = super+y=redo
 
 # scroll back
 # keybind = super+shift+up=write_scrollback_file:open
