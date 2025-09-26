@@ -82,10 +82,10 @@ bindkey "^o" edit-command-line
 # Alt+aを無効化
 bindkey -r "^[a"
 
-# noglob hook flag
+# hook で自動判定されたか判別するためのフラグ
 _DID_SET_NOGLOB=0
 
-# コマンドが実行前hook
+# コマンド実行前のhook
 auto_noglob_corrected_preexec() {
   _DID_SET_NOGLOB=0
 
@@ -107,7 +107,7 @@ auto_noglob_corrected_preexec() {
   fi
 }
 
-# コマンドが実行後hook
+# コマンド実行後のhook
 auto_noglob_corrected_precmd() {
   if (( _DID_SET_NOGLOB )); then
     unsetopt noglob
