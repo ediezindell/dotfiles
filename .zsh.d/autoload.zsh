@@ -82,3 +82,40 @@ bindkey "^o" edit-command-line
 # Alt+aを無効化
 bindkey -r "^[a"
 
+# noglob hook flag
+_DID_SET_NOGLOB=0
+
+# コマンドが実行前hook
+auto_noglob_corrected_preexec() {
+  _DID_SET_NOGLOB=0
+
+  local -a words=("${(z)1}")
+  local contains_bracket=0
+  local contains_standalone_glob=0
+
+  for word in "${words[@]}"; do
+    if [[ "$word" == *'['* || "$word" == *']'* ]]; then
+      contains_bracket=1
+    elif [[ "$word" == *\** || "$word" == *\?* ]]; then
+      contains_standalone_glob=1
+    fi
+  done
+  
+  if (( contains_bracket && !contains_standalone_glob )); then
+    setopt noglob
+    _DID_SET_NOGLOB=1
+  fi
+}
+
+# コマンドが実行後hook
+auto_noglob_corrected_precmd() {
+  if (( _DID_SET_NOGLOB )); then
+    unsetopt noglob
+    _DID_SET_NOGLOB=0
+  fi
+}
+
+# register hook
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec auto_noglob_corrected_preexec
+add-zsh-hook precmd  auto_noglob_corrected_precmd
