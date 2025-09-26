@@ -7,7 +7,7 @@ font-size = 16
 # custom-shader = "~/.config/ghostty/cursor_blaze.glsl"
 # background-image = "~/Pictures/cats/cat132.jpg"
 # background-image-opacity = 0.2
-window-decoration = false
+# window-decoration = false
 macos-window-buttons = hidden
 macos-secure-input-indication = false
 
