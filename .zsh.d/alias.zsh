@@ -3,9 +3,15 @@ alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 
 # ls
+alias ls="ls --color=auto"
 alias l="ls -l"
 alias ll="ls -l"
 alias la="ls -la"
+# ls with noglob
+alias nls="noglob ls --color=auto"
+alias nl="noglob ls -l"
+alias nll="noglob ls -l"
+alias nla="noglob ls -la"
 
 # confirm options
 alias rm="rm -i"
@@ -50,10 +56,7 @@ alias gloo="git log --oneline | head -1"
 alias n="node"
 
 # nvim
-alias v="nvim"
-alias vi="nvim"
-alias vim="nvim"
-alias code="nvim"
+alias vim="noglob nvim"
 alias vimc="nvim ~/.config/"
 alias vimp="nvim ~/.config/nvim/lua/plugins"
 
@@ -61,7 +64,6 @@ alias vimp="nvim ~/.config/nvim/lua/plugins"
 alias cb="system_profiler SPPowerDataType | grep 'State of Charge'"
 
 # Application
-alias fork="open -a Fork"
 alias chrome="open -a Google\ Chrome"
 alias ff="open -a Firefox"
 alias edge="open -a Microsoft\ Edge"
@@ -69,6 +71,11 @@ alias edge="open -a Microsoft\ Edge"
 # util
 alias calx='cal -3; curl -s https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv | iconv -f SHIFT-JIS -t UTF-8 | grep -E "`date -v-1m '+%Y/%-m/'`|`date '+%Y/%-m/'`|`date -v+1m '+%Y/%-m/'`"'
 
+# remove node_modules
 alias rmn='mv ./node_modules /tmp/node_modules.`date +%s`'
 
+# reload zsh
 alias rl="source ~/.zshrc"
+
+# noglob
+alias n="noglob"
