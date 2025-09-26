@@ -79,3 +79,9 @@ alias rl="source ~/.zshrc"
 
 # noglob
 alias n="noglob"
+alias nr="noglob nr"
+alias npm="noglob npm"
+alias pnpm="noglob pnpm"
+alias yarn="noglob yarn"
+alias bun="noglob bun"
+
