@@ -3,6 +3,11 @@ local spec = {
   "Shougo/ddu.vim",
   lazy = false,
   dependencies = {
+    "kuuote/ddu-source-git_status",
+    "kuuote/ddu-source-mr",
+    "kyoh86/ddu-filter-converter_hl_dir",
+    "lambdalisue/vim-mr",
+    "matsui54/ddu-source-file_external",
     "Shougo/ddu-commands.vim",
     "Shougo/ddu-filter-converter_display_word",
     "Shougo/ddu-filter-matcher_files",
@@ -11,15 +16,9 @@ local spec = {
     "Shougo/ddu-kind-file",
     "Shougo/ddu-source-file_rec",
     "Shougo/ddu-ui-ff",
-    "kuuote/ddu-source-git_status",
-    "kuuote/ddu-source-mr",
-    "kyoh86/ddu-filter-converter_hl_dir",
-    "lambdalisue/vim-mr",
-    "matsui54/ddu-source-file_external",
     "shun/ddu-source-rg",
     "uga-rosa/ddu-filter-converter_devicon",
     "vim-denops/denops.vim",
-    "matsui54/ddu-source-file_external",
   },
   init = function()
     local group = vim.api.nvim_create_augroup("DduAuGroup", { clear = true })
@@ -38,15 +37,17 @@ local spec = {
       pattern = "ddu-ff-filter",
       callback = function()
         vim.keymap.set({ "n", "i" }, "<CR>", [[<Esc><Cmd>close<CR>]], keymapOpts)
+        vim.keymap.set({ "n", "i" }, "<Esc>", [[<Esc><Cmd>close<CR>]], keymapOpts)
       end,
       group = group,
     })
   end,
   keys = {
-    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],   desc = "ddu file_rec" },
-    { "<space>fq", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],         desc = "ddu rg" },
-    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],         desc = "ddu mr" },
-    { "<space>fd", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]], desc = "ddu git_status" },
+    { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]],      desc = "ddu file_rec" },
+    { "<space>f;", [[<Cmd>call ddu#start( #{ name: "file_external" } )<CR>]], desc = "ddu file_ext" },
+    { "<space>fg", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]],            desc = "ddu rg" },
+    { "<space>fr", [[<Cmd>call ddu#start( #{ name: "mr" } )<CR>]],            desc = "ddu mr" },
+    { "<space>fh", [[<Cmd>call ddu#start( #{ name: "git_status" } )<CR>]],    desc = "ddu git_status" },
   },
   config = function()
     local height = "&lines - 3"
@@ -62,7 +63,7 @@ local spec = {
           split = "floating",
           floatingBorder = "rounded",
           winHeight = height,
-          winWidth = width,
+          winWidth = width .. " + 1",
           winRow = 0,
           winCol = 0,
           -- preview
@@ -71,7 +72,7 @@ local spec = {
           previewHeight = height,
           previewWidth = width,
           previewRow = 2,
-          previewCol = halfWidth .. " + 2",
+          previewCol = halfWidth .. " + 1",
           previewWindowOptions = {
             { "&signcolumn",     "no" },
             { "&foldcolumn",     0 },
@@ -85,16 +86,13 @@ local spec = {
           -- action
           startAutoAction = true,
           autoAction = { name = "preview" },
-          previewWindowOptions = {
-            { "&signcolumn",     "no" },
-            { "&relativenumber", 0 },
-          },
         },
       },
       sources = { "file_rec" },
       sourceParams = {
         file_rec = { ignoredDirectories = { "node_modules", ".git", "dist", ".vscode", ".next" } },
-        rg = { args = { "--column", "--no-heading", "--color", "never" } },
+        -- rg = { args = { "--column", "--no-heading", "--color", "never" } },
+        rg = { args = { "--json" } },
         dir_rec = { cmd = { "fd", ".", "-H", "-t", "d" } },
       },
       sourceOptions = {
