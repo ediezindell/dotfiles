@@ -2,8 +2,7 @@
 local spec = {
   "SunnyTamang/select-undo.nvim",
   event = "BufEnter",
-  opts = {
-  },
+  opts = {},
 }
 
 return spec
