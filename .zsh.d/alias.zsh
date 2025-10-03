@@ -56,7 +56,7 @@ alias gloo="git log --oneline | head -1"
 alias n="node"
 
 # nvim
-alias vim="noglob nvim"
+alias vim="nvim"
 alias vimc="nvim ~/.config/"
 alias vimp="nvim ~/.config/nvim/lua/plugins"
 
