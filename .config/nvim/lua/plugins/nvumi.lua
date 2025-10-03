@@ -3,7 +3,7 @@
 local spec = {
   "josephburgess/nvumi",
   dependencies = { "folke/snacks.nvim" },
-  event = "BufEnter",
+  cmd = { "Nvumi" },
   opts = {
     virtual_text = "newline", -- or "inline"
     prefix = " 🚀 ", -- prefix shown before the output

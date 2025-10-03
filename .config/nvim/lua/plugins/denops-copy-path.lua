@@ -5,6 +5,9 @@ local spec = {
   dependencies = {
     "vim-denops/denops.vim",
   },
+  keys = {
+    { "<space>cp", "<Cmd>CopyPath<CR>", desc = "Copy file path" },
+  },
   event = "BufEnter",
 }
 return spec
