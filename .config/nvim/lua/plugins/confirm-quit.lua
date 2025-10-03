@@ -1,3 +1,4 @@
+--- `:q` で最後のバッファを閉じる際に確認ダイアログを表示
 ---@type LazySpec
 local spec = {
   "ediezindell/confirm-quit.nvim",

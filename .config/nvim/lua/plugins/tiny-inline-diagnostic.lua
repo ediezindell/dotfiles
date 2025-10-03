@@ -1,3 +1,4 @@
+--- diagnostics を小さくインライン表示
 ---@type LazySpec
 local spec = {
   "rachartier/tiny-inline-diagnostic.nvim",

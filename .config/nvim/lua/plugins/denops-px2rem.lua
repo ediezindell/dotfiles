@@ -1,3 +1,4 @@
+--- font-sizeのpx指定をremへ変換
 ---@type LazySpec
 local spec = {
   "ediezindell/denops-px2rem.vim",

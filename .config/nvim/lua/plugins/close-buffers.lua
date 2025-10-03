@@ -1,3 +1,4 @@
+--- バッファを一括で閉じる
 ---@type LazySpec
 local spec = {
   "kazhala/close-buffers.nvim",

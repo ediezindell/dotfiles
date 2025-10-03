@@ -1,3 +1,4 @@
+--- LSP の code action プレビュー
 ---@type LazySpec
 local spec = {
   "aznhe21/actions-preview.nvim",

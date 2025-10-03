@@ -1,3 +1,4 @@
+--- TypeScript のコメント機能強化
 ---@type LazySpec
 local spec = {
   "folke/ts-comments.nvim",

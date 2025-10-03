@@ -1,4 +1,4 @@
--- ファイル検索
+-- fuzzy finder
 ---@type LazySpec
 local spec = {
   "nvim-telescope/telescope.nvim",

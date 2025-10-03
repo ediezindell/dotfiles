@@ -1,3 +1,4 @@
+--- GitHub Copilot
 ---@type LazySpec
 local spec = {
   enabled = true,

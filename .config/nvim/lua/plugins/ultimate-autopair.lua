@@ -1,3 +1,4 @@
+--- 閉じカッコなどの自動挿入
 ---@type LazySpec
 local spec = {
   "altermo/ultimate-autopair.nvim",

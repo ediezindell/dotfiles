@@ -1,3 +1,4 @@
+--- ファイル内容をMarkdownのコードブロック形式でコピー
 ---@type LazySpec
 local spec = {
   "ediezindell/denops-copy-md-codeblock.vim",

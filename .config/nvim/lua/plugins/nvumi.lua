@@ -1,3 +1,4 @@
+--- スクラッチバッファで計算処理
 ---@type LazySpec
 local spec = {
   "josephburgess/nvumi",
