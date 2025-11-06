@@ -58,8 +58,8 @@ local config = {
     -- },
   },
   -- macos_window_background_blur = 20, -- ぼかし
-  window_decorations = "RESIZE", -- メニューバー非表示
-  hide_tab_bar_if_only_one_tab = true, -- タブが1つしか無い場合はタブバー非表示
+  window_decorations = "RESIZE",          -- メニューバー非表示
+  hide_tab_bar_if_only_one_tab = true,    -- タブが1つしか無い場合はタブバー非表示
   show_new_tab_button_in_tab_bar = false, -- 新しいタブを開くボタン非表示
   colors = {
     tab_bar = {
@@ -68,9 +68,9 @@ local config = {
   },
 
   -- keybinds
-  disable_default_key_bindings = true,
-  keys = keybind.keys,
-  key_tables = keybind.key_tables,
+  -- disable_default_key_bindings = true,
+  -- keys = keybind.keys,
+  -- key_tables = keybind.key_tables,
 }
 
 wezterm.on("format-tab-title", function(tab)
