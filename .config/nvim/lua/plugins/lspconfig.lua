@@ -1,3 +1,4 @@
+--- LSP 設定
 ---@type LazySpec
 local spec = {
   "neovim/nvim-lspconfig",

@@ -1,3 +1,4 @@
+--- 行ジャンプ時のハイライト
 ---@type LazySpec
 local spec = {
   "jinh0/eyeliner.nvim",

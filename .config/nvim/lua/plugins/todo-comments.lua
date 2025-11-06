@@ -1,3 +1,4 @@
+--- TODO コメントをハイライト
 ---@type LazySpec
 local spec = {
   "folke/todo-comments.nvim",

@@ -1,3 +1,4 @@
+--- C-a/C-x の拡張
 ---@type LazySpec
 local spec = {
   "monaqa/dial.nvim",
@@ -33,8 +34,8 @@ local spec = {
     require("dial.config").augends:register_group({
       -- default augends used when no group name is specified
       default = {
-        augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
-        augend.constant.alias.bool, -- boolean value (true <-> false)
+        augend.integer.alias.decimal,  -- nonnegative decimal number (0, 1, 2, 3, ...)
+        augend.constant.alias.bool,    -- boolean value (true <-> false)
         augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
       },
     })

@@ -1,3 +1,4 @@
+--- fuzzy finder
 ---@type LazySpec
 local spec = {
   "hrsh7th/nvim-deck",

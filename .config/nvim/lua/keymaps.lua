@@ -58,3 +58,34 @@ NormalKeymap("<space>bc", function()
     ftype
   ))
 end, "クリップボードの内容と比較")
+local function get_url_under_cursor()
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local line = vim.api.nvim_get_current_line()
+  local valid_chars = "[%w:/%._%-%?%&%=#]"
+
+  local start_col = col
+  while start_col > 0 and line:sub(start_col, start_col):match(valid_chars) do
+    start_col = start_col - 1
+  end
+  start_col = start_col + 1
+
+  local end_col = col + 1
+  while end_col <= #line and line:sub(end_col, end_col):match(valid_chars) do
+    end_col = end_col + 1
+  end
+  end_col = end_col - 1
+
+  local text = line:sub(start_col, end_col)
+
+  if text:match("^https?://") then
+    return text
+  end
+
+  return nil
+end
+NormalKeymap("gx", function()
+  local url = get_url_under_cursor()
+  if url then
+    vim.fn.jobstart({ "open", url }, { detach = true })
+  end
+end, "Open URL under cursor", { silent = true })

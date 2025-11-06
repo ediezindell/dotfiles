@@ -1,3 +1,4 @@
+--- バッファ右上にファイル名を表示
 ---@type LazySpec
 local spec = {
   "b0o/incline.nvim",

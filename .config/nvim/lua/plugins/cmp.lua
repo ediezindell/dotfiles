@@ -22,10 +22,9 @@ local spec = {
         require("luasnip.loaders.from_vscode").lazy_load()
       end,
     },
-    "mlaursen/vim-react-snippets",
+    { "mlaursen/vim-react-snippets", opts = {} },
   },
   config = function()
-    require("vim-react-snippets").lazy_load()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
@@ -104,7 +103,7 @@ local spec = {
         }),
       },
       sources = cmp.config.sources({
-        { name = "luasnip", option = { show_autosnippets = true } },
+        { name = "luasnip",                option = { show_autosnippets = true } },
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "path" },
