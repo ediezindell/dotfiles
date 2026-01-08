@@ -294,7 +294,6 @@ aucmd("BufReadPost", {
   pattern = "*",
   callback = function()
     local fname = vim.fn.expand("<afile>")
-    print(fname)
     if fname == "/tmp/input" or fname == "/private/tmp/input" then
       vim.cmd("ConnectSocket")
     end
