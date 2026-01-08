@@ -80,10 +80,10 @@ local opts = {
 }
 require("lazy").setup("plugins", opts)
 
-require("vim._extui").enable({
-  enable = true,
-  msg = {
-    target = "cmd",
-    timeout = 5000,
-  },
-})
+-- require("vim._extui").enable({
+--   enable = true,
+--   msg = {
+--     target = "cmd",
+--     timeout = 5000,
+--   },
+-- })
