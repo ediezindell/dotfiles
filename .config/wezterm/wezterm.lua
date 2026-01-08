@@ -1,10 +1,11 @@
 local wezterm = require("wezterm")
 local keybind = require("keybinds")
+local mux = wezterm.mux
 local act = wezterm.action
 
 local fonts = {
-  "Moralerspace Argon HWNF",
-  "Moralerspace Neon HWNF",
+  "Moralerspace Argon HW",
+  "Moralerspace Neon HW",
   "FirgeNerd",
   "FirgeNerd Console",
   "HackGen Console NF",
@@ -14,13 +15,13 @@ local fonts = {
 local config = {
   -- appearance
   color_scheme = "nord",
-  window_background_opacity = 0.8,
+  window_background_opacity = 0.9,
   font = wezterm.font(fonts[1], {
     weight = "Medium",
     stretch = "Normal",
     style = "Normal",
   }),
-  font_size = 16,
+  font_size = 14,
   hyperlink_rules = {
     -- Matches: a URL in parens: (URL)
     {
@@ -66,11 +67,12 @@ local config = {
       inactive_tab_edge = "none", -- タブ間のボーダー非表示
     },
   },
+  default_prog = { "wsl", "-d", "Ubuntu-24.04" },
 
   -- keybinds
-  -- disable_default_key_bindings = true,
-  -- keys = keybind.keys,
-  -- key_tables = keybind.key_tables,
+  disable_default_key_bindings = true,
+  keys = keybind.keys,
+  key_tables = keybind.key_tables,
 }
 
 wezterm.on("format-tab-title", function(tab)
@@ -110,6 +112,11 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
   )
   wezterm.sleep_ms(1000)
   os.remove(name)
+end)
+
+wezterm.on("gui-startup", function(cmd)
+  local _tab, _pane, window = mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
 end)
 
 return config
