@@ -20,28 +20,33 @@ function bm() {
 
   prList="$root/.git/pr-list"
   gh pr list > $prList
-  branches=$(cat $prList | awk -F'\t' '{print $3"\t"$2}')
-  if [ -z "$branches" ]; then
+  if [ ! -s "$prList" ]; then
     b
     return
   fi
-  echo $branches | cat -n
-  read branchNumber\?"Enter Branch Number: "
 
-  git fetch
-  git switch $(echo $branches | cut -f1 | awk NR==$branchNumber)
+  local selected
+  selected=$(cat $prList | awk -F'\t' '{print $3"\t"$2}' | fzf --height 40% --layout=reverse --border)
+  if [ -n "$selected" ]; then
+    local branch
+    branch=$(echo "$selected" | cut -f1)
+    git fetch
+    git switch "$branch"
+  fi
 }
 function b() {
-  branches=$(git branch --sort=-committerdate)
-  echo $branches | cat -n
-  read branchNumber\?"Enter Branch Number: "
-  git switch $(echo $branches | cut -c 3- | awk NR==$branchNumber)
+  local branch
+  branch=$(git branch --sort=-committerdate | fzf --height 40% --layout=reverse --border | sed 's/^[ *]*//')
+  if [ -n "$branch" ]; then
+    git switch "$branch"
+  fi
 }
 function ba() {
-  branches=$(git branch -a --sort=-committerdate)
-  echo $branches | cat -n
-  read branchNumber\?"Enter Branch Number: "
-  git switch $(echo ${branches//remotes\/origin\//} | cut -c 3- | awk NR==$branchNumber)
+  local branch
+  branch=$(git branch -a --sort=-committerdate | fzf --height 40% --layout=reverse --border | sed 's/^[ *]*//' | sed 's/^remotes\/origin\///')
+  if [ -n "$branch" ]; then
+    git switch "$branch"
+  fi
 }
 
 function bg() {
