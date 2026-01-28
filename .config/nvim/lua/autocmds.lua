@@ -337,3 +337,32 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
   callback = apply_eslint_fix_all,
 })
+
+--- LSPのsignature_helpを自動表示
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
+  group = group("AutoSignatureHelp"),
+  callback = function(lsp)
+    local client = vim.lsp.get_client_by_id(lsp.data.client_id)
+    if client == nil then
+      return
+    end
+
+    if client:supports_method("textDocument/signatureHelp") then
+      vim.api.nvim_create_autocmd("CursorMovedI", {
+        callback = function()
+          vim.lsp.buf.signature_help({
+            width = 60,
+            height = 30,
+            max_width = 80,
+            max_height = 56,
+            focusable = false,
+            border = "single",
+            silent = true,
+            close_events = { "ModeChanged" },
+          })
+        end,
+      })
+    end
+  end,
+  desc = "auto signature_help",
+})
