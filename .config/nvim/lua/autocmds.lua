@@ -341,25 +341,40 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 --- LSPのsignature_helpを自動表示
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
   group = group("AutoSignatureHelp"),
-  callback = function(lsp)
-    local client = vim.lsp.get_client_by_id(lsp.data.client_id)
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client == nil then
       return
     end
 
     if client:supports_method("textDocument/signatureHelp") then
+      local bufnr = ev.buf
+      local trigger_group = vim.api.nvim_create_augroup("AutoSignatureHelpTrigger", { clear = false })
+      vim.api.nvim_clear_autocmds({ group = trigger_group, buffer = bufnr })
       vim.api.nvim_create_autocmd("CursorMovedI", {
+        group = trigger_group,
+        buffer = bufnr,
         callback = function()
-          vim.lsp.buf.signature_help({
-            width = 60,
-            height = 30,
-            max_width = 80,
-            max_height = 56,
-            focusable = false,
-            border = "single",
-            silent = true,
-            close_events = { "ModeChanged" },
-          })
+          local clients = (vim.lsp.get_clients or vim.lsp.get_active_clients)({ bufnr = bufnr })
+          local has_support = false
+          for _, c in ipairs(clients) do
+            if c:supports_method("textDocument/signatureHelp") then
+              has_support = true
+              break
+            end
+          end
+          if has_support then
+            vim.lsp.buf.signature_help({
+              width = 60,
+              height = 30,
+              max_width = 80,
+              max_height = 56,
+              focusable = false,
+              border = "single",
+              silent = true,
+              close_events = { "ModeChanged" },
+            })
+          end
         end,
       })
     end
