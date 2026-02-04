@@ -1,7 +1,7 @@
 # 見た目
 window-theme = dark
 theme = Catppuccin Mocha
-background-opacity = 0.85
+# background-opacity = 0.85
 font-family = "Guguru Sans Code Console NF"
 font-size = 16
 # custom-shader = "~/.config/ghostty/cursor_blaze.glsl"
@@ -10,6 +10,12 @@ font-size = 16
 # window-decoration = false
 macos-window-buttons = hidden
 macos-secure-input-indication = false
+
+# ウィンドウサイズ・位置
+window-height = 99999
+window-width = 99999
+window-position-x = 0
+window-position-y = 0
 
 # MacのOptionをAltとして使う
 macos-option-as-alt = true
@@ -28,8 +34,14 @@ cursor-style = bar
 # 入力時にマウスをすぐに非表示
 mouse-hide-while-typing = true
 
+# Alt+クリックでカーソル移動
+cursor-click-to-move = true
+
 # フォーカスしてない方を暗くする
 unfocused-split-opacity = 0.5
+
+# 最後のウィンドウが閉じたらApp終了
+quit-after-last-window-closed = true
 
 # リガチャ無効化
 font-feature = -calt
