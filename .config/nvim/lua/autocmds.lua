@@ -339,6 +339,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 --- LSPのsignature_helpを自動表示
+local signature_help_group = group("AutoSignatureHelpTrigger")
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
   group = group("AutoSignatureHelp"),
   callback = function(ev)
@@ -349,10 +350,9 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 
     if client:supports_method("textDocument/signatureHelp") then
       local bufnr = ev.buf
-      local trigger_group = vim.api.nvim_create_augroup("AutoSignatureHelpTrigger", { clear = false })
-      vim.api.nvim_clear_autocmds({ group = trigger_group, buffer = bufnr })
+      vim.api.nvim_clear_autocmds({ group = signature_help_group, buffer = bufnr })
       vim.api.nvim_create_autocmd("CursorMovedI", {
-        group = trigger_group,
+        group = signature_help_group,
         buffer = bufnr,
         callback = function()
           local clients = (vim.lsp.get_clients or vim.lsp.get_active_clients)({ bufnr = bufnr })
