@@ -333,15 +333,15 @@ local function apply_eslint_fix_all()
   end)
 end
 
-vim.api.nvim_create_autocmd("BufWritePre", {
+aucmd("BufWritePre", {
   pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
   callback = apply_eslint_fix_all,
 })
 
 --- LSPのsignature_helpを自動表示
-local signature_help_group = group("AutoSignatureHelpTrigger")
-vim.api.nvim_create_autocmd({ "LspAttach" }, {
-  group = group("AutoSignatureHelp"),
+local signature_help_group = group("AutoSignatureHelp")
+aucmd({ "LspAttach" }, {
+  group = signature_help_group,
   callback = function(ev)
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client == nil then
@@ -350,9 +350,9 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 
     if client:supports_method("textDocument/signatureHelp") then
       local bufnr = ev.buf
-      vim.api.nvim_clear_autocmds({ group = signature_help_group, buffer = bufnr })
-      vim.api.nvim_create_autocmd("CursorMovedI", {
-        group = signature_help_group,
+      aucmd({ group = signature_help_group, buffer = bufnr })
+      aucmd("CursorMovedI", {
+        group = group("AutoSignatureHelpTrigger"),
         buffer = bufnr,
         callback = function()
           local clients = (vim.lsp.get_clients or vim.lsp.get_active_clients)({ bufnr = bufnr })
@@ -380,4 +380,46 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
     end
   end,
   desc = "auto signature_help",
+})
+
+--- バッファを自動で閉じる
+local ft_whitelist = {
+  "help",
+  "oil",
+}
+
+local function is_whitelisted(target_ft)
+  for _, ft in ipairs(ft_whitelist) do
+    if ft == target_ft then
+      return true
+    end
+  end
+  return false
+end
+
+aucmd("BufEnter", {
+  group = group("AutoBufferClean"),
+  callback = function()
+    local last_buf = vim.fn.bufnr("#")
+    if last_buf == -1 or not vim.api.nvim_buf_is_valid(last_buf) then
+      return
+    end
+
+    if is_whitelisted(vim.bo.filetype) then
+      return
+    end
+
+    local modified = vim.api.nvim_get_option_value("modified", {
+      buf = last_buf,
+    })
+    local name = vim.api.nvim_buf_get_name(last_buf)
+
+    if not modified and name ~= "" then
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(last_buf) then
+          vim.cmd("bdelete " .. last_buf)
+        end
+      end)
+    end
+  end,
 })
