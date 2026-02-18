@@ -350,7 +350,7 @@ aucmd({ "LspAttach" }, {
 
     if client:supports_method("textDocument/signatureHelp") then
       local bufnr = ev.buf
-      aucmd({ group = signature_help_group, buffer = bufnr })
+      vim.api.nvim_clear_autocmd({ group = signature_help_group, buffer = bufnr })
       aucmd("CursorMovedI", {
         group = group("AutoSignatureHelpTrigger"),
         buffer = bufnr,
