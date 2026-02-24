@@ -414,10 +414,10 @@ aucmd("BufEnter", {
     })
     local name = vim.api.nvim_buf_get_name(last_buf)
 
-    if not modified and name ~= "" then
+    if not modified and name ~= "" and not string.find(name, "oil:", 1, true) then
       vim.schedule(function()
         if vim.api.nvim_buf_is_valid(last_buf) then
-          vim.cmd("bdelete " .. last_buf)
+          vim.cmd("bdelete! " .. last_buf)
         end
       end)
     end
