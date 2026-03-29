@@ -8,9 +8,9 @@ vim.lsp.enable({
   "intelephense",
   "jsonls",
   "lua_ls",
-  "pug", -- please run: go install github.com/opa-oz/pug-lsp@latest
+  "pug",
   "remark_ls",
-  "rust_analyzer",
+  "rust-analyzer",
   "stylelint",
   "tailwindcss",
   "twiggy_language_server",
