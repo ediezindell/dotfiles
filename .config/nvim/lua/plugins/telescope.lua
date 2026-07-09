@@ -50,6 +50,15 @@ local spec = {
       desc = "telescope live_grep",
     },
     {
+      "<space>fG",
+      function()
+        require("telescope.builtin").live_grep({
+          glob_pattern = { "!.git", "!*.test.*", "!*.spec.*", "!*/__tests__/*" },
+        })
+      end,
+      desc = "telescope live_grep",
+    },
+    {
       "<space>fh",
       function()
         require("telescope.builtin").help_tags()

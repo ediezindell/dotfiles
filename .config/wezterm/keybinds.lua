@@ -18,6 +18,8 @@ return {
     { key = "t",     mods = "ALT",        action = act.SpawnTab("CurrentPaneDomain") },
     { key = "v",     mods = "ALT",        action = act.PasteFrom("Clipboard") },
     { key = "w",     mods = "ALT",        action = act.CloseCurrentTab({ confirm = true }) },
+
+    { key = "h",     mods = "ALT",        action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
   },
 
   key_tables = {

@@ -1,7 +1,8 @@
 --- モード変更時に通知を表示
 ---@type LazySpec
 local spec = {
-  "ediezindell/denops-mode-change-notify.vim",
+  dir = "~/git/denops-mode-change-notify.vim",
+  -- "ediezindell/denops-mode-change-notify.vim",
   dependencies = {
     "vim-denops/denops.vim",
   },
