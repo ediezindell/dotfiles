@@ -54,7 +54,7 @@ local spec = {
       { "<space>pq",      p.qflist,               desc = "Quickfix List" },
       { "<space>pR",      p.resume,               desc = "Resume" },
       { "<space>pu",      p.undo,                 desc = "Undo History" },
-      { "gt",             p.lsp_type_definitions, desc = "Goto Type Definition" },
+
       {
         "<space>fs",
         function()
