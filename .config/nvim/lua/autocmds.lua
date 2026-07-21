@@ -301,43 +301,6 @@ aucmd("BufReadPost", {
   group = group("ConnectSocket"),
 })
 
-local function apply_eslint_fix_all()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local total_lines = vim.api.nvim_buf_line_count(bufnr)
-
-  local params = {
-    textDocument = vim.lsp.util.make_text_document_params(),
-    range = {
-      start = { line = 0, character = 0 },
-      ["end"] = { line = total_lines - 1, character = 0 }, -- 行末文字数は0でもよい（多くのLSPが自動補正する）
-    },
-    context = {
-      only = { "source" },
-      diagnostics = vim.diagnostic.get(bufnr),
-    },
-  }
-
-  vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(results)
-    for _, res in pairs(results) do
-      for _, action in ipairs(res.result or {}) do
-        if action.edit or action.command then
-          if action.edit then
-            print(action.edit)
-          elseif action.command then
-            print(action.command)
-          end
-          -- vim.lsp.buf.execute_command(action)
-        end
-      end
-    end
-  end)
-end
-
-aucmd("BufWritePre", {
-  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
-  callback = apply_eslint_fix_all,
-})
-
 --- LSPのsignature_helpを自動表示
 local signature_help_group = group("AutoSignatureHelp")
 aucmd({ "LspAttach" }, {
@@ -380,46 +343,4 @@ aucmd({ "LspAttach" }, {
     end
   end,
   desc = "auto signature_help",
-})
-
---- バッファを自動で閉じる
-local ft_whitelist = {
-  "help",
-  "oil",
-}
-
-local function is_whitelisted(target_ft)
-  for _, ft in ipairs(ft_whitelist) do
-    if ft == target_ft then
-      return true
-    end
-  end
-  return false
-end
-
-aucmd("BufEnter", {
-  group = group("AutoBufferClean"),
-  callback = function()
-    local last_buf = vim.fn.bufnr("#")
-    if last_buf == -1 or not vim.api.nvim_buf_is_valid(last_buf) then
-      return
-    end
-
-    if is_whitelisted(vim.bo.filetype) then
-      return
-    end
-
-    local modified = vim.api.nvim_get_option_value("modified", {
-      buf = last_buf,
-    })
-    local name = vim.api.nvim_buf_get_name(last_buf)
-
-    if not modified and name ~= "" and not string.find(name, "oil:", 1, true) then
-      vim.schedule(function()
-        if vim.api.nvim_buf_is_valid(last_buf) then
-          vim.cmd("bdelete! " .. last_buf)
-        end
-      end)
-    end
-  end,
 })
