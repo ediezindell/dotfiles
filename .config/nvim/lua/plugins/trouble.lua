@@ -16,7 +16,7 @@ local spec = {
       desc = "Buffer Diagnostics (Trouble)",
     },
     {
-      "<space>cs",
+      "<space>xs",
       "<cmd>Trouble symbols toggle focus=false<cr>",
       desc = "Symbols (Trouble)",
     },

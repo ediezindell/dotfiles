@@ -87,35 +87,6 @@ aucmd("CmdlineLeave", {
   group = group("AutoHLS"),
 })
 
--- LSPアタッチ時のキーマッピングとハンドラ設定
-local function set_lsp_keymaps()
-  local mappings = {
-    K = function()
-      vim.lsp.buf.hover({ border = "rounded" })
-    end,
-    gd = vim.lsp.buf.definition,
-    gt = vim.lsp.buf.type_definition,
-    gr = vim.lsp.buf.rename,
-    gn = vim.lsp.buf.rename,
-    -- ga = vim.lsp.buf.code_action,
-    ge = vim.diagnostic.open_float,
-    ["g]"] = function()
-      vim.diagnostic.jump({ count = 1, float = true })
-    end,
-    ["g["] = function()
-      vim.diagnostic.jump({ count = -1, float = true })
-    end,
-  }
-
-  for key, func in pairs(mappings) do
-    vim.keymap.set("n", key, func, { buffer = 0 })
-  end
-end
-aucmd("LspAttach", {
-  callback = set_lsp_keymaps,
-  group = group("LspKeymap"),
-})
-
 -- 保存時にフォーマットを実行
 aucmd("BufWritePre", {
   callback = function()
