@@ -163,4 +163,90 @@ function M.root_for(bufnr, server)
   return M.project_root(bufnr)
 end
 
+local NO_LAUNCH = "no launch"
+--- 自動判定できないときにユーザーに提示するサーバー
+local PICKABLE = { "tsgo", "denols" }
+
+--- ディレクトリ -> "tsgo" | "denols" | false (起動しない)
+local decided = {}
+--- ディレクトリ -> 応答待ちのコールバック
+local waiting = {}
+
+---@param bufnr integer
+---@return string?
+function M.ts_choice(bufnr)
+  local choice = decided[base_dir(bufnr)]
+  if choice then
+    return choice
+  end
+  return nil
+end
+
+--- 同じディレクトリに対する問い合わせを 1 回のプロンプトに集約する
+---@param dir string
+---@param cb fun(choice: string|false)
+local function ask(dir, cb)
+  if decided[dir] ~= nil then
+    cb(decided[dir])
+    return
+  end
+  if waiting[dir] then
+    table.insert(waiting[dir], cb)
+    return
+  end
+  waiting[dir] = { cb }
+  local items = vim.list_extend(vim.deepcopy(PICKABLE), { NO_LAUNCH })
+  vim.ui.select(items, { prompt = "select LSP for TypeScript: " }, function(item)
+    local choice = item
+    if item == nil or item == NO_LAUNCH then
+      choice = false
+    end
+    -- 中断は記録しない。次に開いたときまた尋ねる
+    if item ~= nil then
+      decided[dir] = choice
+    end
+    local waiters = waiting[dir] or {}
+    waiting[dir] = nil
+    for _, waiter in ipairs(waiters) do
+      waiter(choice)
+    end
+  end)
+end
+
+--- vim.lsp.Config の root_dir から呼ぶ。起動すべきときだけ on_dir を呼ぶ
+---@param bufnr integer
+---@param name string
+---@param on_dir fun(root_dir?: string)
+function M.activate_ts(bufnr, name, on_dir)
+  local server = M.ts_server(bufnr)
+  if server then
+    if server == name then
+      on_dir(M.root_for(bufnr, name))
+    end
+    return
+  end
+  if not vim.tbl_contains(PICKABLE, name) then
+    return
+  end
+  local dir = base_dir(bufnr)
+  ask(dir, function(choice)
+    if choice == name then
+      on_dir(dir)
+    end
+  end)
+end
+
+---@param bufnr integer
+function M.reselect_ts(bufnr)
+  local dir = base_dir(bufnr)
+  decided[dir] = nil
+  waiting[dir] = nil
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if vim.tbl_contains(PICKABLE, client.name) then
+      client:stop()
+    end
+  end
+  vim.cmd("doautocmd nvim.lsp.enable FileType")
+end
+
 return M

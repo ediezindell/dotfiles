@@ -141,4 +141,103 @@ do
   )
 end
 
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local prompts = 0
+  vim.ui.select = function(items, _, on_choice)
+    prompts = prompts + 1
+    h.eq({ "tsgo", "denols", "no launch" }, items, "選択肢は tsgo / denols / no launch")
+    on_choice("tsgo")
+  end
+
+  local started = {}
+  for _, name in ipairs({ "vtsls", "denols", "tsgo" }) do
+    toolchain.activate_ts(bufnr, name, function(dir)
+      started[name] = dir
+    end)
+  end
+  h.eq(1, prompts, "プロンプトは 1 回だけ表示される")
+  h.eq({ tsgo = root }, started, "選んだ tsgo だけが起動する")
+  h.eq("tsgo", toolchain.ts_choice(bufnr), "選択結果が記録される")
+
+  local second = root .. "/b.ts"
+  local fd = assert(io.open(second, "w"))
+  fd:close()
+  local started2 = {}
+  toolchain.activate_ts(h.buf(second), "tsgo", function(dir)
+    started2.tsgo = dir
+  end)
+  h.eq(1, prompts, "同じディレクトリの別ファイルでは再度尋ねない")
+  h.eq({ tsgo = root }, started2, "記録済みの選択で起動する")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local prompts, respond = 0, nil
+  vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
+    respond = on_choice
+  end
+  local started = {}
+  toolchain.activate_ts(bufnr, "denols", function(dir)
+    started.denols = dir
+  end)
+  toolchain.activate_ts(bufnr, "tsgo", function(dir)
+    started.tsgo = dir
+  end)
+  h.eq(1, prompts, "応答前に 2 件来てもプロンプトは 1 回")
+  respond("denols")
+  h.eq({ denols = root }, started, "選んだ denols だけが起動する")
+  h.eq("denols", toolchain.ts_choice(bufnr), "denols が記録される")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.ui.select = function(_, _, on_choice)
+    on_choice("no launch")
+  end
+  local started = {}
+  toolchain.activate_ts(bufnr, "tsgo", function(dir)
+    started.tsgo = dir
+  end)
+  toolchain.activate_ts(bufnr, "denols", function(dir)
+    started.denols = dir
+  end)
+  h.eq({}, started, "no launch を選ぶとどちらも起動しない")
+  h.eq(nil, toolchain.ts_choice(bufnr), "no launch は選択として記録されない")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local prompts = 0
+  vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
+    on_choice(nil)
+  end
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  h.eq(2, prompts, "中断した場合は記録せず次回また尋ねる")
+end
+
+do
+  local root = h.fixture({ files = { ["tsconfig.json"] = "{}", ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local prompts = 0
+  vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
+    on_choice("tsgo")
+  end
+  local started = {}
+  toolchain.activate_ts(bufnr, "vtsls", function(dir)
+    started.vtsls = dir
+  end)
+  h.eq(0, prompts, "自動判定できる場合は尋ねない")
+  h.eq({ vtsls = root }, started, "判定結果の vtsls が起動する")
+  h.eq(nil, toolchain.ts_choice(bufnr), "自動判定の結果は選択として記録しない")
+end
+
 h.finish()
