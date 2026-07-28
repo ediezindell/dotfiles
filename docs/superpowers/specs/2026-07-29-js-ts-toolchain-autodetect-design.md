@@ -75,7 +75,7 @@ PR #6 で none-ls を conform.nvim + nvim-lint に置き換え、deno / biome / 
 | eslint | `eslint.config.{js,mjs,cjs,ts,mts,cts}` / `.eslintrc*`、または deps の `eslint` |
 | oxlint | `.oxlintrc.json` / `oxlint.json`、または deps の `oxlint` |
 | oxfmt | `.oxfmtrc.json` / `.oxfmtrc.jsonc` / `oxfmt.config.ts`、または deps の `oxfmt` |
-| prettier | `.prettierrc*` / `prettier.config.*` / package.json の `prettier` キー、または deps の `prettier` |
+| prettier | 上記のどれも該当しないときの fallback。設定ファイルは見ず、`prettier` コマンドが解決できるかだけで判定する |
 
 ### 2. LSP — `root_dir` コールバックによる buffer 単位の起動判定
 
