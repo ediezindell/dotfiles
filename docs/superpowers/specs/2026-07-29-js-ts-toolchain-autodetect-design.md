@@ -68,6 +68,8 @@ PR #6 で none-ls を conform.nvim + nvim-lint に置き換え、deno / biome / 
 | deno | `deno.json` / `deno.jsonc` / `deno.lock` / `denops` |
 | built-in TS LS | deps に `@typescript/native-preview`、または `typescript` の major が 7 以上 |
 | vtsls | 上記以外で `tsconfig.json` / `jsconfig.json` / `package.json` のいずれかがある |
+
+上表のどの条件にも当てはまらない場合 (単独の `.ts` ファイルをプロジェクト外で開いた場合など) `M.ts_server` は `nil` を返し、TypeScript 系の LS は起動しない。
 | biome | `biome.json` / `biome.jsonc` / `.biome.json` / `.biome.jsonc`、または deps の `@biomejs/biome` |
 | eslint | `eslint.config.{js,mjs,cjs,ts,mts,cts}` / `.eslintrc*`、または deps の `eslint` |
 | oxlint | `.oxlintrc.json` / `oxlint.json`、または deps の `oxlint` |
@@ -119,7 +121,8 @@ prettier がどこにも解決できない場合は空リストを返し、`defa
 | biome (`biome.json`) | vtsls + biome | なし | biome |
 | oxlint + eslint (両方 devDeps) | vtsls | oxlint + eslint | prettier |
 | prettier のみ | vtsls | なし | prettier |
-| typescript 7 (devDeps) | tsgo | 依存構成に従う | 依存構成に従う |
+| typescript 7 + prettier (devDeps) | tsgo | なし | prettier |
+| プロジェクト外の単独 `.ts` ファイル | なし | なし | なし (LSP フォーマットに落ちる) |
 
 加えて、1 セッション内で deno プロジェクトと Node プロジェクトのファイルを順に開き、それぞれのバッファに意図した LS のみが attach していることを確認する (既存実装のグローバル有効化不具合の回帰確認)。
 
