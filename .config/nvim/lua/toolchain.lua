@@ -1,5 +1,4 @@
 --- JS/TS プロジェクトのツールチェーン判定
---- after/lsp/*.lua / conform / nvim-lint はすべてこのモジュールを参照する
 local M = {}
 
 local DEP_FIELDS = { "dependencies", "devDependencies" }

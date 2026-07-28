@@ -33,7 +33,16 @@ end
 do
   local root = h.fixture({ files = { ["package.json"] = "{ broken", ["a.ts"] = "" } })
   local bufnr = h.buf(root .. "/a.ts")
+  local original_notify_once = vim.notify_once
+  local notify_called = false
+  local notify_msg = nil
+  vim.notify_once = function(msg, level)
+    notify_called = true
+    notify_msg = msg
+  end
   h.eq(nil, toolchain.pkg(bufnr), "パースできない package.json は nil")
+  h.eq(true, notify_called and notify_msg:find(root .. "/package.json") ~= nil, "パースエラー通知が呼ばれて package.json のパスが含まれる")
+  vim.notify_once = original_notify_once
 end
 
 h.finish()
