@@ -1,5 +1,5 @@
 --- Formatting configuration with conform.nvim
----@type LazySpec
+
 local function has_biome(bufnr)
   local has = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) ~= nil
   if not has then
@@ -18,6 +18,7 @@ local function has_biome(bufnr)
   return has
 end
 
+---@type LazySpec
 local spec = {
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
