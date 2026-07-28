@@ -48,6 +48,7 @@ local spec = {
           "markuplint",
           "prettier",
           "eslint_d",
+          "oxlint",
         },
       })
     end,
