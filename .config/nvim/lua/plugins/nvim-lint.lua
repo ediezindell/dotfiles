@@ -21,10 +21,11 @@ local spec = {
 
         -- Check if it is a JavaScript/TypeScript file
         if ft == "javascript" or ft == "typescript" or ft == "javascriptreact" or ft == "typescriptreact" then
+          local has_deno = vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "denops" }) ~= nil
           local has_biome = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) ~= nil
           local has_oxlint = vim.fs.root(bufnr, { "oxlint.json", ".oxlintrc" }) ~= nil
 
-          if not has_biome or not has_oxlint then
+          if not has_deno and (not has_biome or not has_oxlint) then
             local pkg_path = vim.fs.root(bufnr, { "package.json" })
             if pkg_path then
               local f = io.open(pkg_path .. "/package.json", "r")
@@ -41,7 +42,9 @@ local spec = {
             end
           end
 
-          if has_biome then
+          if has_deno then
+            lint.try_lint("deno")
+          elseif has_biome then
             lint.try_lint("biomejs")
           else
             local active_linters = {}
