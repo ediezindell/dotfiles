@@ -90,11 +90,13 @@ aucmd("CmdlineLeave", {
 -- 保存時にフォーマットを実行
 aucmd("BufWritePre", {
   callback = function()
-    vim.lsp.buf.format({
-      filter = function()
-        return vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true
-      end,
-    })
+    if vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true then
+      require("conform").format({
+        lsp_format = "fallback",
+        async = false,
+        timeout_ms = 500,
+      })
+    end
   end,
   group = group("AutoFormat"),
 })

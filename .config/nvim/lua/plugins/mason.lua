@@ -1,4 +1,4 @@
--- null-ls (LSPではないものをLSP化する) を利用する
+-- Tool installation management with mason and mason-tool-installer
 ---@type LazySpec[]
 local spec = {
   {
@@ -24,37 +24,37 @@ local spec = {
     },
   },
   {
-    "jay-babu/mason-null-ls.nvim",
-    lazy = false,
-    dependencies = {
-      "nvimtools/none-ls.nvim",
-      "nvimtools/none-ls-extras.nvim",
-      "gbprod/none-ls-shellcheck.nvim",
-      "nvim-lua/plenary.nvim",
-      "vim-test/vim-test",
-    },
-    opts = {
-      ensure_installed = {
-        "biome",
-        "typos-lsp",
-        "lua-language-server",
-        "vtsls",
-        "stylua",
-        -- "css-lsp",
-        "stylelint-lsp",
-        -- "emmet-language-server",
-        "tailwindcss-language-server",
-        "html-lsp",
-        "astro-language-server",
-        "markuplint",
-        "intelephense",
-        "gopls",
-        "remark-language-server",
-        "python-lsp-server",
-        "twiggy-language-server",
-      },
-      automatic_installation = true,
-    },
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          -- LSP Servers
+          "biome",
+          "typos-lsp",
+          "lua-language-server",
+          "vtsls",
+          "stylelint-lsp",
+          "tailwindcss-language-server",
+          "html-lsp",
+          "astro-language-server",
+          "intelephense",
+          "gopls",
+          "remark-language-server",
+          "python-lsp-server",
+          "twiggy-language-server",
+          -- Formatters & Linters
+          "stylua",
+          "markuplint",
+          "prettier",
+          "eslint_d",
+        },
+      })
+    end,
+  },
+  {
+    "vim-test/vim-test",
+    cmd = { "TestNearest", "TestFile", "TestSuite", "TestLast", "TestVisit" },
   },
 }
 
