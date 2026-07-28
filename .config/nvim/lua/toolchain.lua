@@ -3,21 +3,21 @@ local M = {}
 
 local DEP_FIELDS = { "dependencies", "devDependencies" }
 
----@param bufnr integer
+---@param ctx integer|string bufnr、またはファイル / ディレクトリのパス
 ---@return string
-local function buf_dir(bufnr)
-  local name = vim.api.nvim_buf_get_name(bufnr)
-  if name == "" then
-    return vim.fn.getcwd()
+local function base_dir(ctx)
+  if type(ctx) == "number" then
+    local name = vim.api.nvim_buf_get_name(ctx)
+    return name == "" and vim.fn.getcwd() or vim.fs.dirname(name)
   end
-  return vim.fs.dirname(name)
+  return vim.fn.isdirectory(ctx) == 1 and ctx or vim.fs.dirname(ctx)
 end
 
----@param bufnr integer
+---@param ctx integer|string
 ---@param markers string[]|string[][]
 ---@return string?
-local function root(bufnr, markers)
-  return vim.fs.root(buf_dir(bufnr), markers)
+local function root(ctx, markers)
+  return vim.fs.root(base_dir(ctx), markers)
 end
 
 local pkg_cache = {}
@@ -87,6 +87,39 @@ function M.dep_major(bufnr, name)
     return nil
   end
   return tonumber(version:match("%d+"))
+end
+
+---@param ctx integer|string
+---@param name string
+---@return string?
+function M.local_bin(ctx, name)
+  local found = vim.fs.find("node_modules", {
+    path = base_dir(ctx),
+    upward = true,
+    type = "directory",
+    limit = math.huge,
+  })
+  for _, dir in ipairs(found) do
+    local candidate = dir .. "/.bin/" .. name
+    if vim.fn.executable(candidate) == 1 then
+      return candidate
+    end
+  end
+  return nil
+end
+
+---@param ctx integer|string
+---@param name string
+---@return string?
+function M.bin(ctx, name)
+  local found = M.local_bin(ctx, name)
+  if found then
+    return found
+  end
+  if vim.fn.executable(name) == 1 then
+    return name
+  end
+  return nil
 end
 
 return M

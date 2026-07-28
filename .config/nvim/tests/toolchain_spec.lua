@@ -45,4 +45,30 @@ do
   vim.notify_once = original_notify_once
 end
 
+do
+  local root = h.fixture({
+    files = { ["package.json"] = "{}", ["packages/app/src/index.ts"] = "" },
+    exe = { "node_modules/.bin/prettier", "packages/app/node_modules/.bin/eslint" },
+  })
+  local bufnr = h.buf(root .. "/packages/app/src/index.ts")
+  h.eq(
+    root .. "/packages/app/node_modules/.bin/eslint",
+    toolchain.bin(bufnr, "eslint"),
+    "最も近い node_modules/.bin を使う"
+  )
+  h.eq(
+    root .. "/node_modules/.bin/prettier",
+    toolchain.bin(bufnr, "prettier"),
+    "上位の node_modules/.bin まで遡る"
+  )
+  h.eq(nil, toolchain.local_bin(bufnr, "oxlint"), "local に無ければ local_bin は nil")
+  h.eq("sh", toolchain.bin(bufnr, "sh"), "local に無ければグローバルにフォールバックする")
+  h.eq(nil, toolchain.bin(bufnr, "no-such-command-xyz"), "どこにも無ければ nil")
+  h.eq(
+    root .. "/node_modules/.bin/prettier",
+    toolchain.local_bin(root, "prettier"),
+    "ディレクトリパスからも解決できる"
+  )
+end
+
 h.finish()
