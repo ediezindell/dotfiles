@@ -57,7 +57,8 @@ PR #6 で none-ls を conform.nvim + nvim-lint に置き換え、deno / biome / 
 | `M.has_dep(bufnr, name)` | `dependencies` / `devDependencies` のキー完全一致で判定 |
 | `M.dep_major(bufnr, name)` | バージョン指定子からメジャー版を数値で取り出す (`"^7.0.2"` → `7`) |
 | `M.bin(bufnr, name)` | buffer のディレクトリから上方向に `node_modules/.bin/<name>` を探索し絶対パスを返す。無ければグローバルの実行可能ファイル名、それも無ければ `nil` |
-| `M.ts_server(bufnr)` | `"denols"` / `"tsgo"` / `"vtsls"` / `nil` |
+| `M.ts_server(bufnr)` | `"denols"` / `"tsgo"` / `"vtsls"` / `nil` (同期。プロジェクト判定できないとき `nil`) |
+| `M.activate_ts(bufnr, name, on_dir)` | `name` の LS をこの buffer で起動すべきなら `on_dir()` を呼ぶ。判定できない場合はユーザーに選択させる (非同期) |
 | `M.linters(bufnr)` | 実行すべき linter 名のリスト |
 | `M.formatters(bufnr)` | 実行すべき formatter 名のリスト |
 
@@ -69,7 +70,7 @@ PR #6 で none-ls を conform.nvim + nvim-lint に置き換え、deno / biome / 
 | built-in TS LS | deps に `@typescript/native-preview`、または `typescript` の major が 7 以上 |
 | vtsls | 上記以外で `tsconfig.json` / `jsconfig.json` / `package.json` のいずれかがある |
 
-上表のどの条件にも当てはまらない場合 (単独の `.ts` ファイルをプロジェクト外で開いた場合など) `M.ts_server` は `nil` を返し、TypeScript 系の LS は起動しない。
+上表のどの条件にも当てはまらない場合 (プロジェクト外で単独の `.ts` ファイルを開いた場合など) は自動判定せず、ユーザーに選択させる。詳細は次節。
 | biome | `biome.json` / `biome.jsonc` / `.biome.json` / `.biome.jsonc`、または deps の `@biomejs/biome` |
 | eslint | `eslint.config.{js,mjs,cjs,ts,mts,cts}` / `.eslintrc*`、または deps の `eslint` |
 | oxlint | `.oxlintrc.json` / `oxlint.json`、または deps の `oxlint` |
@@ -82,9 +83,27 @@ PR #6 で none-ls を conform.nvim + nvim-lint に置き換え、deno / biome / 
 
 `autocmds.lua` の TypeScript LS 起動用 FileType autocmd は削除する。
 
-- `after/lsp/vtsls.lua` — `M.ts_server(bufnr) == "vtsls"` のときだけ `on_dir()` を呼ぶ
-- `after/lsp/denols.lua` — deno のときだけ `on_dir()` を呼ぶ
-- `after/lsp/tsgo.lua` (新規) — built-in TS LS のときだけ起動する。cmd の解決順は local `tsgo` → local `tsc` (`typescript` major が 7 以上のときのみ) → グローバル `tsgo`。グローバル `tsc` は版が特定できないため候補に入れない
+3 つの `after/lsp/*.lua` はいずれも `root_dir = function(bufnr, on_dir) require("toolchain").activate_ts(bufnr, "<名前>", on_dir) end` の形にする。
+
+- `after/lsp/vtsls.lua` — 判定結果が `vtsls` のときだけ起動
+- `after/lsp/denols.lua` — 判定結果が `denols` のときだけ起動
+- `after/lsp/tsgo.lua` (新規) — 判定結果が `tsgo` のときだけ起動。cmd の解決順は local `tsgo` → local `tsc` (`typescript` major が 7 以上のときのみ) → グローバル `tsgo`。グローバル `tsc` は版が特定できないため候補に入れない
+
+#### プロジェクト外のファイルはユーザーに選択させる
+
+`M.ts_server` が `nil` を返す場合 (プロジェクトの目印が何も見つからない場合)、`vim.ui.select` で `tsgo` / `denols` / `no launch` を提示し、選ばれたものだけを起動する。これは既存実装の `autocmds.lua` にコメントアウトで残っていた挙動を、選択肢を現行のサーバー構成 (vtsls ではなく tsgo) に合わせて復活させるもの。vtsls はこの選択肢には出さない。
+
+`root_dir` コールバックは `on_dir` を非同期に呼んでよい (Neovim 0.12 の実装で、`on_dir` は `vim.schedule` 経由でクライアント起動につながる) ため、選択 UI の結果を待ってから起動できる。
+
+denols と tsgo の両方が有効化されているので、1 つの buffer に対して `root_dir` が 2 回呼ばれる。プロンプトが二重に出ないよう、`toolchain.lua` 側で以下を管理する。
+
+- 選択結果はファイルの所属ディレクトリをキーに記録する。同じディレクトリの別ファイルを開いたときは再度尋ねない
+- `no launch` を選んだ場合も「起動しない」という決定として記録し、再度尋ねない
+- 最初の `root_dir` 呼び出しが選択 UI を開き、決定前に来た 2 つ目の呼び出しは待ち行列に入れる。決定時に待ち行列をまとめて解決する
+
+起動時に渡す root はファイルの所属ディレクトリとする。
+
+判断をやり直せるように、ユーザーコマンド `:TSLspSelect` を追加する。現在の buffer の所属ディレクトリの記録を破棄し、該当クライアントを停止して選択し直す。
 
 ### 3. linter — nvim-lint
 
@@ -105,6 +124,8 @@ local install 優先は conform builtin の `util.from_node_modules` が既に�
 
 prettier がどこにも解決できない場合は空リストを返し、`default_format_opts.lsp_format = "fallback"` により LSP フォーマットに落とす。存在しないコマンドを指定して実行エラーを出すことを避ける。
 
+プロジェクト外のファイルでは、LSP 選択で記録済みの決定を参照する。`denols` を選んでいれば `deno_fmt`、それ以外は上記の通常の優先順位に従う。conform 側は同期的に呼ばれるため、記録された決定を読むだけで、ここから選択 UI を開くことはしない。
+
 対象 filetype は現状維持 (javascript / typescript / javascriptreact / typescriptreact / css / json / html / markdown / astro / lua)。`css` と `json` も同じ選択ロジックを通す。
 
 ### 5. mason
@@ -122,7 +143,15 @@ prettier がどこにも解決できない場合は空リストを返し、`defa
 | oxlint + eslint (両方 devDeps) | vtsls | oxlint + eslint | prettier |
 | prettier のみ | vtsls | なし | prettier |
 | typescript 7 + prettier (devDeps) | tsgo | なし | prettier |
-| プロジェクト外の単独 `.ts` ファイル | なし | なし | なし (LSP フォーマットに落ちる) |
+| プロジェクト外の単独 `.ts` ファイル | 選択 UI で選んだもののみ | なし | `denols` を選べば deno_fmt、他は prettier |
+
+プロジェクト外のファイルについては加えて次を確認する。
+
+- 選択 UI が 1 回だけ表示される (denols / tsgo で二重に出ない)
+- `tsgo` を選ぶと tsgo のみ、`denols` を選ぶと denols のみが attach する
+- `no launch` を選ぶとどちらも attach しない
+- 同じディレクトリの 2 つ目のファイルを開いても再度尋ねられない
+- `:TSLspSelect` で選び直せる
 
 加えて、1 セッション内で deno プロジェクトと Node プロジェクトのファイルを順に開き、それぞれのバッファに意図した LS のみが attach していることを確認する (既存実装のグローバル有効化不具合の回帰確認)。
 
@@ -148,3 +177,4 @@ prettier がどこにも解決できない場合は空リストを返し、`defa
 | プロジェクトごとに `.nvim.lua` (exrc) で使うツールを手動指定 | 自動判定という要件を満たさない |
 | oxlint を `oxlint --lsp` で LSP として使う | nvim-lint と LSP の 2 機構が混在する。oxlint と eslint を並走させる構成では nvim-lint に統一した方が設定が 1 箇所で済む |
 | biome / deno でも nvim-lint を実行する | biome LSP / denols が同じ診断を出すため二重表示になる |
+| プロジェクト外のファイルでは何も起動しない、または tsgo を無条件で起動する | 単独ファイルが deno スクリプトである場合を判定する材料がない。既存実装が選択 UI を用意していた意図に沿ってユーザーに選ばせる |
