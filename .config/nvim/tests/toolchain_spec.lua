@@ -71,4 +71,74 @@ do
   )
 end
 
+do
+  local root = h.fixture({ files = { ["deno.json"] = "{}", ["mod.ts"] = "" } })
+  local bufnr = h.buf(root .. "/mod.ts")
+  h.eq(true, toolchain.is_deno(bufnr), "deno.json があれば deno プロジェクト")
+  h.eq("denols", toolchain.ts_server(bufnr), "deno プロジェクトは denols")
+  h.eq(root, toolchain.root_for(bufnr, "denols"), "denols の root は deno.json のディレクトリ")
+end
+
+do
+  local root = h.fixture({ files = { ["denops/foo/main.ts"] = "" } })
+  local bufnr = h.buf(root .. "/denops/foo/main.ts")
+  h.eq("denols", toolchain.ts_server(bufnr), "denops ディレクトリがあれば denols")
+end
+
+do
+  local root = h.fixture({
+    files = { ["package.json"] = [[{"devDependencies":{"typescript":"~7.1.0"}}]], ["a.ts"] = "" },
+  })
+  h.eq("tsgo", toolchain.ts_server(h.buf(root .. "/a.ts")), "typescript 7 系なら tsgo")
+end
+
+do
+  local root = h.fixture({
+    files = {
+      ["package.json"] = [[{"devDependencies":{"@typescript/native-preview":"latest","typescript":"5.6.0"}}]],
+      ["a.ts"] = "",
+    },
+  })
+  h.eq("tsgo", toolchain.ts_server(h.buf(root .. "/a.ts")), "native-preview があれば tsgo")
+end
+
+do
+  local root = h.fixture({
+    files = {
+      ["tsconfig.json"] = "{}",
+      ["package.json"] = [[{"devDependencies":{"typescript":"^5.6.0"}}]],
+      ["a.ts"] = "",
+    },
+  })
+  h.eq("vtsls", toolchain.ts_server(h.buf(root .. "/a.ts")), "typescript 5 系なら vtsls")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  h.eq(nil, toolchain.ts_server(h.buf(root .. "/a.ts")), "目印が何も無ければ nil")
+end
+
+do
+  local root = h.fixture({
+    files = {
+      ["pnpm-lock.yaml"] = "",
+      ["packages/app/package.json"] = "{}",
+      ["packages/app/a.ts"] = "",
+    },
+  })
+  local bufnr = h.buf(root .. "/packages/app/a.ts")
+  h.eq(root, toolchain.project_root(bufnr), "lock ファイルのあるディレクトリが project root")
+  h.eq(root, toolchain.root_for(bufnr, "vtsls"), "vtsls の root は project root")
+end
+
+do
+  local root = h.fixture({ files = { ["packages/app/package.json"] = "{}", ["packages/app/a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/packages/app/a.ts")
+  h.eq(
+    root .. "/packages/app",
+    toolchain.project_root(bufnr),
+    "lock ファイルが無ければ package.json のディレクトリ"
+  )
+end
+
 h.finish()

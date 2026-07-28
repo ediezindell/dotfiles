@@ -2,6 +2,9 @@
 local M = {}
 
 local DEP_FIELDS = { "dependencies", "devDependencies" }
+local DENO_MARKERS = { "deno.json", "deno.jsonc", "deno.lock", "denops" }
+local NODE_MARKERS = { "tsconfig.json", "jsconfig.json", "package.json" }
+local LOCK_MARKERS = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }
 
 ---@param ctx integer|string bufnr、またはファイル / ディレクトリのパス
 ---@return string
@@ -120,6 +123,44 @@ function M.bin(ctx, name)
     return name
   end
   return nil
+end
+
+---@param bufnr integer
+---@return boolean
+function M.is_deno(bufnr)
+  return root(bufnr, DENO_MARKERS) ~= nil
+end
+
+--- 自動判定できる場合のみサーバー名を返す
+---@param bufnr integer
+---@return "denols"|"tsgo"|"vtsls"|nil
+function M.ts_server(bufnr)
+  if M.is_deno(bufnr) then
+    return "denols"
+  end
+  if M.has_dep(bufnr, "@typescript/native-preview") or (M.dep_major(bufnr, "typescript") or 0) >= 7 then
+    return "tsgo"
+  end
+  if root(bufnr, NODE_MARKERS) then
+    return "vtsls"
+  end
+  return nil
+end
+
+---@param bufnr integer
+---@return string
+function M.project_root(bufnr)
+  return root(bufnr, { LOCK_MARKERS, { ".git" } }) or root(bufnr, NODE_MARKERS) or base_dir(bufnr)
+end
+
+---@param bufnr integer
+---@param server string
+---@return string
+function M.root_for(bufnr, server)
+  if server == "denols" then
+    return root(bufnr, { DENO_MARKERS, { ".git" } }) or base_dir(bufnr)
+  end
+  return M.project_root(bufnr)
 end
 
 return M
