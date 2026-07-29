@@ -1,15 +1,20 @@
 local toolchain = require("toolchain")
 
 --- @typescript/native-preview の tsgo と TypeScript 7 の tsc は同じ LSP を話す。
---- グローバルの tsc は版を特定できず --lsp を持たない可能性があるため候補に入れない。
+--- TypeScript 7 未満の tsc には --lsp が無いため、typescript の major が 7 以上の時だけ候補に入れる。
+--- グローバルの tsc は版を特定できないため候補に入れない。
 ---@param dir string?
 ---@return string
 local function resolve_cmd(dir)
   if dir then
-    for _, name in ipairs({ "tsgo", "tsc" }) do
-      local bin = toolchain.local_bin(dir, name)
-      if bin then
-        return bin
+    local tsgo_bin = toolchain.local_bin(dir, "tsgo")
+    if tsgo_bin then
+      return tsgo_bin
+    end
+    if (toolchain.dep_major(dir, "typescript") or 0) >= 7 then
+      local tsc_bin = toolchain.local_bin(dir, "tsc")
+      if tsc_bin then
+        return tsc_bin
       end
     end
   end

@@ -50,10 +50,10 @@ end
 
 local pkg_cache = {}
 
----@param bufnr integer
+---@param ctx integer|string
 ---@return table?
-function M.pkg(bufnr)
-  local dir = root(bufnr, { "package.json" })
+function M.pkg(ctx)
+  local dir = root(ctx, { "package.json" })
   if not dir then
     return nil
   end
@@ -81,11 +81,11 @@ function M.pkg(bufnr)
   return data
 end
 
----@param bufnr integer
+---@param ctx integer|string
 ---@param name string
 ---@return string?
-function M.dep_version(bufnr, name)
-  local pkg = M.pkg(bufnr)
+function M.dep_version(ctx, name)
+  local pkg = M.pkg(ctx)
   if not pkg then
     return nil
   end
@@ -98,19 +98,19 @@ function M.dep_version(bufnr, name)
   return nil
 end
 
----@param bufnr integer
+---@param ctx integer|string
 ---@param name string
 ---@return boolean
-function M.has_dep(bufnr, name)
-  return M.dep_version(bufnr, name) ~= nil
+function M.has_dep(ctx, name)
+  return M.dep_version(ctx, name) ~= nil
 end
 
 --- "^7.0.2" からメジャー版を取り出す。"latest" / "workspace:*" 等は nil
----@param bufnr integer
+---@param ctx integer|string
 ---@param name string
 ---@return integer?
-function M.dep_major(bufnr, name)
-  local version = M.dep_version(bufnr, name)
+function M.dep_major(ctx, name)
+  local version = M.dep_version(ctx, name)
   if not version then
     return nil
   end
@@ -200,6 +200,9 @@ local waiting = {}
 ---@param bufnr integer
 ---@return string?
 function M.ts_choice(bufnr)
+  if M.ts_server(bufnr) then
+    return nil
+  end
   local choice = decided[base_dir(bufnr)]
   if choice == false then
     return nil
@@ -265,6 +268,11 @@ function M.reselect_ts()
   local bufnr = vim.api.nvim_get_current_buf()
   local dir = base_dir(bufnr)
   if waiting[dir] then
+    vim.notify("選択のプロンプトが既に開いています", vim.log.levels.INFO)
+    return
+  end
+  if M.ts_server(bufnr) then
+    vim.notify("このバッファは自動判定されており選び直しても結果は変わりません", vim.log.levels.INFO)
     return
   end
   decided[dir] = nil
