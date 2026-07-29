@@ -243,6 +243,11 @@ end
 do
   local root = h.fixture({ files = { ["a.ts"] = "" } })
   local bufnr = h.buf(root .. "/a.ts")
+  local prompts = 0
+  vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
+    on_choice(nil)
+  end
   h.eq(nil, toolchain.ts_choice(bufnr), "未決定なら ts_choice は nil")
 end
 
@@ -275,15 +280,21 @@ end
 do
   local root = h.fixture({ files = { ["a.ts"] = "" } })
   local bufnr = h.buf(root .. "/a.ts")
-  local respond
+  local respond, prompts = nil, 0
   vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
     respond = on_choice
   end
-  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  local started = {}
+  toolchain.activate_ts(bufnr, "tsgo", function(dir)
+    started.tsgo = dir
+  end)
   vim.api.nvim_set_current_buf(bufnr)
   vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
   toolchain.reselect_ts()
+  h.eq(1, prompts, "プロンプト表示中の reselect_ts は 2 回目のプロンプトを開かない")
   respond("tsgo")
+  h.eq({ tsgo = root }, started, "プロンプト表示中の reselect_ts でも応答時に待機中のコールバックが発火する")
   h.eq("tsgo", toolchain.ts_choice(bufnr), "プロンプト表示中の reselect_ts は何もせず、応答は通常通り記録される")
 end
 
