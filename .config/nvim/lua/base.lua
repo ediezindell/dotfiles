@@ -41,6 +41,8 @@ vim.filetype.add({
 })
 vim.treesitter.language.register("css", "postcss")
 
+require("mason-path").prepend()
+
 -- lazy.nvimの有効化
 vim.loader.enable()
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

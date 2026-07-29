@@ -94,7 +94,7 @@ aucmd("BufWritePre", {
       require("conform").format({
         lsp_format = "fallback",
         async = false,
-        timeout_ms = 500,
+        timeout_ms = 3000,
       })
     end
   end,
