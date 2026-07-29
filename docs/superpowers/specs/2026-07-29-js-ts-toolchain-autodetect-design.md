@@ -155,6 +155,35 @@ prettier がどこにも解決できない場合は空リストを返し、`defa
 
 加えて、1 セッション内で deno プロジェクトと Node プロジェクトのファイルを順に開き、それぞれのバッファに意図した LS のみが attach していることを確認する (既存実装のグローバル有効化不具合の回帰確認)。
 
+### 実機確認の結果
+
+単体テストは 96 アサーション green (toolchain 63 / lsp 14 / conform 7 / lint 9 / mason-path 3)。
+
+判定結果:
+
+```
+deno           lsp=denols   linters=              formatters=deno_fmt
+biome          lsp=vtsls    linters=              formatters=biome
+oxlint-eslint  lsp=vtsls    linters=oxlint,eslint formatters=prettier
+prettier-only  lsp=vtsls    linters=              formatters=prettier
+ts7            lsp=tsgo     linters=              formatters=prettier
+```
+
+セッション跨ぎの attach 排他性 (今回直した不具合の回帰確認): Node プロジェクト → Deno プロジェクト → Node プロジェクトと開き直して、それぞれ `tsgo` のみ / `denols` のみ / `tsgo` のみが attach する。
+
+選択 UI: プロジェクト外ファイルで `tsgo / denols / no launch` が 1 回だけ表示され、同じディレクトリの 2 つ目のファイルでは再表示されない。
+
+local install 優先: `ts7` は `node_modules/.bin/tsc` を `--lsp --stdio` で起動して `tsgo` が attach する。`prettier-only` は local prettier で `const  a   =  1` → `const a = 1;` に整形される。
+
+### 検証中に判明した既存問題と対応
+
+自動判定そのものとは別に、以下 2 件が表面化したため本作業に含めて修正した。
+
+1. **mason のコマンドが名前で解決できない** — `mason-tool-installer` に lazy トリガーがなく (`base.lua` の `defaults.lazy = true`)、mason 本体も `:Mason*` コマンドでしか読まれないため、mason の bin ディレクトリが PATH に入っていなかった。`vtsls` / `prettier` / `tsgo` がいずれも `executable()` で 0 を返す状態で、vtsls は起動せず prettier フォールバックも空になっていた。`lua/mason-path.lua` を追加し、`base.lua` の冒頭で PATH へ prepend する。LSP の起動判定は起動シーケンス中に走るため、`VeryLazy` 等の遅延イベントでは間に合わない
+2. **保存時整形の timeout 不足** — `autocmds.lua` の `timeout_ms = 500` が prettier の cold start (実測 742ms) に足りず、黙って未整形のまま保存されていた。3000ms に変更した
+
+treesitter grammar のインストールが `git --no-advice` 非対応で全滅する問題も見つかったが、本作業と無関係なため issue #7 に分離した。
+
 ## 影響範囲
 
 | ファイル | 変更 |
