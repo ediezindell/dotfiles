@@ -14,8 +14,6 @@ local spec = {
         }
         null_ls.setup({
           sources = {
-            require("none-ls.diagnostics.eslint").with(opts),
-            require("none-ls.code_actions.eslint").with(opts),
             null_ls.builtins.formatting.prettier.with(opts),
             -- null_ls.builtins.formatting.biome,
             null_ls.builtins.formatting.stylua,

@@ -36,6 +36,7 @@ local spec = {
     opts = {
       ensure_installed = {
         "biome",
+        "eslint-lsp",
         "typos-lsp",
         "lua-language-server",
         "vtsls",
