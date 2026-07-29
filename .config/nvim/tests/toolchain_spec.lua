@@ -298,4 +298,79 @@ do
   h.eq("tsgo", toolchain.ts_choice(bufnr), "プロンプト表示中の reselect_ts は何もせず、応答は通常通り記録される")
 end
 
+do
+  local root = h.fixture({ files = { ["deno.json"] = "{}", ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({}, toolchain.linters(bufnr), "deno は denols の診断に任せる")
+  h.eq({ "deno_fmt" }, toolchain.formatters(bufnr, "typescript"), "deno は deno_fmt")
+end
+
+do
+  local root = h.fixture({ files = { ["biome.json"] = "{}", ["package.json"] = "{}", ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({}, toolchain.linters(bufnr), "biome は LSP の診断に任せる")
+  h.eq({ "biome" }, toolchain.formatters(bufnr, "typescript"), "biome プロジェクトは biome")
+end
+
+do
+  local root = h.fixture({
+    files = { ["package.json"] = [[{"devDependencies":{"@biomejs/biome":"^2.0.0"}}]], ["a.ts"] = "" },
+  })
+  h.eq(
+    { "biome" },
+    toolchain.formatters(h.buf(root .. "/a.ts"), "css"),
+    "biome は設定ファイルが無くても依存で検出する"
+  )
+end
+
+do
+  local root = h.fixture({
+    files = { ["package.json"] = [[{"devDependencies":{"oxlint":"^1.0.0","eslint":"^9.0.0"}}]], ["a.ts"] = "" },
+    exe = { "node_modules/.bin/oxlint", "node_modules/.bin/eslint", "node_modules/.bin/prettier" },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({ "oxlint", "eslint" }, toolchain.linters(bufnr), "oxlint と eslint は両方実行する")
+  h.eq({ "prettier" }, toolchain.formatters(bufnr, "typescript"), "他に無ければ prettier")
+end
+
+do
+  local root = h.fixture({ files = { ["eslint.config.js"] = "", ["package.json"] = "{}", ["a.ts"] = "" } })
+  h.eq(
+    { "eslint_d" },
+    toolchain.linters(h.buf(root .. "/a.ts")),
+    "local eslint が無ければ eslint_d にフォールバックする"
+  )
+end
+
+do
+  local root = h.fixture({ files = { ["package.json"] = "{}", ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({}, toolchain.linters(bufnr), "何も検出しなければ linter は空")
+  h.eq({}, toolchain.formatters(bufnr, "typescript"), "prettier も無ければ formatter は空")
+end
+
+do
+  local root = h.fixture({
+    files = { [".oxfmtrc.json"] = "{}", ["package.json"] = "{}", ["a.ts"] = "" },
+    exe = { "node_modules/.bin/prettier" },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({ "oxfmt" }, toolchain.formatters(bufnr, "typescript"), "oxfmt は JS/TS に使う")
+  h.eq({ "prettier" }, toolchain.formatters(bufnr, "css"), "oxfmt は css には使わない")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" }, exe = { "node_modules/.bin/prettier" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.ui.select = function(_, _, on_choice)
+    on_choice("denols")
+  end
+  toolchain.activate_ts(bufnr, "denols", function() end)
+  h.eq(
+    { "deno_fmt" },
+    toolchain.formatters(bufnr, "typescript"),
+    "denols を選んだプロジェクト外ファイルは deno_fmt"
+  )
+end
+
 h.finish()

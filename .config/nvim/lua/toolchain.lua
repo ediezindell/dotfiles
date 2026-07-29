@@ -5,6 +5,31 @@ local DEP_FIELDS = { "dependencies", "devDependencies" }
 local DENO_MARKERS = { "deno.json", "deno.jsonc", "deno.lock", "denops" }
 local NODE_MARKERS = { "tsconfig.json", "jsconfig.json", "package.json" }
 local LOCK_MARKERS = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }
+local BIOME_MARKERS = { "biome.json", "biome.jsonc", ".biome.json", ".biome.jsonc" }
+local OXLINT_MARKERS = { ".oxlintrc.json", "oxlint.json" }
+local OXFMT_MARKERS = { ".oxfmtrc.json", ".oxfmtrc.jsonc", "oxfmt.config.ts" }
+local ESLINT_MARKERS = {
+  "eslint.config.js",
+  "eslint.config.mjs",
+  "eslint.config.cjs",
+  "eslint.config.ts",
+  "eslint.config.mts",
+  "eslint.config.cts",
+  ".eslintrc",
+  ".eslintrc.js",
+  ".eslintrc.cjs",
+  ".eslintrc.json",
+  ".eslintrc.yml",
+  ".eslintrc.yaml",
+}
+local JS_FILETYPES = {
+  "javascript",
+  "javascriptreact",
+  "javascript.jsx",
+  "typescript",
+  "typescriptreact",
+  "typescript.tsx",
+}
 
 ---@param ctx integer|string bufnr、またはファイル / ディレクトリのパス
 ---@return string
@@ -249,6 +274,67 @@ function M.reselect_ts()
     end
   end
   vim.cmd("doautocmd nvim.lsp.enable FileType")
+end
+
+---@param bufnr integer
+---@return boolean
+local function has_biome(bufnr)
+  return root(bufnr, BIOME_MARKERS) ~= nil or M.has_dep(bufnr, "@biomejs/biome")
+end
+
+---@param bufnr integer
+---@return boolean
+local function has_eslint(bufnr)
+  return root(bufnr, ESLINT_MARKERS) ~= nil or M.has_dep(bufnr, "eslint")
+end
+
+---@param bufnr integer
+---@return boolean
+local function has_oxlint(bufnr)
+  return root(bufnr, OXLINT_MARKERS) ~= nil or M.has_dep(bufnr, "oxlint")
+end
+
+---@param bufnr integer
+---@return boolean
+local function has_oxfmt(bufnr)
+  return root(bufnr, OXFMT_MARKERS) ~= nil or M.has_dep(bufnr, "oxfmt")
+end
+
+--- deno / biome は LSP が同じ診断を出すので nvim-lint では走らせない
+---@param bufnr integer
+---@return string[]
+function M.linters(bufnr)
+  if M.is_deno(bufnr) or has_biome(bufnr) then
+    return {}
+  end
+  local linters = {}
+  if has_oxlint(bufnr) then
+    table.insert(linters, "oxlint")
+  end
+  if has_eslint(bufnr) then
+    table.insert(linters, M.bin(bufnr, "eslint") and "eslint" or "eslint_d")
+  end
+  return linters
+end
+
+---@param bufnr integer
+---@param ft? string
+---@return string[]
+function M.formatters(bufnr, ft)
+  ft = ft or vim.bo[bufnr].filetype
+  if M.is_deno(bufnr) or M.ts_choice(bufnr) == "denols" then
+    return { "deno_fmt" }
+  end
+  if has_biome(bufnr) then
+    return { "biome" }
+  end
+  if has_oxfmt(bufnr) and vim.tbl_contains(JS_FILETYPES, ft) then
+    return { "oxfmt" }
+  end
+  if M.bin(bufnr, "prettier") then
+    return { "prettier" }
+  end
+  return {}
 end
 
 return M
