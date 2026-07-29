@@ -291,11 +291,56 @@ do
   end)
   vim.api.nvim_set_current_buf(bufnr)
   vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
+  local original_notify = vim.notify
+  vim.notify = function() end
   toolchain.reselect_ts()
+  vim.notify = original_notify
   h.eq(1, prompts, "プロンプト表示中の reselect_ts は 2 回目のプロンプトを開かない")
   respond("tsgo")
   h.eq({ tsgo = root }, started, "プロンプト表示中の reselect_ts でも応答時に待機中のコールバックが発火する")
   h.eq("tsgo", toolchain.ts_choice(bufnr), "プロンプト表示中の reselect_ts は何もせず、応答は通常通り記録される")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.ui.select = function(_, _, on_choice)
+    on_choice("tsgo")
+  end
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
+  local original_notify = vim.notify
+  local notified = 0
+  vim.notify = function()
+    notified = notified + 1
+  end
+  toolchain.reselect_ts()
+  vim.notify = original_notify
+  h.eq(0, notified, "選び直しが実際に行われる経路では通知しない")
+end
+
+do
+  local root = h.fixture({
+    files = {
+      ["tsconfig.json"] = "{}",
+      ["package.json"] = [[{"devDependencies":{"typescript":"^5.6.0"}}]],
+      ["a.ts"] = "",
+    },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
+  local original_notify = vim.notify
+  local notified_msg, notified_level = nil, nil
+  vim.notify = function(msg, level)
+    notified_msg = msg
+    notified_level = level
+  end
+  toolchain.reselect_ts()
+  vim.notify = original_notify
+  h.eq(vim.log.levels.INFO, notified_level, "自動判定される場合の reselect_ts は INFO レベルで通知する")
+  h.eq(true, notified_msg ~= nil, "自動判定される場合の reselect_ts は理由を通知する")
 end
 
 do
@@ -320,6 +365,17 @@ do
     { "biome" },
     toolchain.formatters(h.buf(root .. "/a.ts"), "css"),
     "biome は設定ファイルが無くても依存で検出する"
+  )
+end
+
+do
+  local root = h.fixture({
+    files = { ["package.json"] = [[{"devDependencies":{"@biomejs/biome":"^2.0.0"}}]], ["a.ts"] = "" },
+  })
+  h.eq(
+    {},
+    toolchain.linters(h.buf(root .. "/a.ts")),
+    "biome は設定ファイルが無くても依存で検出し linter は空にする"
   )
 end
 
@@ -399,6 +455,25 @@ do
     { "deno_fmt" },
     toolchain.formatters(bufnr, "typescript"),
     "denols を選んだプロジェクト外ファイルは deno_fmt"
+  )
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" }, exe = { "node_modules/.bin/prettier" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.ui.select = function(_, _, on_choice)
+    on_choice("denols")
+  end
+  toolchain.activate_ts(bufnr, "denols", function() end)
+
+  local fd = assert(io.open(root .. "/package.json", "w"))
+  fd:write("{}")
+  fd:close()
+
+  h.eq(
+    { "prettier" },
+    toolchain.formatters(bufnr, "typescript"),
+    "package.json 出現後は denols の記録された選択より自動判定を優先する"
   )
 end
 

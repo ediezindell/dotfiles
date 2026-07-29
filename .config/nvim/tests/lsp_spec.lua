@@ -81,4 +81,54 @@ do
   )
 end
 
+do
+  local root = h.fixture({
+    files = {
+      ["package.json"] = [[{"devDependencies":{"@typescript/native-preview":"latest","typescript":"^5.6.0"}}]],
+      ["a.ts"] = "",
+    },
+    exe = { "node_modules/.bin/tsc" },
+  })
+  local captured
+  local original = vim.lsp.rpc.start
+  vim.lsp.rpc.start = function(cmd)
+    captured = cmd
+    return {}
+  end
+  vim.lsp.config["tsgo"].cmd({}, { root_dir = root })
+  vim.lsp.rpc.start = original
+  h.eq(
+    { "tsgo", "--lsp", "--stdio" },
+    captured,
+    "typescript が 7 未満なら local tsc を使わずグローバル tsgo を使う"
+  )
+end
+
+do
+  local node_root = h.fixture({
+    files = {
+      ["package.json"] = [[{"devDependencies":{"typescript":"^5.6.0"}}]],
+      ["tsconfig.json"] = "{}",
+      ["a.ts"] = "",
+    },
+  })
+  local deno_root = h.fixture({ files = { ["deno.json"] = "{}", ["mod.ts"] = "" } })
+
+  h.eq(
+    { vtsls = node_root },
+    activate(h.buf(node_root .. "/a.ts")),
+    "1 回目 (Node プロジェクト): vtsls だけが起動する"
+  )
+  h.eq(
+    { denols = deno_root },
+    activate(h.buf(deno_root .. "/mod.ts")),
+    "2 回目 (Deno プロジェクト): denols だけが起動する"
+  )
+  h.eq(
+    { vtsls = node_root },
+    activate(h.buf(node_root .. "/a.ts")),
+    "3 回目 (Node プロジェクトに戻る): vtsls だけが起動し denols は残らない"
+  )
+end
+
 h.finish()
