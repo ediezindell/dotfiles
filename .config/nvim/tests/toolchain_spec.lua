@@ -240,4 +240,51 @@ do
   h.eq(nil, toolchain.ts_choice(bufnr), "自動判定の結果は選択として記録しない")
 end
 
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq(nil, toolchain.ts_choice(bufnr), "未決定なら ts_choice は nil")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local prompts = 0
+  vim.ui.select = function(_, _, on_choice)
+    prompts = prompts + 1
+    on_choice("no launch")
+  end
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  h.eq(1, prompts, "no launch 決定後の再問い合わせはプロンプトを開かない")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.ui.select = function(_, _, on_choice)
+    on_choice("tsgo")
+  end
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
+  toolchain.reselect_ts()
+  h.eq(nil, toolchain.ts_choice(bufnr), "reselect_ts は記録済みの選択を消す")
+end
+
+do
+  local root = h.fixture({ files = { ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local respond
+  vim.ui.select = function(_, _, on_choice)
+    respond = on_choice
+  end
+  toolchain.activate_ts(bufnr, "tsgo", function() end)
+  vim.api.nvim_set_current_buf(bufnr)
+  vim.api.nvim_create_augroup("nvim.lsp.enable", { clear = false })
+  toolchain.reselect_ts()
+  respond("tsgo")
+  h.eq("tsgo", toolchain.ts_choice(bufnr), "プロンプト表示中の reselect_ts は何もせず、応答は通常通り記録される")
+end
+
 h.finish()

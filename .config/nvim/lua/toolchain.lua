@@ -176,10 +176,10 @@ local waiting = {}
 ---@return string?
 function M.ts_choice(bufnr)
   local choice = decided[base_dir(bufnr)]
-  if choice then
-    return choice
+  if choice == false then
+    return nil
   end
-  return nil
+  return choice
 end
 
 --- 同じディレクトリに対する問い合わせを 1 回のプロンプトに集約する
@@ -213,7 +213,7 @@ local function ask(dir, cb)
   end)
 end
 
---- vim.lsp.Config の root_dir から呼ぶ。起動すべきときだけ on_dir を呼ぶ
+--- 起動すべきと判定できたときだけ on_dir を呼ぶ
 ---@param bufnr integer
 ---@param name string
 ---@param on_dir fun(root_dir?: string)
@@ -236,11 +236,13 @@ function M.activate_ts(bufnr, name, on_dir)
   end)
 end
 
----@param bufnr integer
-function M.reselect_ts(bufnr)
+function M.reselect_ts()
+  local bufnr = vim.api.nvim_get_current_buf()
   local dir = base_dir(bufnr)
+  if waiting[dir] then
+    return
+  end
   decided[dir] = nil
-  waiting[dir] = nil
   for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
     if vim.tbl_contains(PICKABLE, client.name) then
       client:stop()
