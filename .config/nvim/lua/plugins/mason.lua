@@ -50,6 +50,7 @@ local spec = {
           "prettier",
           "eslint_d",
           "oxlint",
+          "oxfmt",
         },
       })
     end,

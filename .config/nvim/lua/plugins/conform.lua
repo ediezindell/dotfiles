@@ -1,35 +1,7 @@
 --- Formatting configuration with conform.nvim
-
-local function has_deno(bufnr)
-  return vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "denops" }) ~= nil
-end
-
-local function has_biome(bufnr)
-  local has = vim.fs.root(bufnr, { "biome.json", "biome.jsonc" }) ~= nil
-  if not has then
-    local pkg_path = vim.fs.root(bufnr, { "package.json" })
-    if pkg_path then
-      local f = io.open(pkg_path .. "/package.json", "r")
-      if f then
-        local content = f:read("*a")
-        f:close()
-        if content:match('"@?biomejs/biome"') or content:match('"biome"') then
-          has = true
-        end
-      end
-    end
-  end
-  return has
-end
-
+--- コマンド解決 (node_modules/.bin 優先) は conform builtin に任せる
 local function select_formatter(bufnr)
-  if has_deno(bufnr) then
-    return { "deno_fmt" }
-  elseif has_biome(bufnr) then
-    return { "biome" }
-  else
-    return { "prettier" }
-  end
+  return require("toolchain").formatters(bufnr)
 end
 
 ---@type LazySpec
@@ -40,16 +12,10 @@ local spec = {
   opts = {
     formatters_by_ft = {
       javascript = select_formatter,
-      typescript = select_formatter,
       javascriptreact = select_formatter,
+      typescript = select_formatter,
       typescriptreact = select_formatter,
-      css = function(bufnr)
-        if has_biome(bufnr) then
-          return { "biome" }
-        else
-          return { "prettier" }
-        end
-      end,
+      css = select_formatter,
       json = select_formatter,
       html = { "prettier" },
       markdown = { "prettier" },
