@@ -34,6 +34,7 @@ local spec = {
           "typos-lsp",
           "lua-language-server",
           "vtsls",
+          "tsgo",
           "stylelint-lsp",
           "tailwindcss-language-server",
           "html-lsp",

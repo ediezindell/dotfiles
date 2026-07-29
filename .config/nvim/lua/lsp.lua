@@ -2,7 +2,7 @@ vim.lsp.enable({
   "astro",
   "biome",
   "cssls",
-  -- "denols", -- 条件付きで有効化するためコメントアウト
+  "denols",
   "gopls",
   "html",
   "intelephense",
@@ -13,7 +13,12 @@ vim.lsp.enable({
   "rust-analyzer",
   "stylelint",
   "tailwindcss",
+  "tsgo",
   "twiggy_language_server",
   "typos_lsp",
-  -- "vtsls", -- 条件付きで有効化するためコメントアウト
+  "vtsls",
 })
+
+vim.api.nvim_create_user_command("TSLspSelect", function()
+  require("toolchain").reselect_ts()
+end, { desc = "TypeScript の LSP を選び直す" })

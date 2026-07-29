@@ -1,5 +1,8 @@
 ---@type vim.lsp.Config
 return {
+  root_dir = function(bufnr, on_dir)
+    require("toolchain").activate_ts(bufnr, "vtsls", on_dir)
+  end,
   filetypes = {
     "javascript",
     "javascriptreact",
