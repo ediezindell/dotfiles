@@ -1,6 +1,6 @@
 vim.cmd("autocmd!")
-
 vim.scriptencoding = "utf-8"
+vim.g.loaded_nvim_dir_plugin = true
 
 -- leaderキーを指定
 vim.api.nvim_set_var("mapleader", " ")
