@@ -335,18 +335,27 @@ end
 
 do
   local root = h.fixture({ files = { ["eslint.config.js"] = "", ["package.json"] = "{}", ["a.ts"] = "" } })
+  local bufnr = h.buf(root .. "/a.ts")
+  local empty_path_dir = h.fixture({})
+  local original_path = vim.env.PATH
+  vim.env.PATH = empty_path_dir
   h.eq(
     { "eslint_d" },
-    toolchain.linters(h.buf(root .. "/a.ts")),
+    toolchain.linters(bufnr),
     "local eslint が無ければ eslint_d にフォールバックする"
   )
+  vim.env.PATH = original_path
 end
 
 do
   local root = h.fixture({ files = { ["package.json"] = "{}", ["a.ts"] = "" } })
   local bufnr = h.buf(root .. "/a.ts")
+  local empty_path_dir = h.fixture({})
+  local original_path = vim.env.PATH
+  vim.env.PATH = empty_path_dir
   h.eq({}, toolchain.linters(bufnr), "何も検出しなければ linter は空")
   h.eq({}, toolchain.formatters(bufnr, "typescript"), "prettier も無ければ formatter は空")
+  vim.env.PATH = original_path
 end
 
 do
@@ -357,6 +366,26 @@ do
   local bufnr = h.buf(root .. "/a.ts")
   h.eq({ "oxfmt" }, toolchain.formatters(bufnr, "typescript"), "oxfmt は JS/TS に使う")
   h.eq({ "prettier" }, toolchain.formatters(bufnr, "css"), "oxfmt は css には使わない")
+end
+
+do
+  local root = h.fixture({
+    files = { [".oxfmtrc.json"] = "{}", ["package.json"] = "{}", ["a.ts"] = "" },
+    exe = { "node_modules/.bin/prettier" },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.bo[bufnr].filetype = "typescript"
+  h.eq({ "oxfmt" }, toolchain.formatters(bufnr), "ft 省略時はバッファの filetype を使い oxfmt を選ぶ")
+end
+
+do
+  local root = h.fixture({
+    files = { [".oxfmtrc.json"] = "{}", ["package.json"] = "{}", ["a.ts"] = "" },
+    exe = { "node_modules/.bin/prettier" },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  vim.bo[bufnr].filetype = "css"
+  h.eq({ "prettier" }, toolchain.formatters(bufnr), "ft 省略時もバッファの filetype 経由で css には oxfmt を使わない")
 end
 
 do
