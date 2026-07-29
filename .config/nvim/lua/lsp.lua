@@ -3,6 +3,7 @@ vim.lsp.enable({
   "biome",
   "cssls",
   -- "denols", -- 条件付きで有効化するためコメントアウト
+  "eslint",
   "gopls",
   "html",
   "intelephense",
