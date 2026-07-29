@@ -32,4 +32,11 @@ do
   h.eq({ "prettier" }, by_ft.markdown, "markdown は prettier 固定")
 end
 
+do
+  local root = h.fixture({ files = { ["deno.json"] = "{}", ["a.css"] = "" } })
+  local bufnr = h.buf(root .. "/a.css")
+  vim.bo[bufnr].filetype = "css"
+  h.eq({ "deno_fmt" }, by_ft.css(bufnr), "deno プロジェクトは css でも deno_fmt")
+end
+
 h.finish()
