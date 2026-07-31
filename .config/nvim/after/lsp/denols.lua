@@ -1,6 +1,8 @@
 ---@type vim.lsp.Config
 return {
-  single_file_support = true,
+  root_dir = function(bufnr, on_dir)
+    require("toolchain").activate_ts(bufnr, "denols", on_dir)
+  end,
   init_options = {
     lint = true,
     unstable = true,

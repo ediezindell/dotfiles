@@ -17,6 +17,9 @@ end, "enable auto format in this buffer")
 NormalKeymap("<space>fd", function()
   vim.b.disable_auto_format = true
 end, "disable auto format in this buffer")
+NormalKeymap("<space>fm", function()
+  require("conform").format({ async = true, lsp_format = "fallback" })
+end, "format buffer manual")
 NormalKeymap("q:", ":", "", { noremap = true })
 
 CommandKeymap("<Esc><Esc>", "set nohlsearch", "no highlight")

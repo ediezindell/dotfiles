@@ -5,27 +5,6 @@ local spec = {
   dependencies = {
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
-    {
-      "nvimtools/none-ls.nvim",
-      config = function()
-        local null_ls = require("null-ls")
-        local opts = {
-          prefer_local = "node_modules/.bin",
-        }
-        null_ls.setup({
-          sources = {
-            null_ls.builtins.formatting.prettier.with(opts),
-            -- null_ls.builtins.formatting.biome,
-            null_ls.builtins.formatting.stylua,
-            null_ls.builtins.diagnostics.markuplint.with({
-              extra_filetypes = { "astro" },
-              command = "markuplint",
-            }),
-          },
-        })
-      end,
-    },
-    "nvimtools/none-ls-extras.nvim",
     "yioneko/nvim-vtsls",
     "b0o/schemastore.nvim",
     "SmiteshP/nvim-navic",
