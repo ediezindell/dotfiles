@@ -6,6 +6,15 @@ local JS_FILETYPES = {
   typescriptreact = true,
 }
 
+--- ddu の preview のような実ファイルでない buffer では linter を起動しない。
+--- ddu-ui-ff は preview 毎に buftype=nofile の buffer を作り、その window で
+--- `doautocmd BufRead` を叩くため、ガードが無いと preview 毎に linter が起動する。
+---@param bufnr integer
+---@return boolean
+local function is_real_file(bufnr)
+  return vim.bo[bufnr].buftype == "" and vim.api.nvim_buf_get_name(bufnr) ~= ""
+end
+
 ---@type LazySpec
 local spec = {
   "mfussenegger/nvim-lint",
@@ -19,10 +28,20 @@ local spec = {
       html = { "markuplint" },
     }
 
-    local function lint_buffer()
+    ---@param ev { event: string }
+    local function lint_buffer(ev)
       local bufnr = vim.api.nvim_get_current_buf()
+      if not is_real_file(bufnr) then
+        return
+      end
       if not JS_FILETYPES[vim.bo[bufnr].filetype] then
         lint.try_lint()
+        return
+      end
+
+      -- eslint は大きな project だと 1 回数分 CPU を張り付かせるので、
+      -- InsertLeave の度には走らせない（JS/TS は読み込み時と保存時のみ）
+      if ev.event == "InsertLeave" then
         return
       end
 
@@ -41,7 +60,8 @@ local spec = {
       })
     end
 
-    vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+    -- BufEnter だと buffer を切り替えるだけで linter が起動するので使わない
+    vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
       group = vim.api.nvim_create_augroup("lint", { clear = true }),
       callback = lint_buffer,
     })

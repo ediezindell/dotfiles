@@ -17,12 +17,13 @@ spec.config()
 
 ---@param bufnr integer
 ---@param ft string
+---@param event? string 既定は "BufWritePost"
 ---@return { calls: integer, names?: string[], opts?: table }
-local function run(bufnr, ft)
+local function run(bufnr, ft, event)
   vim.bo[bufnr].filetype = ft
   vim.api.nvim_set_current_buf(bufnr)
   calls, last = 0, nil
-  vim.api.nvim_exec_autocmds("BufWritePost", { buffer = bufnr })
+  vim.api.nvim_exec_autocmds(event or "BufWritePost", { buffer = bufnr })
   return { calls = calls, names = last and last.names, opts = last and last.opts }
 end
 
@@ -65,6 +66,39 @@ do
   local root = h.fixture({ files = { ["a.html"] = "" } })
   h.eq({ calls = 1 }, run(h.buf(root .. "/a.html"), "html"), "JS/TS 以外は引数なしで try_lint を呼ぶ")
   h.eq({ "markuplint" }, lint.linters_by_ft.html, "html は markuplint")
+end
+
+do
+  local root = h.fixture({ files = { ["a.html"] = "" } })
+  local bufnr = h.buf(root .. "/a.html")
+  h.eq({ calls = 1 }, run(bufnr, "html", "BufReadPost"), "BufReadPost でも try_lint を呼ぶ")
+  h.eq({ calls = 0 }, run(bufnr, "html", "BufEnter"), "BufEnter では try_lint を呼ばない")
+  h.eq({ calls = 1 }, run(bufnr, "html", "InsertLeave"), "JS/TS 以外は InsertLeave でも try_lint を呼ぶ")
+end
+
+do
+  -- eslint は重いので InsertLeave では走らせない
+  local root = h.fixture({
+    files = { ["package.json"] = [[{"devDependencies":{"eslint":"^9.0.0"}}]], ["a.ts"] = "" },
+    exe = { "node_modules/.bin/eslint" },
+  })
+  local bufnr = h.buf(root .. "/a.ts")
+  h.eq({ "eslint" }, run(bufnr, "typescript", "BufWritePost").names, "JS/TS は BufWritePost で try_lint を呼ぶ")
+  h.eq({ calls = 0 }, run(bufnr, "typescript", "InsertLeave"), "JS/TS は InsertLeave では try_lint を呼ばない")
+end
+
+do
+  -- ddu-ui-ff の preview buffer: buftype=nofile で、preview window で BufRead が叩かれる
+  local root = h.fixture({ files = { ["a.html"] = "", ["a.ts"] = "" } })
+  local bufnr = vim.fn.bufadd("ddu-ff:" .. root .. "/a.html")
+  vim.bo[bufnr].buftype = "nofile"
+  vim.fn.bufload(bufnr)
+  h.eq({ calls = 0 }, run(bufnr, "html", "BufReadPost"), "preview buffer では try_lint を呼ばない")
+end
+
+do
+  local bufnr = vim.api.nvim_create_buf(false, false)
+  h.eq({ calls = 0 }, run(bufnr, "html", "BufReadPost"), "無名 buffer では try_lint を呼ばない")
 end
 
 h.finish()

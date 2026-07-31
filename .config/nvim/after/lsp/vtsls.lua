@@ -30,9 +30,13 @@ return {
         completeFunctionCalls = true,
       },
       tsserver = {
+        -- syntax 専用の軽量プロセスを分けると補完・ハイライトが semantic 処理で
+        -- ブロックされないので有効のまま
         useSeparateSyntaxServer = true,
         experimental = {
-          enableProjectDiagnostics = true,
+          -- project 全体の診断は tsserver を常時 CPU で回し続けるので無効化。
+          -- 開いていないファイルの型エラーは出なくなる（tsc / CI で拾う）
+          enableProjectDiagnostics = false,
         },
       },
       preferences = {

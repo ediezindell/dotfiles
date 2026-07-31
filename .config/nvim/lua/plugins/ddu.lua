@@ -1,6 +1,7 @@
 ---@type LazySpec
 local spec = {
   "Shougo/ddu.vim",
+  event = "VeryLazy",
   dependencies = {
     "kuuote/ddu-source-git_status",
     "kuuote/ddu-source-mr",
@@ -96,7 +97,9 @@ local spec = {
           },
           -- action
           startAutoAction = true,
-          autoAction = { name = "preview" },
+          -- 既定の delay は 10ms でほぼ debounce されず、スクロール中に
+          -- preview（buffer 生成 + filetype 検出 + autocmd 一式）が連発する
+          autoAction = { name = "preview", delay = 200 },
         },
       },
       sourceParams = {
