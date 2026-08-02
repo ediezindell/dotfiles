@@ -125,14 +125,6 @@ local spec = {
     NormalKeymap("<space>cx", function()
       require("CopilotChat").close()
     end, "お転婆お嬢様チャットを閉じる")
-
-    NormalKeymap("<space>cs", function()
-      require("CopilotChat").stop()
-    end, "お転婆お嬢様の応答を停止")
-
-    NormalKeymap("<space>cn", function()
-      require("CopilotChat").reset()
-    end, "お転婆お嬢様との会話をリセット")
   end,
 }
 

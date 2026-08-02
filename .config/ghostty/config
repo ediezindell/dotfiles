@@ -98,3 +98,5 @@ keybind = super+y=redo
 # scroll back
 # keybind = super+shift+up=write_scrollback_file:open
 keybind = super+shift+up=write_scrollback_file:paste
+# search
+keybind = super+f=start_search

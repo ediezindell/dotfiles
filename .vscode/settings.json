@@ -1,0 +1,71 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.lineNumbers": "on",
+  "editor.cursorLineHighlight": "line",
+  "editor.renderWhitespace": "all",
+  "editor.cursorSurroundingLines": 4,
+  "files.encoding": "utf8",
+  "workbench.editor.openSideBySideDirection": "right",
+  "vim.leader": "<space>",
+  "vim.useSystemClipboard": true,
+  "vim.ignorecase": true,
+  "vim.smartcase": true,
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["Y"], "after": ["y", "$"] },
+    { "before": ["M"], "after": ["`"] },
+    { "before": ["<BS>"], "after": ["<C-o>"] },
+    { "before": ["<Left>"], "after": ["<C-o>"] },
+    { "before": ["<Right>"], "after": ["<C-i>"] },
+    { "before": ["q", ":"], "after": [":"] },
+    { "before": ["<leader>", "s", "s"], "commands": ["workbench.action.splitEditorDown"] },
+    { "before": ["<leader>", "s", "v"], "commands": ["workbench.action.splitEditorRight"] },
+    {
+      "before": ["<leader>", "<C-v>"],
+      "commands": [
+        "editor.action.selectAll",
+        "editor.action.clipboardPasteAction"
+      ]
+    },
+    { "before": ["<leader>", "b", "d"], "commands": ["workbench.action.closeActiveEditor"] },
+    { "before": ["g", "x"], "commands": ["editor.action.openLink"] },
+    // Telescope replacements
+    { "before": ["<leader>", "f", "f"], "commands": ["workbench.action.quickOpen"] },
+    { "before": ["<leader>", "f", "g"], "commands": ["workbench.action.findInFiles"] },
+    { "before": ["<leader>", "f", "b"], "commands": ["workbench.action.showAllEditorsByAppearance"] },
+    { "before": ["<leader>", "f", "h"], "commands": ["workbench.action.openGlobalKeybindings"] },
+    { "before": ["<leader>", "f", "r"], "commands": ["workbench.action.openRecent"] },
+    // Trouble replacements
+    { "before": ["<leader>", "x", "x"], "commands": ["workbench.actions.view.problems"] },
+    // Oil replacement
+    { "before": ["-"], "commands": ["workbench.view.explorer"] },
+    // ToggleTerm replacement
+    { "before": ["<leader>", "t"], "commands": ["workbench.action.terminal.toggleTerminal"] },
+    // Barbar replacements
+    { "before": ["[", "b"], "commands": ["workbench.action.previousEditor"] },
+    { "before": ["]", "b"], "commands": ["workbench.action.nextEditor"] },
+    { "before": ["<A-w>"], "commands": ["workbench.action.closeActiveEditor"] },
+    { "before": ["<leader>", "b", "p"], "commands": ["workbench.action.pinEditor"] },
+    { "before": ["<leader>", "b", "D"], "commands": ["workbench.action.closeOtherEditors"] },
+    { "before": ["<ESC>", "<ESC>"], "commands": [":nohl"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    { "before": ["p"], "after": ["P"] },
+    { "before": ["<"], "after": ["<", "g", "v"] },
+    { "before": [">"], "after": [">", "g", "v"] },
+    { "before": ["a", "\""], "after": ["2", "i", "\""] },
+    { "before": ["a", "'"], "after": ["2", "i", "'"] },
+    { "before": ["a", "`"], "after": ["2", "i", "`"] },
+    { "before": ["i", " "], "after": ["i", "W"] },
+    { "before": ["a", " "], "after": ["2", "i", "W"] }
+  ],
+  "vim.operatorPendingModeKeyBindingsNonRecursive": [
+    { "before": ["a", "\""], "after": ["2", "i", "\""] },
+    { "before": ["a", "'"], "after": ["2", "i", "'"] },
+    { "before": ["a", "`"], "after": ["2", "i", "`"] },
+    { "before": ["i", " "], "after": ["i", "W"] },
+    { "before": ["a", " "], "after": ["2", "i", "W"] }
+  ]
+}

@@ -87,43 +87,16 @@ aucmd("CmdlineLeave", {
   group = group("AutoHLS"),
 })
 
--- LSPアタッチ時のキーマッピングとハンドラ設定
-local function set_lsp_keymaps()
-  local mappings = {
-    K = function()
-      vim.lsp.buf.hover({ border = "rounded" })
-    end,
-    gd = vim.lsp.buf.definition,
-    gt = vim.lsp.buf.type_definition,
-    gr = vim.lsp.buf.rename,
-    gn = vim.lsp.buf.rename,
-    -- ga = vim.lsp.buf.code_action,
-    ge = vim.diagnostic.open_float,
-    ["g]"] = function()
-      vim.diagnostic.jump({ count = 1, float = true })
-    end,
-    ["g["] = function()
-      vim.diagnostic.jump({ count = -1, float = true })
-    end,
-  }
-
-  for key, func in pairs(mappings) do
-    vim.keymap.set("n", key, func, { buffer = 0 })
-  end
-end
-aucmd("LspAttach", {
-  callback = set_lsp_keymaps,
-  group = group("LspKeymap"),
-})
-
 -- 保存時にフォーマットを実行
 aucmd("BufWritePre", {
   callback = function()
-    vim.lsp.buf.format({
-      filter = function()
-        return vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true
-      end,
-    })
+    if vim.g.disable_auto_format ~= true and vim.b.disable_auto_format ~= true then
+      require("conform").format({
+        lsp_format = "fallback",
+        async = false,
+        timeout_ms = 3000,
+      })
+    end
   end,
   group = group("AutoFormat"),
 })
@@ -240,45 +213,6 @@ aucmd("TextYankPost", {
   group = group("HighlightYank"),
 })
 
--- TypeScriptのLS起動設定
-aucmd("FileType", {
-  pattern = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
-    "astro",
-  },
-  callback = function()
-    local ts_root = vim.fs.root(0, {
-      "tsconfig.json",
-      "jsconfig.json",
-    })
-    local deno_root = vim.fs.root(0, {
-      "deno.json",
-      "deno.jsonc",
-      "denops",
-    })
-
-    if ts_root ~= nil then
-      vim.lsp.enable("vtsls")
-    elseif deno_root ~= nil then
-      vim.lsp.enable("denols")
-      -- else
-      --   local NO_LAUNCH = "no launch"
-      --   vim.ui.select({ "vtsls", "denols", NO_LAUNCH }, {
-      --     prompt = "select LSP for TypeScript: ",
-      --   }, function(item)
-      --     if item ~= NO_LAUNCH then
-      --       vim.lsp.enable(item)
-      --     end
-      --   end)
-    end
-  end,
-})
-
 aucmd("QuickfixCmdPost", {
   pattern = "*",
   callback = function()
@@ -301,43 +235,6 @@ aucmd("BufReadPost", {
   group = group("ConnectSocket"),
 })
 
-local function apply_eslint_fix_all()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local total_lines = vim.api.nvim_buf_line_count(bufnr)
-
-  local params = {
-    textDocument = vim.lsp.util.make_text_document_params(),
-    range = {
-      start = { line = 0, character = 0 },
-      ["end"] = { line = total_lines - 1, character = 0 }, -- 行末文字数は0でもよい（多くのLSPが自動補正する）
-    },
-    context = {
-      only = { "source" },
-      diagnostics = vim.diagnostic.get(bufnr),
-    },
-  }
-
-  vim.lsp.buf_request_all(bufnr, "textDocument/codeAction", params, function(results)
-    for _, res in pairs(results) do
-      for _, action in ipairs(res.result or {}) do
-        if action.edit or action.command then
-          if action.edit then
-            print(action.edit)
-          elseif action.command then
-            print(action.command)
-          end
-          -- vim.lsp.buf.execute_command(action)
-        end
-      end
-    end
-  end)
-end
-
-aucmd("BufWritePre", {
-  pattern = { "*.js", "*.ts", "*.jsx", "*.tsx" },
-  callback = apply_eslint_fix_all,
-})
-
 --- LSPのsignature_helpを自動表示
 local signature_help_group = group("AutoSignatureHelp")
 aucmd({ "LspAttach" }, {
@@ -351,7 +248,7 @@ aucmd({ "LspAttach" }, {
     if client:supports_method("textDocument/signatureHelp") then
       local bufnr = ev.buf
       vim.api.nvim_clear_autocmds({ group = signature_help_group, buffer = bufnr })
-      aucmd("CursorMovedI", {
+      aucmd("CursorHoldI", {
         group = group("AutoSignatureHelpTrigger"),
         buffer = bufnr,
         callback = function()
@@ -380,46 +277,4 @@ aucmd({ "LspAttach" }, {
     end
   end,
   desc = "auto signature_help",
-})
-
---- バッファを自動で閉じる
-local ft_whitelist = {
-  "help",
-  "oil",
-}
-
-local function is_whitelisted(target_ft)
-  for _, ft in ipairs(ft_whitelist) do
-    if ft == target_ft then
-      return true
-    end
-  end
-  return false
-end
-
-aucmd("BufEnter", {
-  group = group("AutoBufferClean"),
-  callback = function()
-    local last_buf = vim.fn.bufnr("#")
-    if last_buf == -1 or not vim.api.nvim_buf_is_valid(last_buf) then
-      return
-    end
-
-    if is_whitelisted(vim.bo.filetype) then
-      return
-    end
-
-    local modified = vim.api.nvim_get_option_value("modified", {
-      buf = last_buf,
-    })
-    local name = vim.api.nvim_buf_get_name(last_buf)
-
-    if not modified and name ~= "" and not string.find(name, "oil:", 1, true) then
-      vim.schedule(function()
-        if vim.api.nvim_buf_is_valid(last_buf) then
-          vim.cmd("bdelete! " .. last_buf)
-        end
-      end)
-    end
-  end,
 })
