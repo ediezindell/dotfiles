@@ -15,8 +15,10 @@ return {
   ---@param dispatchers? vim.lsp.rpc.Dispatchers
   ---@param config vim.lsp.ClientConfig
   cmd = function(dispatchers, config)
-    local encoded = config.root_dir:gsub("/", "%%")
-    local data_dir = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace", encoded)
+    local data_dir = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace")
+    if config.root_dir then
+      data_dir = vim.fs.joinpath(data_dir, (config.root_dir:gsub("/", "%%")))
+    end
     local java_home = resolve_java_home("21")
     local opts
     if java_home then

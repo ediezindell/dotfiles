@@ -145,4 +145,10 @@ do
   )
 end
 
+do
+  local workspace = data_arg(captured_cmd(nil))
+  local expected = vim.fs.joinpath(vim.fn.stdpath("cache"), "jdtls", "workspace")
+  h.eq(expected, workspace, "root_dir が nil でもエラーにならず共有 workspace パスになる")
+end
+
 h.finish()
