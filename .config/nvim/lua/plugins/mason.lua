@@ -45,6 +45,7 @@ local spec = {
           "remark-language-server",
           "python-lsp-server",
           "twiggy-language-server",
+          "jdtls",
           -- Formatters & Linters
           "stylua",
           "markuplint",

@@ -6,6 +6,7 @@ vim.lsp.enable({
   "gopls",
   "html",
   "intelephense",
+  "jdtls",
   "jsonls",
   "lua_ls",
   "pug",
