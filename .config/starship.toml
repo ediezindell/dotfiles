@@ -7,6 +7,6 @@ success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set
 
 [custom.pr]
 style = "blue"
-command = ''' grep "$(git branch --contains | cut -d' ' -f2)" .git/pr-list | cut -f2 '''
-when = ''' test "$PWD/.git/pr-list" '''
+command = ''' grep "$(git branch --show-current)" "$(git rev-parse --git-dir)/pr-list" | cut -f2 '''
+when = ''' test -f "$(git rev-parse --git-dir 2>/dev/null)/pr-list" '''
 format = '[$output]($style) '
