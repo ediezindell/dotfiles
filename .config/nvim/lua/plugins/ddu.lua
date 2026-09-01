@@ -16,6 +16,9 @@ local spec = {
     "Shougo/ddu-source-file_rec",
     "Shougo/ddu-ui-ff",
     "shun/ddu-source-rg",
+    {
+      dir = "~/git/ddu-source-tgrep",
+    },
     "uga-rosa/ddu-filter-converter_devicon",
     "vim-denops/denops.vim",
   },
@@ -95,6 +98,7 @@ local spec = {
     { "<space>ff", [[<Cmd>call ddu#start( #{ name: "file_rec" } )<CR>]], desc = "ddu file_rec" },
     { "<space>fF", [[<Cmd>call ddu#start( #{ name: "dir_rec" } )<CR>]], desc = "ddu dir_rec" },
     { "<space>f;", [[<Cmd>call ddu#start( #{ name: "file_external" } )<CR>]], desc = "ddu file_ext" },
+    { "<space>ft", [[<Cmd>call ddu#start( #{ name: "tgrep" } )<CR>]], desc = "ddu tgrep" },
     { "<space>fg", [[<Cmd>call ddu#start( #{ name: "rg" } )<CR>]], desc = "ddu rg" },
     { "<space>fG", [[<Cmd>call ddu#start( #{ name: "rg_no_test" } )<CR>]], desc = "ddu rg (no test/stories)" },
     {
@@ -203,6 +207,7 @@ local spec = {
         },
         rg = rgSourceOptions,
         rg_no_test = rgSourceOptions,
+        tgrep = rgSourceOptions,
       },
       kindOptions = {
         file = { defaultAction = "open" },
@@ -213,7 +218,8 @@ local spec = {
       },
     })
 
-    local sources = { "file_rec", "dir_rec", "mr", "git_status", "rg", "rg_no_test", "file_external", "mru", "mrw" }
+    local sources =
+      { "file_rec", "dir_rec", "mr", "git_status", "rg", "rg_no_test", "tgrep", "file_external", "mru", "mrw" }
     for _, source in ipairs(sources) do
       vim.fn["ddu#custom#patch_local"](source, {
         sources = { source },
