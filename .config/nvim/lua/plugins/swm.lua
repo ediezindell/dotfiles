@@ -1,7 +1,6 @@
 ---@type LazySpec
 local spec = {
   "hrsh7th/nvim-swm",
-  event = "BufEnter",
   keys = {
     {
       "<C-h>",

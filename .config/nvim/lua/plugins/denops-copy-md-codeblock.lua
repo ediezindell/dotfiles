@@ -8,6 +8,6 @@ local spec = {
   keys = {
     { "<space>cP", "<Cmd>CopyCode<CR>", desc = "Copy file path" },
   },
-  event = "BufEnter",
+  event = "VeryLazy",
 }
 return spec

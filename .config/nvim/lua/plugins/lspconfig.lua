@@ -3,7 +3,6 @@
 local spec = {
   "neovim/nvim-lspconfig",
   dependencies = {
-    "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
     "yioneko/nvim-vtsls",
     "b0o/schemastore.nvim",

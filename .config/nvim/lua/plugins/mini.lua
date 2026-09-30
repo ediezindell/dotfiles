@@ -25,7 +25,7 @@ local spec = {
     -- クオートや括弧編集
     "echasnovski/mini.surround",
     version = false,
-    event = "BufEnter",
+    event = "VeryLazy",
     opts = {
       mappings = {
         add = "sa",       -- Add surrounding in Normal and Visual modes
@@ -46,14 +46,14 @@ local spec = {
     "echasnovski/mini.move",
     version = false,
     config = true,
-    event = "BufEnter",
+    event = "VeryLazy",
   },
   {
     -- gSで引数を1行にまとめたり複数行に展開したり
     "echasnovski/mini.splitjoin",
     version = false,
     config = true,
-    event = "BufEnter",
+    event = "VeryLazy",
   },
   {
     -- カーソル上の単語ハイライト
@@ -62,7 +62,7 @@ local spec = {
     opts = {
       delay = 10,
     },
-    event = "BufEnter",
+    event = "VeryLazy",
   },
   {
     -- 括弧間移動

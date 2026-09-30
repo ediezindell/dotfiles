@@ -11,7 +11,7 @@ local spec = {
       })
     end, { expr = true })
   end,
-  event = "BufEnter",
+  event = "VeryLazy",
 }
 
 return spec

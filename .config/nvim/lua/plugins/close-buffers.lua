@@ -2,7 +2,6 @@
 ---@type LazySpec
 local spec = {
   "kazhala/close-buffers.nvim",
-  event = "BufEnter",
   keys = {
     {
       "<space>bw",

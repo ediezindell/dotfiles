@@ -6,7 +6,7 @@ local spec = {
   dependencies = {
     "vim-denops/denops.vim",
   },
-  event = "BufEnter",
+  event = "VeryLazy",
   init = function()
     vim.g.mode_change_notify_options = {
       style = "ascii_filled",

@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "rktjmp/shipwright.nvim",
-  lazy = false,
+  cmd = "Shipwright",
 }
 
 return spec

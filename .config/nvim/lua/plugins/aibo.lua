@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "lambdalisue/nvim-aibo",
-  lazy = false,
+  cmd = { "Aibo", "AiboSend" },
   opts = {},
 }
 

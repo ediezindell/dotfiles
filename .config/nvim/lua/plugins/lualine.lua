@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "nvim-lualine/lualine.nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   opts = {
     options = {
       icons_enabled = true,

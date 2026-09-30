@@ -2,7 +2,7 @@
 ---@type LazySpec
 local spec = {
   "folke/which-key.nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   init = function()
     vim.o.timeout = true
     vim.o.timeoutlen = 300

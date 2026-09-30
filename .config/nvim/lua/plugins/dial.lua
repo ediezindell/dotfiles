@@ -2,7 +2,6 @@
 ---@type LazySpec
 local spec = {
   "monaqa/dial.nvim",
-  event = "BufEnter",
   keys = {
     {
       "<C-a>",

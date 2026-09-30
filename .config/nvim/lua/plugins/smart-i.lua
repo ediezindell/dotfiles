@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "yuki-yano/smart-i.nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   opts = {
     enable_i = false,
     enable_I = true,

@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "sphamba/smear-cursor.nvim",
-  event = "BufEnter",
+  event = "VeryLazy",
   opts = {},
 }
 

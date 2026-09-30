@@ -1,7 +1,7 @@
 ---@type LazySpec
 local spec = {
   "NStefan002/screenkey.nvim",
-  lazy = false,
+  cmd = "Screenkey",
   version = "*", -- or branch = "main", to use the latest commit
 }
 

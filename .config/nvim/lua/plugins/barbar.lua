@@ -6,7 +6,7 @@ local spec = {
     "lewis6991/gitsigns.nvim",     -- OPTIONAL: for git status
     "nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
   },
-  event = "BufEnter",
+  event = "VeryLazy",
   keys = {
     { "[b",        "<Cmd>BufferPrevious<CR>",                   desc = "BufferPrevious (barbar)" },
     { "]b",        "<Cmd>BufferNext<CR>",                       desc = "BufferNext (barbar)" },

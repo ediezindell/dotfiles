@@ -5,6 +5,6 @@ local spec = {
   dependencies = {
     "vim-denops/denops.vim",
   },
-  event = "BufEnter",
+  event = "VeryLazy",
 }
 return spec

@@ -19,7 +19,7 @@ local spec = {
   opts = {
     notes_path = vim.fn.expand("~/notes"),
   },
-  event = "BufEnter",
+  event = "VeryLazy",
 }
 
 return spec

@@ -2,6 +2,7 @@
 ---@type LazySpec
 local spec = {
   "hrsh7th/nvim-cmp",
+  event = { "InsertEnter", "CmdlineEnter" },
   dependencies = {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-cmdline",
@@ -18,11 +19,10 @@ local spec = {
       build = "make install_jsregexp",
       config = function()
         vim.keymap.set("n", "<leader>ss", require("luasnip.loaders").edit_snippet_files, { desc = "Edit snippets" })
-        require("luasnip.loaders.from_lua").load({ paths = { "~/.config/nvim/snippets" } })
+        require("luasnip.loaders.from_lua").lazy_load({ paths = { "~/.config/nvim/snippets" } })
         require("luasnip.loaders.from_vscode").lazy_load()
       end,
     },
-    { "mlaursen/vim-react-snippets", opts = {} },
   },
   config = function()
     local cmp = require("cmp")
