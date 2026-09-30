@@ -16,9 +16,7 @@ local spec = {
     "Shougo/ddu-source-file_rec",
     "Shougo/ddu-ui-ff",
     "shun/ddu-source-rg",
-    {
-      dir = "~/git/ddu-source-tgrep",
-    },
+    "ediezindell/ddu-source-tgrep",
     "uga-rosa/ddu-filter-converter_devicon",
     "vim-denops/denops.vim",
   },
@@ -196,6 +194,10 @@ local spec = {
         },
         git_diff_main_files = {
           cmd = { "git", "diff", "main", "--name-only" },
+        },
+        tgrep = {
+          scope = "marker",
+          debug = true,
         },
       },
       sourceOptions = {

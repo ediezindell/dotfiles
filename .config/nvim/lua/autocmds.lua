@@ -15,15 +15,15 @@ aucmd("InsertLeave", {
 -- 日本語入力での誤入力を自動修正（よく使うもののみ安全に実装）
 local japanese_corrections = {
   -- 基本的なコマンド（ASCII文字のみ使用）
-  ["qa"] = "qa",   -- くぁ -> qa
-  ["wq"] = "wq",   -- われq -> wq
-  ["w"] = "w",     -- ｗ -> w
-  ["q"] = "q",     -- q -> q
-  ["e"] = "e",     -- え -> e
-  ["h"] = "h",     -- ｈ -> h
-  ["vs"] = "vs",   -- ｖｓ -> vs
-  ["sp"] = "sp",   -- ｓp -> sp
-  ["bd"] = "bd",   -- ぶd -> bd
+  ["qa"] = "qa", -- くぁ -> qa
+  ["wq"] = "wq", -- われq -> wq
+  ["w"] = "w", -- ｗ -> w
+  ["q"] = "q", -- q -> q
+  ["e"] = "e", -- え -> e
+  ["h"] = "h", -- ｈ -> h
+  ["vs"] = "vs", -- ｖｓ -> vs
+  ["sp"] = "sp", -- ｓp -> sp
+  ["bd"] = "bd", -- ぶd -> bd
   ["buf"] = "buf", -- ぶf -> buf
   ["tab"] = "tab", -- たあb -> tab
   ["set"] = "set", -- せt -> set
@@ -200,10 +200,10 @@ aucmd("FileType", {
   group = group("DduUiFf"),
 })
 
-aucmd("BufWritePre", {
-  command = "Px2rem",
-  group = group("Px2rem"),
-})
+-- aucmd("BufWritePre", {
+--   command = "Px2rem",
+--   group = group("Px2rem"),
+-- })
 
 aucmd("TextYankPost", {
   pattern = "*",
