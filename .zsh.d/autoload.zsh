@@ -44,9 +44,6 @@ elif [ -d "${VOLTA_HOME}" ]; then
   export PATH="${VOLTA_HOME}/bin:$PATH"
 fi
 
-# npm completion
-eval "`npm completion`" 
-
 # deno
 export DENO_HOME=$HOME/.deno
 if [ -d "${DENO_HOME}" ]; then

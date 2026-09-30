@@ -5,3 +5,6 @@
 
 **/.claude/settings.local.json
 .prd
+
+**/.claude/.cc-writes/
+**/.tgrep

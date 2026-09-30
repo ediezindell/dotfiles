@@ -72,7 +72,7 @@ alias ff="open -a Firefox"
 alias edge="open -a Microsoft\ Edge"
 
 # util
-alias calx='cal -3; curl -s https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv | iconv -f SHIFT-JIS -t UTF-8 | grep -E "`date -v-1m '+%Y/%-m/'`|`date '+%Y/%-m/'`|`date -v+1m '+%Y/%-m/'`"'
+# alias calx='cal -3; curl -s https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv | iconv -f SHIFT-JIS -t UTF-8 | grep -E "`date -v-1m '+%Y/%-m/'`|`date '+%Y/%-m/'`|`date -v+1m '+%Y/%-m/'`"'
 
 # remove node_modules
 alias rmn='mv ./node_modules /tmp/node_modules.`date +%s`'
@@ -88,3 +88,4 @@ alias pnpm="noglob pnpm"
 alias yarn="noglob yarn"
 alias bun="noglob bun"
 
+alias tg=tgrep

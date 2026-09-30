@@ -127,3 +127,24 @@ function gcb() {
   fi
   git checkout -b "$branch"
 }
+
+function pr-wt() {
+PR_ID="${1:-}"
+
+if [ -z "$PR_ID" ]; then
+  echo "エラー: PR番号またはURLを指定してください (例: $0 123)"
+  exit 1
+fi
+
+# GitHub CLIでPRのブランチ名を取得
+BRANCH=$(gh pr view "$PR_ID" --json headRefName --jq .headRefName)
+TARGET_DIR="../${BRANCH}"
+
+# PRのコミットをフェッチしてローカルブランチを作成・更新
+git fetch -f origin "pull/${PR_ID}/head:${BRANCH}"
+
+# ワークツリーを追加
+git worktree add "$TARGET_DIR" "$BRANCH"
+
+echo "✅ ワークツリーを作成しました: ${TARGET_DIR}"
+}
