@@ -69,6 +69,7 @@ local spec = {
         vim.keymap.set({ "n" }, "<CR>", [[<Cmd>call ddu#ui#do_action("itemAction")<CR>]], opts)
         vim.keymap.set({ "n" }, "i", [[<Cmd>call ddu#ui#do_action("openFilterWindow")<CR>]], opts)
         vim.keymap.set({ "n" }, "P", [[<Cmd>call ddu#ui#do_action("togglePreview")<CR>]], opts)
+        vim.keymap.set({ "n" }, "p", [[<Cmd>call ddu#ui#do_action("toggleAutoAction")<CR>]], opts)
 
         apply_ddu_statusline()
       end,
@@ -168,8 +169,8 @@ local spec = {
             { "&relativenumber", 0 },
             { "&wrap", 0 },
           },
-          -- action
-          startAutoAction = true,
+          -- 起動時に preview すると描画が止まるので、toggleAutoAction で必要な時だけ有効にする
+          startAutoAction = false,
           autoAction = { name = "preview", delay = 200 },
         },
       },
@@ -229,6 +230,20 @@ local spec = {
             floatingTitle = source,
           },
         },
+      })
+    end
+
+    -- 初回 ddu#start で拡張の import 待ちが出るので先読みする。loader は name ごとに別
+    for _, source in ipairs(sources) do
+      vim.fn["ddu#load"](source, "ui", { "ff" })
+      vim.fn["ddu#load"](source, "kind", { "file" })
+      vim.fn["ddu#load"](source, "source", { source })
+      vim.fn["ddu#load"](source, "filter", {
+        "matcher_substring",
+        "sorter_alpha",
+        "converter_display_word",
+        "converter_devicon",
+        "converter_hl_dir",
       })
     end
   end,
